@@ -1,37 +1,35 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
+    "target": "es5",
     "lib": [
       "dom",
-      "es2017"
+      "dom.iterable",
+      "esnext"
     ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "target": "es5",
-    "jsx": "react",
-    "importHelpers": true,
-    "noUnusedLocals": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "esModuleInterop": true,
-    "strict": true,
-    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
     "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "declaration": false,
-    "sourceMap": false,
-    "baseUrl": ".",
-    "outDir": "./dist",
-    "paths": {
-      "*": ["./src/*"]
-    },
-    "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"],
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
+    "strictNullChecks": false,
+    "types": [],
+    "typeRoots": [
+      "types",
+      "node_modules/@types"
+    ],
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src",
-    "typings/**/*.d.ts",
-    "./node_modules/@types"
-  ],
-  "exclude": [
-    "**/*.js"
+    "src"
   ]
 }

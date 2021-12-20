@@ -1,20 +1,27 @@
-import React, { FC, useCallback } from "react";
+import React, { FC } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import './App.css';
+import NavMenu from '../NavMenu';
 
-import { Button } from  '../Button/Button';
+import LoginPage from '../../pages/LoginPage';
+import SignupPage from '../../pages/SignupPage';
+import LeaderboardPage from '../../pages/LeaderboardPage';
+import ForumPage from '../../pages/ForumPage';
+import GamePage from '../../pages/GamePage';
 
 const App: FC = () => {
-  const handleClick = useCallback((e) => {
-    // TODO implement game start
-    console.log('start!', e)
-  }, []);
-
   return (
-    <React.Fragment>
-      <Button onClick={handleClick}>start</Button>
-    </React.Fragment>
+    <BrowserRouter>
+      <NavMenu />
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/leaderboard" element={<LeaderboardPage />} />
+        <Route path="/forum" element={<ForumPage />} />
+        <Route path="/game" element={<GamePage />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
