@@ -10,6 +10,8 @@
     "jsx": "react",
     "importHelpers": true,
     "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
     "esModuleInterop": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
