@@ -1,24 +1,20 @@
-import React, { FC,Component, ButtonHTMLAttributes } from "react";
+import React, { FC, useCallback } from "react";
 
 import './App.css';
 
-const MyComponent: FC<ButtonHTMLAttributes<HTMLButtonElement>> = (props) => {
-  const { children, ...rest } =  props;
-  return <button {...rest}>{children}</button>;
+import { Button } from  '../Button/Button';
+
+const App: FC = () => {
+  const handleClick = useCallback((e) => {
+    // TODO implement game start
+    console.log('start!', e)
+  }, []);
+
+  return (
+    <React.Fragment>
+      <Button onClick={handleClick}>start</Button>
+    </React.Fragment>
+  );
 }
 
-export default class App extends Component {
-  state = {
-    id: 0,
-  };
-
-  render() {
-    const { id } = this.state;
-
-    return (
-      <React.Fragment>
-        <MyComponent>{id}</MyComponent>
-      </React.Fragment>
-    );
-  }
-}
+export default App;

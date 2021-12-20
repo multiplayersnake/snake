@@ -1,0 +1,16 @@
+.button {
+  min-width: 100px;
+  min-height: 36px;
+  color: #ffffff;
+  font-size: 13px;
+  font-family: sans-serif;
+  line-height: 13px;
+  background-color: #3369f3;
+  border-radius: 18px;
+  border: none;
+  outline: none;
+}
+
+.button:focus {
+   box-shadow: 0 0 2px 2px #999999;
+ }
