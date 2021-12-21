@@ -1,14 +1,12 @@
 import React, { FC } from 'react';
-
-import Button from '../../components/Button';
+import Canvas from '../../components/Canvas';
 
 import './GamePage.css';
 
 const GamePage: FC = () => {
   return (
     <div className="game-page">
-      <h1>Здесь будет игровое поле...</h1>
-      <Button>OK</Button>
+      <Canvas />
     </div>
   );
 };
