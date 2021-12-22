@@ -8,7 +8,7 @@ const ForumPage: FC = () => {
   return (
     <div className="forum-page">
       <h1>Здесь будет форум...</h1>
-      <h2>И мы начинаем разработку этой страницы</h2>
+      <h2>И мы пробуем начать разработку этой страницы</h2>
       <Button>OK</Button>
     </div>
   );
