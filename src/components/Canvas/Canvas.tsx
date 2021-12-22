@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
-import { StartGame } from '../../core/core';
+import { startGame } from '../../core/core';
 import './Canvas.css';
 
 type OwnProps = React.CanvasHTMLAttributes<HTMLCanvasElement>;
@@ -12,7 +12,7 @@ const Canvas: FC<Props> = () => {
   useEffect(() => {
     const ctx = ref.current?.getContext('2d');
 
-    StartGame(ctx);
+    startGame(ctx);
   }, []);
 
   return <canvas className="canvas" ref={ref} width={1000} height={600} />;

@@ -1,6 +1,4 @@
 import config from './constants';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import appleSource from '../assets/apple2.png';
 const appleImage = new Image(20, 20);
 appleImage.src = appleSource;
@@ -15,7 +13,7 @@ export type Circle = {
 };
 
 class Snake {
-  public Elements: Circle[] = [];
+  public elements: Circle[] = [];
   public hp = 0;
   public name = '';
   public score = 0;
@@ -23,14 +21,14 @@ class Snake {
   constructor(x: number, y: number, vx: number, vy: number, hp: number, col: string, name: string) {
     this.hp = hp;
     this.name = name;
-    this.Elements = [];
+    this.elements = [];
     const r = config.fieldStep / 2;
     // Логическая защита. Змея можем двигаться только по одной из осей
     if (vx !== 0) vy = 0;
 
     // Создаем голову змеи. Это круг с переданными координатами и скоростями
     const el: Circle = { x: x, y: y, vx: vx, vy: vy, r: r, col: col };
-    this.Elements.push(el);
+    this.elements.push(el);
 
     // Создаем туловище и хвост змеи. Это круги, смещенные относительно головы в зависимости от текущей скорости.
     // Элементы туловища на 2 пикселя меньше головы, а хвост еще на 2.
@@ -41,7 +39,7 @@ class Snake {
       x -= dx;
       y -= dy;
       const el: Circle = { x: x, y: y, vx: vx, vy: vy, r: r2, col: col };
-      this.Elements.push(el);
+      this.elements.push(el);
     }
   }
 }

@@ -20,10 +20,10 @@ const config = {
   fieldHeight: 490,
   fieldLeft: 200,
   fieldTop: 100,
-  LBorder: 0,
-  RBorder: 0,
-  TBorder: 0,
-  BBorder: 0,
+  lBorder: 0,
+  rBorder: 0,
+  tBorder: 0,
+  bBorder: 0,
 
   // Параметры правой панели
   rightPanelLeft: 0,
@@ -46,10 +46,10 @@ const config = {
 
 // Эти значения удобно использовать в расчетах, однако они сами являются зависимыми от еще более базовых.
 // Их инициализируем как нулевые, а вот теперь рассчитываем
-config.LBorder = config.fieldLeft + config.fieldStep / 2;
-config.RBorder = config.fieldLeft + config.fieldWidth - config.fieldStep / 2;
-config.TBorder = config.fieldTop + config.fieldStep / 2;
-config.BBorder = config.fieldTop + config.fieldHeight - config.fieldStep / 2;
+config.lBorder = config.fieldLeft + config.fieldStep / 2;
+config.rBorder = config.fieldLeft + config.fieldWidth - config.fieldStep / 2;
+config.tBorder = config.fieldTop + config.fieldStep / 2;
+config.bBorder = config.fieldTop + config.fieldHeight - config.fieldStep / 2;
 
 config.rightPanelLeft = config.fieldLeft + config.fieldWidth + config.panelIdent;
 config.rightPanelWidth = config.wholeWidth - config.rightPanelLeft - config.panelIdent;
