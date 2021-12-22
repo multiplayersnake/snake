@@ -15,13 +15,15 @@ function navLinkClass(params: NavLinkClassParams): string {
 const NavMenu: FC = () => {
   return (
     <nav className="nav-menu">
-      {routes.map((route) => (
-        <div key={route.path}>
-          <NavLink className={navLinkClass} to={route.path}>
-            {route.title}
-          </NavLink>
-        </div>
-      ))}
+      <ul className="nav-menu-items">
+        {routes.map((route) => (
+          <li key={route.path}>
+            <NavLink className={navLinkClass} to={route.path}>
+              {route.title}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
     </nav>
   );
 };
