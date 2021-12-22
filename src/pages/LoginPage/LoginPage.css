@@ -1,3 +1,15 @@
 .login-page {
   color: var(--green);
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  gap: var(--gap-4);
+  padding: var(--gap-4);
+}
+
+.login-page-image {
+  display: block;
+  width: var(--gap-8);
+  height: var(--gap-10);
+  margin: 32px;
 }

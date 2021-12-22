@@ -1,9 +1,13 @@
 :root {
-  --azure: #0077ff;
   --black: #000000;
-  --green: #4bb34b;
+  --blue: #0077ff;
+  --gray: #b2b2b2;
+  --green: #156b39;
+  --orange: #ffa000;
+  --purple: #735ce6;
   --red: #e64646;
+  --turquoise: #63b9ba;
+  --violet: #792ec0;
   --white: #ffffff;
   --yellow: #ffc107;
-  --gray: #999999;
 }

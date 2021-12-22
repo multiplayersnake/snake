@@ -1,12 +1,13 @@
 import React, { FC, ButtonHTMLAttributes } from 'react';
+import cn from 'classnames';
 
 import './Button.css';
 
 const Button: FC<ButtonHTMLAttributes<HTMLButtonElement>> = (props) => {
-  const { children, ...rest } = props;
+  const { children, className, ...rest } = props;
 
   return (
-    <button {...rest} className="button">
+    <button {...rest} className={cn('button', className)}>
       {children}
     </button>
   );

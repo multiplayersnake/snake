@@ -5,7 +5,7 @@ module.exports = {
   entry: ['./src/index.tsx', './src/styles/index.css'],
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js',
+    filename: 'bundle[contenthash].js',
     publicPath: '/'
   },
   resolve: {
@@ -21,6 +21,20 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(gif|ico|jpe?g|png|svg|webp)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/images/[contenthash][ext]'
+        }
+      },
+      {
+        test: /\.(eot|ttf|woff?2)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/fonts/[contenthash][ext]'
+        }
       }
     ]
   },
