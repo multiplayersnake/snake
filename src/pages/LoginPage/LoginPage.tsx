@@ -18,7 +18,7 @@ const LoginPage: FC = () => {
 
       <TextArea label="Биография" id="bio" name="bio" />
 
-      <Button>Авторизоваться</Button>
+      <Button>Войти</Button>
 
       <img className="login-page-image" src={yellowSquare} alt="Yellow square" title="Красный круг" />
     </div>

@@ -1,18 +1,18 @@
 :root {
-  --button-height: var(--normal-control-height);
-  --button-width: var(--normal-control-width);
+  --button-width: var(--normal-button-width);
+  --button-height: var(--normal-button-height);
 }
 
 .button {
-  width: var(--button-width);
+  min-width: var(--button-width);
   height: var(--button-height);
   padding-left: var(--gap-5);
   padding-right: var(--gap-5);
-  color: var(--white);
-  font-family: var(--platform-font);
-  font-size: 100%;
+  color: var(--violet);
+  font-family: var(--impact-font);
+  font-size: var(--gap-6);
   border-radius: var(--normal-border-radius);
-  background-color: var(--blue);
+  background-color: var(--yellow);
 }
 
 .button:focus {

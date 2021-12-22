@@ -5,6 +5,7 @@
   align-items: flex-start;
   gap: var(--gap-4);
   padding: var(--gap-4);
+  background-color: var(--transparent-blue);
 }
 
 .login-page-image {
