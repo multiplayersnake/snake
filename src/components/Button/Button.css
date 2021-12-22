@@ -1,17 +1,20 @@
+:root {
+  --button-width: var(--normal-button-width);
+  --button-height: var(--normal-button-height);
+}
+
 .button {
-  min-width: 100px;
-  min-height: 36px;
-  padding: 0 18px;
-  color: var(--white);
-  font-family: sans-serif;
-  font-size: 13px;
-  line-height: 13px;
-  border-radius: 18px;
-  background-color: var(--azure);
-  border: none;
-  outline: none;
+  min-width: var(--button-width);
+  height: var(--button-height);
+  padding-left: var(--gap-5);
+  padding-right: var(--gap-5);
+  color: var(--violet);
+  font-family: var(--impact-font);
+  font-size: var(--gap-6);
+  border-radius: var(--normal-border-radius);
+  background-color: var(--yellow);
 }
 
 .button:focus {
-  box-shadow: 0 0 2px 2px var(--yellow);
+  box-shadow: var(--shadow);
 }

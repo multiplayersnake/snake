@@ -1,9 +1,20 @@
 :root {
-  --azure: #0077ff;
+  /* цвета из макетов */
+  /* https://www.figma.com/file/EduXWeAso0ymv9iv5mOGcM/snake */
   --black: #000000;
-  --green: #4bb34b;
-  --red: #e64646;
+  --dark-gray: #1e1e1e;
+  --light-gray: #e0e0e0;
+  --transparent-black: rgba(0, 0, 0, 0.5);
+  --transparent-blue: rgba(139, 179, 217, 0.5);
+  --violet: #55278f;
   --white: #ffffff;
-  --yellow: #ffc107;
-  --gray: #999999;
+  --yellow: #cdd02a;
+  /* цвета для отладки, в конце разработки лишние можно удалить */
+  --blue: #0077ff;
+  --gray: #b2b2b2;
+  --green: #156b39;
+  --orange: #ffa000;
+  --purple: #735ce6;
+  --red: #e64646;
+  --turquoise: #63b9ba;
 }

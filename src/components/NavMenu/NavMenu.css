@@ -1,9 +1,23 @@
 .nav-menu {
+  margin: 0;
 }
 
 .nav-menu-items {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  background: var(--transparent-black);
+  color: var(--white);
+  margin: 0;
+  list-style: none;
+}
+
+.nav-menu-item {
+  font-weight: bold;
+  color: var(--white);
+  margin-left: 32px;
 }
 
 .active-link {
-  color: var(--red);
+  color: var(--violet);
 }

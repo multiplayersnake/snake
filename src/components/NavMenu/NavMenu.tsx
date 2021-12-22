@@ -12,12 +12,18 @@ function navLinkClass(params: NavLinkClassParams): string {
   return params.isActive ? 'active-link nav-menu-link' : 'nav-menu-link';
 }
 
-const NavMenu: FC = () => {
+type NavMenuProps = {
+  hidden?: boolean;
+};
+
+const NavMenu: FC<NavMenuProps> = ({ hidden }) => {
+  if (hidden) return null;
+
   return (
     <nav className="nav-menu">
       <ul className="nav-menu-items">
         {routes.map((route) => (
-          <li key={route.path}>
+          <li key={route.path} className="nav-menu-item">
             <NavLink className={navLinkClass} to={route.path}>
               {route.title}
             </NavLink>

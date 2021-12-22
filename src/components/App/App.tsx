@@ -12,7 +12,7 @@ import GamePage from '../../pages/GamePage';
 const App: FC = () => {
   return (
     <BrowserRouter>
-      <NavMenu />
+      <NavMenu hidden={false} />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />

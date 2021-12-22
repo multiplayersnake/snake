@@ -1,0 +1,38 @@
+:root {
+  --text-area-width: var(--normal-input-width);
+}
+
+.text-area-container {
+  position: relative;
+  margin-top: calc(var(--gap-4));
+}
+
+.text-area-label {
+  position: absolute;
+  color: var(--black);
+  font-size: var(--gap-3);
+  top: calc(var(--gap-4) * -1);
+}
+
+.text-area {
+  min-width: var(--text-area-width);
+  padding-left: var(--gap-2);
+  padding-right: var(--gap-2);
+  background-color: var(--light-gray);
+  color: var(--black);
+  font-family: var(--platform-font);
+  font-size: 100%;
+  border-radius: var(--normal-border-radius);
+  border-width: 0;
+  border-style: solid;
+  border-color: var(--black);
+  resize: none;
+}
+
+.text-area::-webkit-scrollbar {
+  display: none;
+}
+
+.text-area:focus {
+  box-shadow: var(--shadow);
+}

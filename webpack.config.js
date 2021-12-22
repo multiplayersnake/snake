@@ -1,12 +1,14 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: ['./src/index.tsx', './src/styles/index.css'],
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js',
-    publicPath: '/'
+    filename: 'bundle[contenthash].js',
+    publicPath: '/',
+    clean: true
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
@@ -21,6 +23,20 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(gif|ico|jpe?g|png|svg|webp)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/images/[contenthash][ext]'
+        }
+      },
+      {
+        test: /\.(eot|ttf|woff?2)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/fonts/[contenthash][ext]'
+        }
       }
     ]
   },
@@ -31,5 +47,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './www/index.html'
     })
-  ]
+  ],
+  optimization: {
+    minimizer: [new TerserPlugin({ extractComments: false })]
+  }
 };

@@ -1,0 +1,35 @@
+:root {
+  --input-width: var(--normal-input-width);
+  --input-height: var(--normal-input-height);
+}
+
+.input-container {
+  position: relative;
+  margin-top: calc(var(--gap-4));
+}
+
+.input-label {
+  position: absolute;
+  color: var(--black);
+  font-size: var(--gap-3);
+  top: calc(var(--gap-4) * -1);
+}
+
+.input {
+  height: var(--input-height);
+  width: var(--input-width);
+  padding-left: var(--gap-2);
+  padding-right: var(--gap-2);
+  background-color: var(--light-gray);
+  color: var(--black);
+  font-family: var(--platform-font);
+  font-size: 100%;
+  border-radius: var(--normal-border-radius);
+  border-width: 0;
+  border-style: solid;
+  border-color: var(--black);
+}
+
+.input:focus {
+  box-shadow: var(--shadow);
+}
