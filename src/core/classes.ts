@@ -34,6 +34,7 @@ class Snake {
     // Элементы туловища на 2 пикселя меньше головы, а хвост еще на 2.
     const dx = vx === 0 ? 0 : (Math.abs(vx) / vx) * config.fieldStep;
     const dy = vy === 0 ? 0 : (Math.abs(vy) / vy) * config.fieldStep;
+
     for (let i = 1; i < config.defaultSnakeLength; i++) {
       const r2 = i < config.defaultSnakeLength - 1 ? Math.round(r * 0.8) : Math.round(r * 0.7);
       x -= dx;
