@@ -1,4 +1,9 @@
 import config from './constants';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import appleSource from '../assets/apple2.png';
+const appleImage = new Image(20, 20);
+appleImage.src = appleSource;
 
 export type Circle = {
   x: number;
@@ -68,10 +73,12 @@ class Boom {
 class Apple {
   public x: number;
   public y: number;
+  public image: CanvasImageSource;
 
   constructor(x: number, y: number) {
     this.x = x;
     this.y = y;
+    this.image = appleImage;
   }
 }
 

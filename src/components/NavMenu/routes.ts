@@ -3,7 +3,7 @@ const routes = [
   { path: '/signup', title: 'Регистрация' },
   { path: '/leaderboard', title: 'Лидерборд' },
   { path: '/forum', title: 'Форум' },
-  { path: '/game', title: 'Игровое поля' }
+  { path: '/game', title: 'Игровое поле' }
 ];
 
 export default routes;

@@ -1,6 +1,5 @@
 import { Snake, Coin, Boom, Circle, Apple } from './classes';
 import config from './constants';
-import imageApple from '../assets/';
 
 let last = window.performance.now();
 let mainTimerId: number;
@@ -304,10 +303,14 @@ function DrawCoins(): void {
 // Функция отрисовки яблок
 function DrawApples(): void {
   Apples.map(function (el) {
-    // eslint-disable-next-line no-undef
-    const image: HTMLImageElement = new Image(config.fieldStep, config.fieldStep);
-    image.src = imageApple;
-    ctx.drawImage(image, el.x - config.fieldStep / 2, el.y - config.fieldStep / 2);
+    /*
+    ctx.beginPath();
+    ctx.arc(el.x, el.y, config.fieldStep / 2, 0, 2 * Math.PI);
+    ctx.fillStyle = 'rgba(255,0,0,0.8)';
+    ctx.fill();
+    ctx.closePath();
+    */
+    ctx.drawImage(el.image, el.x - config.fieldStep / 2, el.y - config.fieldStep / 2);
 
     return null;
   });
