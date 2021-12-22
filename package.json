@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack serve --mode development --open --hot ",
-    "build": "webpack --mode production",
+    "build": "webpack --mode development",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npm run lint:scripts && npm run lint:styles",
     "lint:scripts": "eslint --fix . --ext .ts,.tsx src",
@@ -36,7 +36,9 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "5.5.0",
+    "image-webpack-loader": "^8.0.1",
     "path": "0.12.7",
     "prettier": "^2.4.1",
     "prettier-stylelint": "^0.4.2",
