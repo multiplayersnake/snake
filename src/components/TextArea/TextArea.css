@@ -29,6 +29,10 @@
   resize: none;
 }
 
+.text-area::-webkit-scrollbar {
+  display: none;
+}
+
 .text-area:focus {
   box-shadow: var(--shadow);
 }
