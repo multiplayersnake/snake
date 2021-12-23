@@ -1,5 +1,5 @@
-import BaseAPI from './BaseAPI';
 import { User } from '../types/models';
+import BaseAPI from './BaseAPI';
 
 export interface SignUpRequest {
   first_name: string;

@@ -3,11 +3,13 @@ import cn from 'classnames';
 
 import './Button.css';
 
-const Button: FC<ButtonHTMLAttributes<HTMLButtonElement>> = (props) => {
-  const { children, className, ...rest } = props;
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+
+const Button: FC<ButtonProps> = (props) => {
+  const { type = 'button', children, className, ...rest } = props;
 
   return (
-    <button {...rest} className={cn('button', className)}>
+    <button {...rest} className={cn('button', className)} type={type}>
       {children}
     </button>
   );

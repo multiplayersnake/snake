@@ -1,7 +1,10 @@
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { User } from '../../types/models';
+import LogoutLink from '../LogoutLink';
 import routes from './routes';
+
 import './NavMenu.css';
 
 type NavLinkClassParams = {
@@ -14,9 +17,11 @@ function navLinkClass(params: NavLinkClassParams): string {
 
 type NavMenuProps = {
   hidden?: boolean;
+  user?: User;
+  onLogout: () => void;
 };
 
-const NavMenu: FC<NavMenuProps> = ({ hidden }) => {
+const NavMenu: FC<NavMenuProps> = ({ hidden, user, onLogout }) => {
   if (hidden) return null;
 
   return (
@@ -29,7 +34,13 @@ const NavMenu: FC<NavMenuProps> = ({ hidden }) => {
             </NavLink>
           </li>
         ))}
+        {user && (
+          <li className="nav-menu-item">
+            <LogoutLink onLogout={onLogout} />
+          </li>
+        )}
       </ul>
+      {user && <pre className="user-name">{JSON.stringify(user, null, 2)}</pre>}
     </nav>
   );
 };

@@ -1,51 +1,43 @@
 import authAPI, { SignInRequest, SignUpRequest } from '../api/AuthAPI';
+import handleAPIError from '../api/handleAPIError';
+
+import { User } from '../types/models';
 import getSubmittedFormData from './getSubmittedFormData';
-import handleError from './handleError';
 
 class AuthService {
   public static async signIn(e: SubmitEvent): Promise<void> {
     try {
-      const credentials = getSubmittedFormData<SignInRequest>(e);
-
-      console.log('credentials:', credentials);
-
-      await authAPI.signIn(credentials);
-
-      console.log('signIn OK');
-    } catch (error) {
-      handleError(error);
+      const signInData = getSubmittedFormData<SignInRequest>(e);
+      await authAPI.signIn(signInData);
+    } catch (e) {
+      handleAPIError(e as Error);
     }
   }
 
   public static async signUp(e: Event): Promise<void> {
     try {
       const newUserData = getSubmittedFormData<SignUpRequest>(e);
-
       await authAPI.signUp(newUserData);
-
-      console.log('signUp OK');
-    } catch (error) {
-      handleError(error);
+    } catch (e) {
+      handleAPIError(e as Error);
     }
   }
 
   public static async logout(): Promise<void> {
     try {
       await authAPI.logout();
-
-      console.log('logout OK');
-    } catch (error) {
-      handleError(error);
+    } catch (e) {
+      handleAPIError(e as Error);
     }
   }
 
-  public static async checkAuthorization(): Promise<void> {
+  public static async checkAuthorization(): Promise<User | undefined> {
     try {
       const user = await authAPI.getUser();
-
-      console.log('current user:', user);
-    } catch (error) {
-      handleError(error);
+      return user;
+    } catch (e) {
+      handleAPIError(e as Error);
+      return undefined;
     }
   }
 }

@@ -13,6 +13,22 @@
   font-size: var(--gap-6);
   border-radius: var(--normal-border-radius);
   background-color: var(--yellow);
+  position: relative;
+}
+
+.button:after {
+  position: absolute;
+  display: block;
+  content: '';
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: var(--normal-border-radius);
+}
+
+.button:hover:after {
+  background-color: var(--transparent-blue);
 }
 
 .button:focus {

@@ -1,28 +1,38 @@
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { FC, useCallback } from 'react';
 
 import Button from '../../components/Button';
+import NavButton from '../../components/Button/NavButton';
 import Form from '../../components/Form';
 import Heading from '../../components/Heading';
 import Input from '../../components/Input';
 
 import AuthService from '../../services/AuthService';
+import { User } from '../../types/models';
 
 import './LoginPage.css';
 
-const LoginPage: FC = () => {
-  useEffect(() => {
-    void AuthService.checkAuthorization();
-  }, []);
+type LoginPageProps = {
+  onLogin: (user?: User) => void;
+};
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
+const LoginPage: FC<LoginPageProps> = ({ onLogin }) => {
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
 
-    void AuthService.signIn(e);
-  }, []);
+      async function login() {
+        await AuthService.signIn(e);
+        const user = await AuthService.checkAuthorization();
+        onLogin(user);
 
-  const handleLogout = useCallback(() => {
-    void AuthService.logout();
-  }, []);
+        const form = e.target as HTMLFormElement;
+        form.reset();
+      }
+
+      void login();
+    },
+    [onLogin]
+  );
 
   return (
     <div className="login-page">
@@ -36,10 +46,7 @@ const LoginPage: FC = () => {
 
         <div className="login-page-buttons">
           <Button type="submit">Войти</Button>
-          <Button type="button" onClick={handleLogout}>
-            Выйти
-          </Button>
-          {/*<Button type="button">Регистрация</Button>*/}
+          <NavButton to="/signup">Регистрация</NavButton>
         </div>
       </Form>
     </div>
