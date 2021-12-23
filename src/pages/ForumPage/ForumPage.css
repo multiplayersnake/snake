@@ -3,31 +3,35 @@
   grid-template-areas:
     "nav   title title"
     "themes themes new ";
-  grid-template-rows: 80px calc(100vh - 80px);
-  grid-template-columns: 300px calc(100% - 640px) 300px;
+  grid-template-rows: 80px calc(100vh - 80px - 30px - 35px);
+  grid-template-columns: 300px calc(100% - 600px - 30px) 300px;
   gap: 10px;
   justify-self: center;
   align-self: center;
-  background-image: url(../../assets/mainBack.jpg);
-  background-size: cover;
+  padding: 10px;
 }
 
 .button-forum-back {
   grid-area: nav;
-
+  align-self: center;
+  justify-self: center;
 }
 
 .title-forum {
   grid-area: title;
-  background: RGBA(0,0,255,0.5);
+  align-self: center;
+  justify-self: center;
 }
 
 .themes-forum {
   grid-area: themes;
-  background: RGBA(0,0,255,0.5);
+  align-self: flex-start;
+  justify-self: center;
+  width: 100%;
 }
 
 .new-forum {
   grid-area: new;
-  background: RGBA(0,0,255,0.5);
+  align-self: center;
+  justify-self: center;
 }
