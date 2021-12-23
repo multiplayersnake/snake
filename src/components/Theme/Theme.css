@@ -1,14 +1,15 @@
 .theme {
-  width: 100%;
+  width: calc(100% - 23px);
   display: grid;
   grid-template-areas:
     "datetime  author  mesCount"
     "content   content content "
     ".         .       newCount ";
+  grid-template-columns: 33% 33% 33%;
   margin: 5px;
   padding: 5px;
   gap: 5px;
-  background: rgba(0,0,0,0.3);
+  background: var(--transparent-black);
   font-family: var(--impact-font);
   font-size: var(--gap-6);
   transition: all 0.2s ease-in-out;
@@ -23,7 +24,6 @@
 .theme-datetime {
   grid-area: datetime;
   align-self: center;
-  justify-self: flex-start;
   padding: 5px;
   width: 100%;
   background: rgba(200,200,200,0.8);
@@ -32,34 +32,34 @@
 .theme-author {
   grid-area: author;
   align-self: center;
-  justify-self: center;
   padding: 5px;
   width: 100%;
   background: rgba(200,200,200,0.8);
+  text-align: center;
 }
 
 .theme-mesCount {
   grid-area: mesCount;
   align-self: center;
-  justify-self: flex-end;
   padding: 5px;
   width: 100%;
   background: rgba(200,200,200,0.8);
+  text-align: right;
 }
 
 .theme-content {
   grid-area: content;
   align-self: center;
-  justify-self: flex-start;
   background: rgba(255,255,255,0.8);
   padding: 5px;
   width: 100%;
   min-height: 100px;
+  text-align: left;
 }
 
 .theme-newCount {
   grid-area: newCount;
   align-self: center;
-  justify-self: flex-end;
   color: rgb(255,255,255);
+  text-align: right;
 }

@@ -20,7 +20,7 @@
 .title-forum {
   grid-area: title;
   align-self: center;
-  justify-self: center;
+  text-align: center;
 }
 
 .themes-forum {
@@ -28,10 +28,32 @@
   align-self: flex-start;
   justify-self: center;
   width: 100%;
+  height: calc(100vh - 80px - 30px - 35px);
+  overflow: auto;
+  overflow-x:hidden;
+  background: var(--transparent-blue);
+
 }
 
 .new-forum {
   grid-area: new;
   align-self: center;
   justify-self: center;
+  height: calc(100vh - 80px - 30px - 35px);
+  background: var(--transparent-blue);
+}
+
+.new-forum {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-self: center;
+  align-self: flex-start;
+  padding: 10px;
+  font-family: var(--impact-font);
+  font-size: var(--gap-6);
+}
+
+.text-area-forum {
+  min-height: 300px;
 }
