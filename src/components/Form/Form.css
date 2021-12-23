@@ -1,0 +1,8 @@
+.form {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  padding: var(--gap-4);
+  gap: var(--gap-5);
+  border-radius: var(--normal-border-radius);
+}

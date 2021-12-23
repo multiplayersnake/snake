@@ -1,26 +1,28 @@
 import React, { FC } from 'react';
 
 import Button from '../../components/Button';
+import Form from '../../components/Form';
+import Heading from '../../components/Heading';
 import Input from '../../components/Input';
-import TextArea from '../../components/TextArea';
 
-import yellowSquare from '../../assets/yellow-square.jpg';
 import './LoginPage.css';
 
 const LoginPage: FC = () => {
   return (
     <div className="login-page">
-      <h1>Здесь будет страница авторизации...</h1>
+      <Heading tag="h1">Боевые змеи</Heading>
 
-      <Input label="Логин" id="login" name="login" />
+      <Form>
+        <Heading tag="h2">Авторизация</Heading>
 
-      <Input label="Пароль" id="password" name="password" type="password" />
+        <Input label="Логин" name="login" />
+        <Input label="Пароль" name="password" type="password" />
 
-      <TextArea label="Биография" id="bio" name="bio" />
-
-      <Button>Войти</Button>
-
-      <img className="login-page-image" src={yellowSquare} alt="Yellow square" title="Красный круг" />
+        <div className="login-page-buttons">
+          <Button type="submit">Войти</Button>
+          <Button type="button">Регистрация</Button>
+        </div>
+      </Form>
     </div>
   );
 };
