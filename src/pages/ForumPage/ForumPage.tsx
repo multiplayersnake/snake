@@ -1,11 +1,11 @@
 import React, { FC, useRef, useState } from 'react';
+import cn from 'classnames';
 
 import Button from '../../components/Button';
 import Heading from '../../components/Heading';
-import Theme from '../../components/Theme';
+import Topic from '../../components/Topic';
 
 import './ForumPage.css';
-import cn from 'classnames';
 import { out_arr } from './mock';
 
 function formatDateTime(val: Date) {
@@ -21,24 +21,13 @@ function formatDateTime(val: Date) {
 
 const ForumPage: FC = () => {
   const contentRef = useRef(null);
-  const [themes, setThemes] = useState(out_arr);
+  const [topics, setTopics] = useState(out_arr);
 
-  const CreateNewTheme = () => {
-    const id = themes.length;
+  const createNewTopic = () => {
+    const id = topics.length;
     const datetime = formatDateTime(new Date());
     const content = contentRef.current.value;
-    setThemes(
-      [
-        {
-          id: id,
-          datetime: datetime,
-          author: 'Текущий пользователь',
-          mesCount: 1,
-          newCount: 0,
-          content: content
-        }
-      ].concat(themes)
-    );
+    setTopics([{ id, datetime, author: 'Текущий пользователь', mesCount: 1, newCount: 0, content }].concat(topics));
   };
 
   return (
@@ -47,9 +36,9 @@ const ForumPage: FC = () => {
       <Heading tag="h1" className={cn('title-forum')}>
         Форум
       </Heading>
-      <div className={cn('themes-forum')}>
-        {themes.map((value, index) => (
-          <Theme
+      <div className={cn('topics-forum')}>
+        {topics.map((value, index) => (
+          <Topic
             key={index}
             datetime={value.datetime}
             author={value.author}
@@ -64,7 +53,7 @@ const ForumPage: FC = () => {
         <input ref={contentRef} className={cn('input')} />
         Сообщение:
         <textarea className={cn('text-area', 'text-area-forum')} />
-        <button onClick={CreateNewTheme} className={cn('button', 'button-forum-new')}>
+        <button onClick={createNewTopic} className={cn('button', 'button-forum-new')}>
           Создать тему
         </button>
       </div>

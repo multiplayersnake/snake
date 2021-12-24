@@ -21,7 +21,7 @@
     "selector-attribute-operator-space-before": "never",
     "declaration-block-trailing-semicolon": "always",
     "declaration-colon-space-before": "never",
-    "declaration-colon-space-after": "always",
+    "declaration-colon-space-after": "always-single-line",
     "property-no-vendor-prefix": true,
     "value-no-vendor-prefix": true,
     "at-rule-no-vendor-prefix": true,

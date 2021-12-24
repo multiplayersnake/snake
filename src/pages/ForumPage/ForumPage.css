@@ -1,8 +1,8 @@
 .forum-page {
   display: grid;
   grid-template-areas:
-    "nav   title title"
-    "themes themes new ";
+    'nav   title title'
+    'topics topics new ';
   grid-template-rows: 80px calc(100vh - 80px - 30px - 35px);
   grid-template-columns: 300px calc(100% - 600px - 30px) 300px;
   gap: 10px;
@@ -23,27 +23,22 @@
   text-align: center;
 }
 
-.themes-forum {
-  grid-area: themes;
+.topics-forum {
+  grid-area: topics;
   align-self: flex-start;
   justify-self: center;
   width: 100%;
   height: calc(100vh - 80px - 30px - 35px);
   overflow: auto;
-  overflow-x:hidden;
+  overflow-x: hidden;
   background: var(--transparent-blue);
-
+  padding: 10px;
 }
 
 .new-forum {
   grid-area: new;
-  align-self: center;
-  justify-self: center;
   height: calc(100vh - 80px - 30px - 35px);
   background: var(--transparent-blue);
-}
-
-.new-forum {
   display: flex;
   flex-direction: column;
   gap: 10px;
