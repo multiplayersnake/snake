@@ -1,3 +1,4 @@
+import { FormEvent } from 'react';
 import authAPI, { SignInRequest, SignUpRequest } from '../api/AuthAPI';
 import handleAPIError from '../api/handleAPIError';
 
@@ -5,7 +6,7 @@ import { User } from '../types/models';
 import getSubmittedFormData from './getSubmittedFormData';
 
 class AuthService {
-  public static async signIn(e: SubmitEvent): Promise<void> {
+  public static async signIn(e: FormEvent): Promise<void> {
     try {
       const signInData = getSubmittedFormData<SignInRequest>(e);
       await authAPI.signIn(signInData);
@@ -14,7 +15,7 @@ class AuthService {
     }
   }
 
-  public static async signUp(e: Event): Promise<void> {
+  public static async signUp(e: FormEvent): Promise<void> {
     try {
       const newUserData = getSubmittedFormData<SignUpRequest>(e);
       await authAPI.signUp(newUserData);

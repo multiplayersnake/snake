@@ -1,3 +1,5 @@
+import { FormEvent } from 'react';
+
 import sanitizeUserInput from './sanitizeUserInput';
 
 interface FormDataType {
@@ -6,7 +8,7 @@ interface FormDataType {
 
 type DefaultFormDataType = Record<string, FormDataEntryValue>;
 
-const getSubmittedFormData = <T = DefaultFormDataType>(e: Event): T => {
+const getSubmittedFormData = <T = DefaultFormDataType>(e: FormEvent): T => {
   const form = e.target as HTMLFormElement;
   const formData = new FormData(form) as FormDataType;
   const nonEmptyFields: DefaultFormDataType = {};

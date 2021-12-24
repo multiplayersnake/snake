@@ -1,29 +1,23 @@
 import React, { FC, useCallback } from 'react';
 
-import './LogoutLink.css';
-import AuthService from '../../services/AuthService';
+import { MenuAction, MenuActionType } from '../../types/mainMenu';
 
 type LogoutLinkProps = {
-  onLogout: () => void;
+  onClick: (action: MenuAction) => void;
 };
 
-const LogoutLink: FC<LogoutLinkProps> = ({ onLogout }) => {
+const LogoutLink: FC<LogoutLinkProps> = ({ onClick }) => {
   const handleClick = useCallback(
-    (e) => {
+    (e: React.MouseEvent) => {
       e.preventDefault();
 
-      async function logout() {
-        await AuthService.logout();
-        onLogout();
-      }
-
-      void logout();
+      onClick({ type: MenuActionType.Logout });
     },
-    [onLogout]
+    [onClick]
   );
 
   return (
-    <a href="#" onClick={handleClick}>
+    <a href="/" onClick={handleClick}>
       Выйти
     </a>
   );

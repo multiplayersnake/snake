@@ -1,37 +1,29 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, FormEvent, useCallback } from 'react';
 
 import Button from '../../components/Button';
 import NavButton from '../../components/Button/NavButton';
 import Form from '../../components/Form';
 import Heading from '../../components/Heading';
 import Input from '../../components/Input';
-
-import AuthService from '../../services/AuthService';
-import { User } from '../../types/models';
+import { MenuAction, MenuActionType } from '../../types/mainMenu';
 
 import './LoginPage.css';
 
 type LoginPageProps = {
-  onLogin: (user?: User) => void;
+  onAction: (action: MenuAction) => void;
 };
 
-const LoginPage: FC<LoginPageProps> = ({ onLogin }) => {
+const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
   const handleSubmit = useCallback(
-    (e) => {
+    async (e: FormEvent) => {
       e.preventDefault();
 
-      async function login() {
-        await AuthService.signIn(e);
-        const user = await AuthService.checkAuthorization();
-        onLogin(user);
+      onAction({ type: MenuActionType.Login, payload: e });
 
-        const form = e.target as HTMLFormElement;
-        form.reset();
-      }
-
-      void login();
+      const form = e.target as HTMLFormElement;
+      form.reset();
     },
-    [onLogin]
+    [onAction]
   );
 
   return (
