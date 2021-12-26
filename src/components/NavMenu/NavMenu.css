@@ -9,7 +9,7 @@
 }
 
 .nav-menu-items_hidden {
-  height: 0;
+  height: 0 !important;
 }
 
 .nav-menu-items {

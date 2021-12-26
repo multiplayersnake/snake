@@ -1,10 +1,5 @@
-function handleAPIError(serializedError: Error) {
-  try {
-    const error = JSON.parse(serializedError.message);
-    console.log('API error:', error);
-  } catch {
-    console.log('unknown API error');
-  }
+function handleAPIError(error: Error) {
+  console.error('API error:', error);
 }
 
 export default handleAPIError;

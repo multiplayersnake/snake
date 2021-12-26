@@ -24,21 +24,21 @@ class AuthService {
     }
   }
 
-  public static async logout(): Promise<void> {
+  public static async logOut(): Promise<void> {
     try {
-      await authAPI.logout();
+      await authAPI.logOut();
     } catch (e) {
       handleAPIError(e as Error);
     }
   }
 
-  public static async checkAuthorization(): Promise<User | undefined> {
+  public static async checkAuthorization(): Promise<User | null> {
     try {
       const user = await authAPI.getUser();
       return user;
     } catch (e) {
       handleAPIError(e as Error);
-      return undefined;
+      return null;
     }
   }
 }

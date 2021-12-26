@@ -16,8 +16,6 @@ type LoginPageProps = {
 const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
-      e.preventDefault();
-
       onAction({ type: MenuActionType.Login, payload: e });
 
       const form = e.target as HTMLFormElement;

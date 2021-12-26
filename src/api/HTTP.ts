@@ -7,10 +7,14 @@ enum Method {
 
 export const BASE_URL = 'https://ya-praktikum.tech/api/v2';
 
+interface ObjectLike {
+  [key: string]: string;
+}
+
 interface Options {
   method?: Method;
-  data?: FormData | unknown;
-  headers?: Record<string, string>;
+  data?: FormData | ObjectLike;
+  headers?: ObjectLike;
   timeout?: number;
   raw?: boolean;
 }

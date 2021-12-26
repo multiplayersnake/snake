@@ -1,23 +1,23 @@
 import { User } from '../types/models';
 import BaseAPI from './BaseAPI';
 
-export interface SignUpRequest {
+export type SignUpRequest = {
   first_name: string;
   second_name: string;
   login: string;
   email: string;
   password: string;
   phone: string;
-}
+};
 
-export interface SignUpResponse {
+export type SignUpResponse = {
   id: number;
-}
+};
 
-export interface SignInRequest {
+export type SignInRequest = {
   login: string;
   password: string;
-}
+};
 
 class AuthAPI extends BaseAPI {
   constructor() {
@@ -32,7 +32,7 @@ class AuthAPI extends BaseAPI {
     return this.http.post<void>('/signin', { data });
   }
 
-  public logout(): Promise<void> {
+  public logOut(): Promise<void> {
     return this.http.post<void>('/logout');
   }
 

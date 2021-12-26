@@ -26,7 +26,7 @@ type NavMenuProps = {
 const NavMenu: FC<NavMenuProps> = ({ hidden, user, onAction }) => {
   return (
     <nav className="nav-menu">
-      <ul className={cn('nav-menu-items', hidden && 'nav-menu-items_hidden')}>
+      <ul className={cn('nav-menu-items', { 'nav-menu-items_hidden': hidden })}>
         {routes.map((route) => (
           <li key={route.path} className="nav-menu-item">
             <NavLink className={navLinkClass} to={route.path}>

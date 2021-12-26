@@ -6,18 +6,18 @@ import { User } from '../../types/models';
 
 type UseAuth = {
   authorized: boolean;
-  user?: User;
+  user: User;
   checkAuthorization: () => void;
   handleAction: (action: MenuAction) => void;
 };
 
 function useAuth(): UseAuth {
-  const [user, setUser] = useState<User | undefined>(undefined);
-  const authorized = useMemo(() => !!user, [user]);
+  const [user, setUser] = useState<User | null>(null);
+  const authorized = useMemo(() => Boolean(user), [user]);
 
-  const logout = useCallback(async () => {
-    await AuthService.logout();
-    setUser(undefined);
+  const logOut = useCallback(async () => {
+    await AuthService.logOut();
+    setUser(null);
   }, []);
 
   const checkAuthorization = useCallback(async () => {
@@ -25,7 +25,7 @@ function useAuth(): UseAuth {
     setUser(user);
   }, []);
 
-  const login = useCallback(async (e: FormEvent) => {
+  const logIn = useCallback(async (e: FormEvent) => {
     await AuthService.signIn(e);
     const user = await AuthService.checkAuthorization();
     setUser(user);
@@ -35,18 +35,18 @@ function useAuth(): UseAuth {
     (action: MenuAction) => {
       switch (action.type) {
         case MenuActionType.Login:
-          void login(action.payload);
+          void logIn(action.payload);
           break;
 
         case MenuActionType.Logout:
-          void logout();
+          void logOut();
           break;
 
         default:
           console.log('Unknown main menu action:', action);
       }
     },
-    [login, logout]
+    [logIn, logOut]
   );
 
   return { authorized, user, checkAuthorization, handleAction };
