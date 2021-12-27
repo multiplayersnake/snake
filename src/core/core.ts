@@ -298,23 +298,27 @@ function tick(): void {
 
 // Функция запуска ядра
 function startGame(inContext: CanvasRenderingContext2D): void {
-  const snake1 = new Snake(400, 200, 0.1, 0.0, 100, 'red', 'Smith_123');
-  snakes.push(snake1);
-
-  const snake2 = new Snake(700, 400, -0.1, 0.0, 100, 'blue', 'John');
-  snakes.push(snake2);
-
   ctx = inContext;
-  gameStatus.mode = 'Play';
 
-  mainTimerStart = window.performance.now();
-  tick();
-  mainTimerId = setInterval(tick, 1000);
+  if (snakes.length === 0) {
+    const snake1 = new Snake(400, 200, 0.1, 0.0, 100, 'red', 'Smith_123');
+    snakes.push(snake1);
+
+    const snake2 = new Snake(700, 400, -0.1, 0.0, 100, 'blue', 'John');
+    snakes.push(snake2);
+
+    gameStatus.mode = 'Play';
+
+    mainTimerStart = window.performance.now();
+    tick();
+    mainTimerId = setInterval(tick, 1000);
+
+    coinGenerator();
+    setTimeout(appleGenerator, config.appleCreateTime * 1000);
+  }
 
   draw.drawLeftPanel(ctx, snakes[indexOfSnakeUnderControl]);
   draw.drawRightPanel(ctx, snakes);
-  coinGenerator();
-  setTimeout(appleGenerator, config.appleCreateTime * 1000);
   render();
 }
 
