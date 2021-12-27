@@ -1,15 +1,27 @@
 .nav-menu {
   margin: 0;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.nav-menu-items_hidden {
+  height: 0 !important;
 }
 
 .nav-menu-items {
   height: 32px;
   display: flex;
   align-items: center;
-  background: var(--transparent-black);
   color: var(--white);
   margin: 0;
   list-style: none;
+  flex: 1;
+  overflow: hidden;
+  background: var(--transparent-black);
 }
 
 .nav-menu-item {
@@ -20,4 +32,16 @@
 
 .active-link {
   color: var(--violet);
+}
+
+.user-name {
+  background-color: var(--transparent-black);
+  color: var(--white);
+  width: 300px;
+  margin: 0;
+  font-size: var(--gap-4);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
 }

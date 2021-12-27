@@ -5,14 +5,17 @@
 
 .input-container {
   position: relative;
-  margin-top: calc(var(--gap-4));
+  align-self: stretch;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .input-label {
-  position: absolute;
   color: var(--black);
-  font-size: var(--gap-3);
-  top: calc(var(--gap-4) * -1);
+  font-size: var(--gap-5);
+  font-family: var(--impact-font);
+  filter: var(--white-shadow);
 }
 
 .input {
@@ -31,5 +34,5 @@
 }
 
 .input:focus {
-  box-shadow: var(--shadow);
+  box-shadow: var(--gray-shadow);
 }

@@ -1,9 +1,10 @@
 const routes = [
-  { path: '/login', title: 'Войти' },
-  { path: '/signup', title: 'Регистрация' },
-  { path: '/leaderboard', title: 'Лидерборд' },
+  { path: '/game', title: 'В бой!' },
+  { path: '/profile', title: 'Профиль' },
   { path: '/forum', title: 'Форум' },
-  { path: '/game', title: 'Игровое поле' }
+  { path: '/', title: 'Главная' },
+  { path: '/login', title: 'Войти' },
+  { path: '/signup', title: 'Регистрация' }
 ];
 
 export default routes;

@@ -1,0 +1,29 @@
+.heading {
+  margin: 0;
+  font-family: var(--impact-font);
+}
+
+.h1 {
+  font-size: calc(var(--gap) * 16);
+  color: var(--violet);
+}
+
+.h2 {
+  font-size: calc(var(--gap) * 12);
+}
+
+.h3 {
+  font-size: calc(var(--gap) * 9.36);
+}
+
+.h4 {
+  font-size: calc(var(--gap) * 8);
+}
+
+.h5 {
+  font-size: calc(var(--gap) * 6.64);
+}
+
+.h6 {
+  font-size: calc(var(--gap) * 6);
+}
