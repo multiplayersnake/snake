@@ -1,29 +1,39 @@
 .heading {
   margin: 0;
-  font-family: var(--impact-font);
+  color: rgb(255, 255, 255);
+  font-weight: normal;
+  text-shadow: var(--text-shadow);
 }
 
 .h1 {
   font-size: calc(var(--gap) * 16);
-  color: var(--violet);
+  font-family: var(--title-font);
+  color: rgba(236, 239, 73, 1);
+  letter-spacing: calc(var(--gap) * 2);
+  text-shadow: var(--title-shadow);
 }
 
 .h2 {
   font-size: calc(var(--gap) * 12);
+  font-family: var(--header-font);
 }
 
 .h3 {
   font-size: calc(var(--gap) * 9.36);
+  font-family: var(--main-font);
 }
 
 .h4 {
   font-size: calc(var(--gap) * 8);
+  font-family: var(--main-font);
 }
 
 .h5 {
   font-size: calc(var(--gap) * 6.64);
+  font-family: var(--main-font);
 }
 
 .h6 {
   font-size: calc(var(--gap) * 6);
+  font-family: var(--main-font);
 }

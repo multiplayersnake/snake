@@ -8,13 +8,14 @@
   height: var(--button-height);
   padding-left: var(--gap-5);
   padding-right: var(--gap-5);
-  color: var(--violet);
-  font-family: var(--impact-font);
+  color: rgb(0, 0, 0);
+  font-family: var(--main-font);
   font-size: var(--gap-6);
-  border-radius: var(--normal-border-radius);
-  background-color: var(--yellow);
+  font-weight: normal;
+  border-radius: var(--gap5-1);
+  background: linear-gradient(rgb(254, 255, 199), rgb(250, 255, 150), rgb(250, 255, 0));
   position: relative;
-  box-shadow: var(--inset-black-shadow);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
   cursor: pointer;
 }
 
@@ -29,10 +30,10 @@
   border-radius: var(--normal-border-radius);
 }
 
-.button:hover:after {
-  background-color: var(--transparent-blue);
+.button:hover {
+  box-shadow: 0 0 5px rgb(255, 255, 255);
 }
 
 .button:focus {
-  box-shadow: var(--gray-shadow), var(--inset-black-shadow);
+  box-shadow: 0 0 5px rgb(255, 255, 255);
 }

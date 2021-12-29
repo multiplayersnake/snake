@@ -1,0 +1,31 @@
+.text-field {
+  padding: var(--gap5-2);
+  width: 100%;
+  background: var(--sub-panel-background);
+  border-radius: var(--gap5-1);
+  text-shadow: var(--text-light);
+}
+
+.message {
+  display: grid;
+  grid-template-areas:
+    'author '
+    'content ';
+  grid-template-columns: auto;
+  gap: var(--gap5-2);
+  font-family: var(--main-font);
+  font-size: var(--gap-5);
+  transition: all 0.2s ease-in-out;
+  margin-top: var(--gap5-2);
+}
+
+.message-author {
+  grid-area: author;
+  text-align: start;
+}
+
+.message-content {
+  grid-area: content;
+  min-height: 100px;
+  text-align: left;
+}

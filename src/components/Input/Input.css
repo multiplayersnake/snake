@@ -23,11 +23,11 @@
   width: var(--input-width);
   padding-left: var(--gap-2);
   padding-right: var(--gap-2);
-  background-color: var(--light-gray);
+  background: var(--sub-panel-background);
   color: var(--black);
   font-family: var(--platform-font);
   font-size: 100%;
-  border-radius: var(--normal-border-radius);
+  border-radius: var(--gap5);
   border-width: 0;
   border-style: solid;
   border-color: var(--black);

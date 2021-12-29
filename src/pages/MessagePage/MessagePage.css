@@ -1,8 +1,8 @@
-.forum-page {
+.message-page {
   display: grid;
   grid-template-areas:
     'nav    title .'
-    'topics topics topics ';
+    'messages messages messages ';
   grid-template-rows: 55px calc(100vh - 55px);
   grid-template-columns: 300px calc(100% - 600px - 60px) 300px;
   gap: var(--gap5-6);
@@ -19,14 +19,14 @@
   justify-self: left;
 }
 
-.title-forum {
+.title-message {
   grid-area: title;
   align-self: center;
   text-align: center;
 }
 
-.topics-forum {
-  grid-area: topics;
+.messages-forum {
+  grid-area: messages;
   align-self: flex-start;
   justify-self: center;
   width: 100%;
@@ -36,12 +36,12 @@
   padding: var(--gap5-5);
   border-radius: var(--gap5-1);
   display: grid;
-  grid-template-areas: 'topiclist newtopic';
+  grid-template-areas: 'messagelist newmessage';
   grid-template-rows: 100%;
   grid-template-columns: calc(100% - 340px) 340px;
 }
 
-.topics-list {
+.messages-list {
   height: 100%;
   overflow: hidden;
   font-family: var(--header-font);
@@ -49,8 +49,8 @@
   padding: var(--gap5-2);
 }
 
-.new-forum {
-  grid-area: newtopic;
+.new-message {
+  grid-area: newmessage;
   display: flex;
   flex-direction: column;
   gap: var(--gap5-2);

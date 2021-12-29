@@ -17,4 +17,8 @@
   --purple: #735ce6;
   --red: #e64646;
   --turquoise: #63b9ba;
+
+  /* Основные цвета разметки */
+  --panel-background: rgba(0, 196, 255, 0.7);
+  --sub-panel-background: rgba(244, 244, 245, 0.7);
 }
