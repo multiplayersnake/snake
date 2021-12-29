@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
 import './Topic.css';
@@ -9,19 +10,40 @@ type TopicProps = {
   mesCount: number;
   newCount: number;
   content: string;
+  id: number;
+  href: string;
 };
 
 const Topic: FC<TopicProps> = (props) => {
-  const { datetime, author, mesCount, newCount, content } = props;
+  const { datetime, author, mesCount, newCount, content, href } = props;
+  let newElem = '';
+  if (newCount > 0) newElem = ` (новых ${newCount})`;
+
+  const navigate = useNavigate();
+  const handleClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      navigate(href);
+    },
+    [navigate, href]
+  );
 
   return (
-    <div className={cn('topic')}>
-      <div className={cn('topic-datetime')}>Создана: {datetime}</div>
-      <div className={cn('topic-author')}>Автор: {author}</div>
-      <div className={cn('topic-mesCount')}>Сообщений: {mesCount}</div>
-      <div className={cn('topic-content')}>{content}</div>
-      {newCount > 0 && <div className={cn('topic-newCount')}>{`Новых сообщений: ${newCount}`}</div>}
-    </div>
+    <a href={href} onClick={handleClick}>
+      <div className={cn('topic', 'text-field')}>
+        <div className={cn('topic-datetime', 'text-field')}>
+          Создана: <b>{datetime}</b>
+        </div>
+        <div className={cn('topic-author', 'text-field')}>
+          Автор: <b>{author}</b>
+        </div>
+        <div className={cn('topic-mesCount', 'text-field')}>
+          Сообщений: {mesCount}
+          <b>{newElem}</b>
+        </div>
+        <div className={cn('topic-content', 'text-field')}>{content}</div>
+      </div>
+    </a>
   );
 };
 

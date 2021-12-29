@@ -8,8 +8,8 @@
 
 .content {
   flex: 1;
-  background-image: url(../../assets/mainBack.jpg);
+  background-image: url(../../assets/mainBack2.jpg);
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center bottom;
+  background-position: right center;
 }

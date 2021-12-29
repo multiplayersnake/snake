@@ -1,5 +1,6 @@
 :root {
   --gap: 4px;
+  --gap5: 5px;
 
   --gap-1: calc(var(--gap) * 1); /* 4px */
   --gap-2: calc(var(--gap) * 2); /* 8px */
@@ -12,7 +13,14 @@
   --gap-9: calc(var(--gap) * 9); /* 36px */
   --gap-10: calc(var(--gap) * 10); /* 40px */
 
-  --normal-border-radius: var(--gap-3);
+  --gap5-1: calc(var(--gap) * 1); /* 5px */
+  --gap5-2: calc(var(--gap) * 2); /* 10px */
+  --gap5-3: calc(var(--gap) * 3); /* 15px */
+  --gap5-4: calc(var(--gap) * 4); /* 20px */
+  --gap5-5: calc(var(--gap) * 5); /* 25px */
+  --gap5-6: calc(var(--gap) * 6); /* 30px */
+
+  --normal-border-radius: var(--gap5-1);
   --normal-input-width: calc(var(--gap-1) * 75);
   --normal-input-height: var(--gap-8);
   --normal-button-width: calc(var(--gap-1) * 46);

@@ -1,6 +1,6 @@
 .nav-menu {
   margin: 0;
-  display: flex;
+  display: none;
   justify-content: space-between;
   position: absolute;
   bottom: 0;
