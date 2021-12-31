@@ -21,10 +21,10 @@ const ForumPage: FC = () => {
   const [messages, setMessages] = useState(out_arr[topicId]);
 
   const createNewMessage = () => {
-    const datetime = formatDateTime(new Date());
+    const dateTime = formatDateTime(new Date());
     const content = contentRef.current.value;
     contentRef.current.value = '';
-    setMessages(messages.concat([{ datetime, author: 'Текущий пользователь', content }]));
+    setMessages(messages.concat([{ dateTime, author: 'Текущий пользователь', content }]));
   };
 
   return (
@@ -39,7 +39,7 @@ const ForumPage: FC = () => {
         <div className={cn('messages-list')}>
           <Scroll title={`${topic_arr[topicId].content}`} mode={'Last'}>
             {messages.map((value, index) => (
-              <Message key={index} datetime={value.datetime} author={value.author} content={value.content} />
+              <Message key={index} dateTime={value.dateTime} author={value.author} content={value.content} />
             ))}
             <br />
           </Scroll>

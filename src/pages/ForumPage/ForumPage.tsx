@@ -19,11 +19,11 @@ const ForumPage: FC = () => {
 
   const createNewTopic = () => {
     const id = topics.length;
-    const datetime = formatDateTime(new Date());
+    const dateTime = formatDateTime(new Date());
     const content = contentRef.current.value;
     contentRef.current.value = '';
     messageRef.current.value = '';
-    setTopics([{ id, datetime, author: 'Текущий пользователь', mesCount: 1, newCount: 0, content }].concat(topics));
+    setTopics([{ id, dateTime, author: 'Текущий пользователь', mesCount: 1, newCount: 0, content }].concat(topics));
   };
 
   return (
@@ -41,7 +41,7 @@ const ForumPage: FC = () => {
               <Topic
                 key={index}
                 id={value.id}
-                datetime={value.datetime}
+                dateTime={value.dateTime}
                 author={value.author}
                 mesCount={value.mesCount}
                 newCount={value.newCount}

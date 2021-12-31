@@ -4,10 +4,11 @@
     'title  upbutton  . . .'
     'content content content bar .'
     '.  downbutton . . .';
-  grid-template-columns: 40% 40px 40% 30px 20px;
-  grid-template-rows: auto auto 30px;
+  grid-template-columns: calc(50% - 45px) 40px calc(50% - 45px) 30px 20px;
+  grid-template-rows: max-content auto 30px;
   gap: var(--gap5-2);
   height: 100%;
+  width: 100%;
 }
 
 .scroll-title {
@@ -55,13 +56,13 @@
 .img-button:hover {
   filter: drop-shadow(var(--box-shadow));
 }
-.scroll-upbutton {
+.scroll-up-button {
   grid-area: upbutton;
   justify-self: center;
   background-image: url('../../assets/up.png');
 }
 
-.scroll-downbutton {
+.scroll-down-button {
   grid-area: downbutton;
   justify-self: center;
   background-image: url('../../assets/down.png');

@@ -8,7 +8,7 @@
   --transparent-blue: rgba(139, 179, 217, 0.5);
   --violet: #55278f;
   --white: #ffffff;
-  --yellow: #cdd02a;
+  --yellow: rgba(236, 239, 73, 1);
   /* цвета для отладки, в конце разработки лишние можно удалить */
   --blue: #0077ff;
   --gray: #b2b2b2;

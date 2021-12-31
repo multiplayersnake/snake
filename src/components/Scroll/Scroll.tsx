@@ -28,7 +28,8 @@ const ScrollComponent: FC<ScrollProps> = (props) => {
   function getScrollParameters() {
     const hiddenHeight = contentRef.current.scrollHeight;
     const viewHeight = contentRef.current.clientHeight;
-    const trackHeight = viewHeight * (viewHeight / hiddenHeight);
+    let trackHeight = viewHeight * (viewHeight / hiddenHeight);
+    if (hiddenHeight <= viewHeight) trackHeight = 0;
 
     const curTop = contentRef.current.scrollTop;
     const maxTop = hiddenHeight - viewHeight;
@@ -93,7 +94,7 @@ const ScrollComponent: FC<ScrollProps> = (props) => {
   return (
     <div className="scroll" onWheel={wheelProcess} onMouseMove={onMouseMove} onMouseUp={onMouseUpTrack}>
       <Heading className={cn('scroll-title', 'h4')}>{title}</Heading>
-      <span className={cn('scroll-upbutton', 'img-button')} onClick={upClick} />
+      <span className={cn('scroll-up-button', 'img-button')} onClick={upClick} />
       <div className={cn('scroll-bar')}>
         <div
           ref={trackRef}
@@ -104,7 +105,7 @@ const ScrollComponent: FC<ScrollProps> = (props) => {
           style={{ top: 0 }}
         />
       </div>
-      <span className={cn('scroll-downbutton', 'img-button')} onClick={downClick} />
+      <span className={cn('scroll-down-button', 'img-button')} onClick={downClick} />
       <div className={cn('scroll-content')} ref={contentRef} onScroll={scrollContent}>
         {children}
       </div>

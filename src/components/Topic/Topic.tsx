@@ -5,7 +5,7 @@ import cn from 'classnames';
 import './Topic.css';
 
 type TopicProps = {
-  datetime: string;
+  dateTime: string;
   author: string;
   mesCount: number;
   newCount: number;
@@ -15,7 +15,7 @@ type TopicProps = {
 };
 
 const Topic: FC<TopicProps> = (props) => {
-  const { datetime, author, mesCount, newCount, content, href } = props;
+  const { dateTime, author, mesCount, newCount, content, href } = props;
   let newElem = '';
   if (newCount > 0) newElem = ` (новых ${newCount})`;
 
@@ -31,13 +31,13 @@ const Topic: FC<TopicProps> = (props) => {
   return (
     <a href={href} onClick={handleClick}>
       <div className={cn('topic', 'text-field')}>
-        <div className={cn('topic-datetime', 'text-field')}>
-          Создана: <b>{datetime}</b>
+        <div className={cn('topic-dateTime', 'text-field')}>
+          Создана: <b>{dateTime}</b>
         </div>
         <div className={cn('topic-author', 'text-field')}>
           Автор: <b>{author}</b>
         </div>
-        <div className={cn('topic-mesCount', 'text-field')}>
+        <div className={cn('topic-mes-count', 'text-field')}>
           Сообщений: {mesCount}
           <b>{newElem}</b>
         </div>

@@ -9,7 +9,7 @@
 .topic {
   display: grid;
   grid-template-areas:
-    'datetime  author  mesCount'
+    'dateTime  author  mesCount'
     'content   content content ';
   grid-template-columns: 30% auto 30%;
   gap: var(--gap5-2);
@@ -24,8 +24,8 @@
   box-shadow: var(--box-shadow);
 }
 
-.topic-datetime {
-  grid-area: datetime;
+.topic-dateTime {
+  grid-area: dateTime;
   text-align: left;
 }
 
@@ -34,7 +34,7 @@
   text-align: center;
 }
 
-.topic-mesCount {
+.topic-mes-count {
   grid-area: mesCount;
   text-align: right;
 }

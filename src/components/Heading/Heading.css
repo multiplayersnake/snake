@@ -1,6 +1,6 @@
 .heading {
   margin: 0;
-  color: rgb(255, 255, 255);
+  color: var(--white);
   font-weight: normal;
   text-shadow: var(--text-shadow);
 }
@@ -8,7 +8,7 @@
 .h1 {
   font-size: calc(var(--gap) * 16);
   font-family: var(--title-font);
-  color: rgba(236, 239, 73, 1);
+  color: var(--yellow);
   letter-spacing: calc(var(--gap) * 2);
   text-shadow: var(--title-shadow);
 }
