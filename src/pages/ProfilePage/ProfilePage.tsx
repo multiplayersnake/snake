@@ -26,7 +26,7 @@ const ProfilePage: FC = () => {
         <Scroll title={''} mode={'First'}>
           <div className={cn('item-profile')}>Голова</div>
           <div className={cn('item-profile')}>Туловище</div>
-          <div className={cn('item-profile')}>Хвост</div>
+          <div className={cn('item-profile')}>Хвост </div>
         </Scroll>
       </div>
     </div>
