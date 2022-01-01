@@ -10,6 +10,7 @@ import LoginPage from '../../pages/LoginPage';
 import MainPage from '../../pages/MainPage';
 import ProfilePage from '../../pages/ProfilePage';
 import SignupPage from '../../pages/SignupPage';
+import MessagePage from '../../pages/MessagePage';
 
 import useAuth from '../../hooks/useAuth';
 
@@ -34,6 +35,7 @@ const App: FC = () => {
               <Route path="/forum" element={<ForumPage />} />
               <Route path="/login" element={<LoginPage onAction={handleAction} />} />
               <Route path="/signup" element={<SignupPage />} />
+              <Route path="/message" element={<MessagePage />} />
 
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
