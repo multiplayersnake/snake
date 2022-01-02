@@ -7,6 +7,11 @@ import Scroll from '../../components/Scroll/Scroll';
 import coinSource from '../../assets/coin.png';
 import awardSource from '../../assets/award.png';
 
+import { part_arr } from './mock';
+import { item_arr } from './mock';
+import { user_selected } from './mock';
+import SelectorShopItemComponent from '../../components/SelectorShopItem';
+
 const ProfilePage: FC = () => {
   return (
     <div className="profile-page">
@@ -24,9 +29,14 @@ const ProfilePage: FC = () => {
       </div>
       <div className={cn('items-profile')}>
         <Scroll title={''} mode={'First'}>
-          <div className={cn('item-profile')}>Голова</div>
-          <div className={cn('item-profile')}>Туловище</div>
-          <div className={cn('item-profile')}>Хвост </div>
+          {part_arr.map((value, index) => (
+            <SelectorShopItemComponent
+              key={index}
+              title={value.name}
+              selected={user_selected[index]}
+              items={item_arr[index]}
+            />
+          ))}
         </Scroll>
       </div>
     </div>
