@@ -5,13 +5,19 @@
   flex-flow: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: var(--gap-10);
-  gap: var(--gap-10);
 }
 
-.signup-page-buttons {
-  display: flex;
-  gap: var(--gap-5);
+.form {
+  padding: var(--gap-10);
+}
+
+.h2 {
+  margin-bottom: 20px;
+}
+
+.button {
+  width: 340px;
+  margin-top: 20px;
 }
 
 .logo {

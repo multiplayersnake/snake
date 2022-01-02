@@ -21,8 +21,8 @@
   --gap5-6: calc(var(--gap) * 6); /* 30px */
 
   --normal-border-radius: var(--gap5-1);
-  --normal-input-width: calc(var(--gap-1) * 75);
-  --normal-input-height: var(--gap-8);
+  --normal-input-width: calc(var(--gap-1) * 85);
+  --normal-input-height: calc(var(--gap) * 12.5);
   --normal-button-width: calc(var(--gap-1) * 46);
-  --normal-button-height: calc(var(--gap-1) * 14);
+  --normal-button-height: calc(var(--gap-1) * 15);
 }

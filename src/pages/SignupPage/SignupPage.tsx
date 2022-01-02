@@ -13,12 +13,14 @@ const SignupPage: FC = () => {
     <div className="signup-page">
       <img className="logo" src={logo} alt={'logo'} />
       <Form>
-        <Heading tag="h1">Регистрация</Heading>
+        <Heading tag="h2">Регистрация</Heading>
+
+        <Input label="Ник" name="nickname" />
+        <Input label="E-mail" name="e-mail" />
         <Input label="Логин" name="login" />
-        <Input label="Пароль" name="password" type="password" />
-        <div className="login-page-buttons">
-          <Button type="submit">Зарегистрироваться</Button>
-        </div>
+        <Input label="Пароль" name="password" />
+
+        <Button type="submit">Зарегистрироваться</Button>
       </Form>
     </div>
   );
