@@ -1,26 +1,43 @@
-@import url('https://rsms.me/inter/inter.css');
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Seymour+One&display=swap');
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../assets/fonts/OpenSans-Regular.eot');
+  src: url('../assets/fonts/OpenSans-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/OpenSans-Regular.woff2') format('woff2'),
+    url('../assets/fonts/OpenSans-Regular.woff') format('woff'),
+    url('../assets/fonts/OpenSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 @font-face {
   font-family: 'Open Sans';
-  src: url('../assets/fonts/OpenSans-Regular-webfont.eot');
-  src: url('../assets/fonts/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../assets/fonts/OpenSans-Regular-webfont.woff') format('woff'),
-    url('../assets/fonts/OpenSans-Regular-webfont.ttf') format('truetype');
+  src: url('../assets/fonts/OpenSans-SemiBold.eot');
+  src: url('../assets/fonts/OpenSans-SemiBold.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/OpenSans-SemiBold.woff2') format('woff2'),
+    url('../assets/fonts/OpenSans-SemiBold.woff') format('woff'),
+    url('../assets/fonts/OpenSans-SemiBold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Impact';
+  src: url('../assets/fonts/ImpactLTStd.eot');
+  src: url('../assets/fonts/ImpactLTStd.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/ImpactLTStd.woff2') format('woff2'), url('../assets/fonts/ImpactLTStd.woff') format('woff'),
+    url('../assets/fonts/ImpactLTStd.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
-  --platform-font: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --inter-font: 'Inter', sans-serif;
   --impact-font: 'Impact', sans-serif;
   --open_sans-font: 'Open Sans', sans-serif;
 
   /* Базовые шрифты для заголовков и всего остального текста>*/
   --header-font: 'Impact', sans-serif;
-  --main-font: 'Tahoma', sans-serif;
-  --title-font: 'Seymour One', sans-serif;
+  --main-font: 'Open Sans', sans-serif;
 }
