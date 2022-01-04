@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import NavMenu from '../NavMenu';
@@ -17,11 +17,7 @@ import useAuth from '../../hooks/useAuth';
 import './App.css';
 
 const App: FC = () => {
-  const { authorized, user, checkAuthorization, handleAction } = useAuth();
-
-  useEffect(() => {
-    void checkAuthorization();
-  }, [checkAuthorization]);
+  const { AuthorizedOnly, GuestOnly, authorized, user, handleAction } = useAuth();
 
   return (
     <div className="app">
@@ -29,14 +25,62 @@ const App: FC = () => {
         <main className="content">
           <ErrorBoundary>
             <Routes>
-              <Route path="/" element={<MainPage authorized={authorized} onAction={handleAction} />} />
-              <Route path="/game" element={<GamePage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/forum" element={<ForumPage />} />
-              <Route path="/login" element={<LoginPage onAction={handleAction} />} />
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="/message" element={<MessagePage />} />
-
+              <Route
+                path="/login"
+                element={
+                  <GuestOnly>
+                    <LoginPage onAction={handleAction} />
+                  </GuestOnly>
+                }
+              />
+              <Route
+                path="/signup"
+                element={
+                  <GuestOnly>
+                    <SignupPage />
+                  </GuestOnly>
+                }
+              />
+              <Route
+                path="/"
+                element={
+                  <AuthorizedOnly>
+                    <MainPage authorized={authorized} onAction={handleAction} />
+                  </AuthorizedOnly>
+                }
+              />
+              <Route
+                path="/game"
+                element={
+                  <AuthorizedOnly>
+                    <GamePage />
+                  </AuthorizedOnly>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <AuthorizedOnly>
+                    <ProfilePage />
+                  </AuthorizedOnly>
+                }
+              />
+              <Route
+                path="/forum"
+                element={
+                  <AuthorizedOnly>
+                    <ForumPage />
+                  </AuthorizedOnly>
+                }
+              />
+              <Route
+                path="/message"
+                element={
+                  <AuthorizedOnly>
+                    <MessagePage />
+                  </AuthorizedOnly>
+                }
+              />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </ErrorBoundary>
