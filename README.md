@@ -2,7 +2,7 @@
 
 Предварительные макеты основных экранов:
 https://www.figma.com/file/EduXWeAso0ymv9iv5mOGcM/snake?node-id=0%3A1
-Усовершенстоваванные макеты экранов:
+Усовершенствованные макеты экранов:
 https://www.figma.com/file/shSFDN4NMBizZwGSua7XHc/Snake?node-id=1%3A5887
 
 # Общее описание игры.
