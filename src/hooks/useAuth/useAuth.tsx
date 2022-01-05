@@ -1,4 +1,5 @@
-import { useCallback, useState, useMemo, FormEvent } from 'react';
+import React, { useEffect, useCallback, useState, useMemo, FormEvent, ReactElement, FC } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import AuthService from '../../services/AuthService';
 import { MenuActionType, MenuAction } from '../../types/mainMenu';
@@ -9,11 +10,43 @@ type UseAuth = {
   user: User;
   checkAuthorization: () => void;
   handleAction: (action: MenuAction) => void;
+  AuthorizedOnly: FC;
+  GuestOnly: FC;
 };
 
+const AUTHORIZED_DEFAULT_ROUTE = '/';
+const GUEST_DEFAULT_ROUTE = '/login';
+
 function useAuth(): UseAuth {
+  const [authorizationChecked, setAuthorizationChecked] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
   const authorized = useMemo(() => Boolean(user), [user]);
+
+  const AuthorizedOnly = useCallback(
+    ({ children }): ReactElement => {
+      if (!authorized) {
+        return <Navigate to={GUEST_DEFAULT_ROUTE} />;
+      }
+
+      return children;
+    },
+    [authorized]
+  );
+
+  const GuestOnly = useCallback(
+    ({ children }): ReactElement => {
+      if (!authorizationChecked) {
+        return null;
+      }
+
+      if (authorized) {
+        return <Navigate to={AUTHORIZED_DEFAULT_ROUTE} />;
+      }
+
+      return children;
+    },
+    [authorizationChecked, authorized]
+  );
 
   const logOut = useCallback(async () => {
     await AuthService.logOut();
@@ -23,6 +56,7 @@ function useAuth(): UseAuth {
   const checkAuthorization = useCallback(async () => {
     const user = await AuthService.checkAuthorization();
     setUser(user);
+    setAuthorizationChecked(true);
   }, []);
 
   const logIn = useCallback(async (e: FormEvent) => {
@@ -49,7 +83,11 @@ function useAuth(): UseAuth {
     [logIn, logOut]
   );
 
-  return { authorized, user, checkAuthorization, handleAction };
+  useEffect(() => {
+    void checkAuthorization();
+  }, [checkAuthorization]);
+
+  return { AuthorizedOnly, GuestOnly, authorized, user, checkAuthorization, handleAction };
 }
 
 export default useAuth;
