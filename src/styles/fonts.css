@@ -35,7 +35,7 @@
 
 :root {
   --impact-font: 'Impact', sans-serif;
-  --open_sans-font: 'Open Sans', sans-serif;
+  --open-sans-font: 'Open Sans', sans-serif;
 
   /* Базовые шрифты для заголовков и всего остального текста>*/
   --header-font: 'Impact', sans-serif;
