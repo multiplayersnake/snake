@@ -7,15 +7,6 @@ import elSource from '../../assets/elexir.png';
 import coinSource from '../../assets/coin.png';
 import awardSource from '../../assets/award.png';
 
-const elImage = new Image(75, 75);
-elImage.src = elSource;
-
-const coinImage = new Image(20, 20);
-coinImage.src = coinSource;
-
-const awardImage = new Image(20, 20);
-awardImage.src = awardSource;
-
 type ShopItemProps = {
   name: string;
   desc: string;
@@ -46,8 +37,6 @@ const ShopItemComponent: FC<ShopItemProps> = (props) => {
         ctx.fill();
         ctx.closePath();
       }
-    } else {
-      ctx.drawImage(elImage, 0, 0);
     }
   }, [item.color, item.form, item.type]);
 
