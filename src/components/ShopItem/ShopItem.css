@@ -1,0 +1,61 @@
+.one-item {
+  display: grid;
+  grid-template-areas:
+    ' img  price coin '
+    ' img  cond award '
+    ' title title title ';
+  grid-template-columns: 75px 50px auto;
+  grid-template-rows: 35px 35px 30px;
+  background: var(--sub-panel-background);
+  border-radius: var(--gap5);
+  padding: var(--gap5-2);
+  align-items: center;
+  transition: all ease-in-out 0.2s;
+  gap: var(--gap5);
+  font-size: var(--gap-5);
+}
+
+.img {
+  grid-area: img;
+}
+
+.img-in-line {
+  vertical-align: middle;
+  height: 30px;
+  filter: drop-shadow(var(--text-shadow));
+}
+
+.price {
+  grid-area: price;
+  text-align: right;
+}
+
+.coin {
+  grid-area: coin;
+}
+
+.cond {
+  grid-area: cond;
+  text-align: right;
+}
+
+.award {
+  grid-area: award;
+}
+
+.title {
+  grid-area: title;
+  text-align: center;
+}
+
+.shop_item {
+  cursor: pointer;
+}
+
+.shop_item:hover {
+  box-shadow: var(--box-shadow);
+}
+
+.shop_item:disabled {
+  background: rgba(0, 0, 0, 0.7);
+}

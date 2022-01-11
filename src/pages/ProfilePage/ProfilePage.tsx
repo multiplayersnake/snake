@@ -33,7 +33,7 @@ const ProfilePage: FC = () => {
             <SelectorShopItemComponent
               key={index}
               title={value.name}
-              selected={user_selected[index]}
+              selected={item_arr[index][user_selected[index]]}
               items={item_arr[index]}
             />
           ))}
