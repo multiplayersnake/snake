@@ -15,10 +15,10 @@ const SignupPage: FC = () => {
       <Form>
         <Heading tag="h2">Регистрация</Heading>
 
-        <Input label="Ник" name="nickname" />
-        <Input label="E-mail" name="e-mail" />
-        <Input label="Логин" name="login" />
-        <Input label="Пароль" name="password" />
+        <Input required label="Ник" name="nickname" />
+        <Input required label="E-mail" name="e-mail" />
+        <Input required label="Логин" name="login" />
+        <Input required label="Пароль" name="password" />
 
         <Button type="submit">Зарегистрироваться</Button>
       </Form>

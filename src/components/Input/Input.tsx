@@ -12,7 +12,7 @@ const Input: FC<InputProps> = (props) => {
 
   return (
     <label className="input-container">
-      <input required={true} {...rest} className={cn('input', className)} />
+      <input {...rest} className={cn('input', className)} />
       <span className="input-label">{label}</span>
     </label>
   );
