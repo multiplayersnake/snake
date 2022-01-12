@@ -5,18 +5,18 @@ import './SelectorShopItem.css';
 import Heading from '../Heading';
 import ShopItem from '../ShopItem';
 
-type IItem = {
+type ItemType = {
   id: string;
   name: string;
-  item_desc: string;
-  item_price: number;
-  item_condition: number;
+  itemDesc: string;
+  itemPrice: number;
+  itemCondition: number;
 };
 
 type SelectorShopItemProps = {
   title: string;
-  selected: IItem;
-  items: IItem[];
+  selected: ItemType;
+  items: ItemType[];
 };
 
 const SelectorShopItemComponent: FC<SelectorShopItemProps> = (props) => {
@@ -29,10 +29,10 @@ const SelectorShopItemComponent: FC<SelectorShopItemProps> = (props) => {
       <div className={cn('selector-shop-item-select')}>
         <ShopItem
           isSelected={true}
-          item_condition={selected.item_condition}
-          item_price={selected.item_price}
+          itemCondition={selected.itemCondition}
+          itemPrice={selected.itemPrice}
           name={selected.name}
-          desc={selected.item_desc}
+          desc={selected.itemDesc}
         />
       </div>
       <div className={cn('selector-shop-item-items')}>
@@ -40,10 +40,10 @@ const SelectorShopItemComponent: FC<SelectorShopItemProps> = (props) => {
           <ShopItem
             isSelected={false}
             key={index}
-            item_condition={value.item_condition}
-            item_price={value.item_price}
+            itemCondition={value.itemCondition}
+            itemPrice={value.itemPrice}
             name={value.name}
-            desc={value.item_desc}
+            desc={value.itemDesc}
           />
         ))}
       </div>

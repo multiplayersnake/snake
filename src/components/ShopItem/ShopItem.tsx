@@ -1,8 +1,7 @@
 import React, { FC, useEffect, useRef } from 'react';
-
-import './ShopItem.css';
 import cn from 'classnames';
 
+import './ShopItem.css';
 import elSource from '../../assets/elexir.png';
 import coinSource from '../../assets/coin.png';
 import awardSource from '../../assets/award.png';
@@ -11,8 +10,8 @@ type ShopItemProps = {
   name: string;
   desc: string;
   isSelected: boolean;
-  item_price: number;
-  item_condition: number;
+  itemPrice: number;
+  itemCondition: number;
 };
 
 function GetImgPlace(itemType: any) {
@@ -21,7 +20,7 @@ function GetImgPlace(itemType: any) {
 }
 
 const ShopItemComponent: FC<ShopItemProps> = (props) => {
-  const { isSelected, name, desc, item_price, item_condition } = props;
+  const { isSelected, name, desc, itemPrice, itemCondition } = props;
   const ref = useRef(null);
   const item = JSON.parse(desc);
 
@@ -46,11 +45,11 @@ const ShopItemComponent: FC<ShopItemProps> = (props) => {
     <div className={cls}>
       <canvas ref={ref} width={75} height={75} className={'img'} />
       <GetImgPlace itemType={item.type} />
-      <div className={cn('price')}>{item_price}</div>
+      <div className={'price'}>{itemPrice}</div>
       <img src={coinSource} className={cn('coin', 'img-in-line')} alt={''} />
-      <div className={cn('cond')}>{item_condition}</div>
+      <div className={'cond'}>{itemCondition}</div>
       <img src={awardSource} className={cn('award', 'img-in-line')} alt={''} />
-      <div className={cn('title')}>{name}</div>
+      <div className={'title'}>{name}</div>
     </div>
   );
 };
