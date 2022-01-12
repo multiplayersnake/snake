@@ -21,10 +21,10 @@ const ProfilePage: FC = () => {
       <div className={cn('title-profile')}>
         <div className={cn('heading', 'h6')}>Позывной: John</div>
         <div className={cn('heading', 'h6')}>
-          Валюта: 150 <img src={coinSource} className={cn('img-in-line')} alt={''} />
+          Валюта: 150 <img src={coinSource} className={cn('img-in-line')} alt={'coin'} />
         </div>
         <div className={cn('heading', 'h6')}>
-          Награды: 7 <img src={awardSource} className={cn('img-in-line')} alt={''} />
+          Награды: 7 <img src={awardSource} className={cn('img-in-line')} alt={'award'} />
         </div>
       </div>
       <div className={cn('items-profile')}>
