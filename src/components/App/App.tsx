@@ -11,6 +11,7 @@ import MainPage from '../../pages/MainPage';
 import ProfilePage from '../../pages/ProfilePage';
 import SignupPage from '../../pages/SignupPage';
 import MessagePage from '../../pages/MessagePage';
+import GameTypePage from '../../pages/GameTypePage';
 
 import useAuth from '../../hooks/useAuth';
 
@@ -78,6 +79,14 @@ const App: FC = () => {
                 element={
                   <AuthorizedOnly>
                     <MessagePage />
+                  </AuthorizedOnly>
+                }
+              />
+              <Route
+                path="/game-type"
+                element={
+                  <AuthorizedOnly>
+                    <GameTypePage />
                   </AuthorizedOnly>
                 }
               />
