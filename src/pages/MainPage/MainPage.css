@@ -15,15 +15,3 @@
   align-items: center;
   gap: var(--gap-5);
 }
-
-.right-panel {
-  right: var(--gap5-5);
-}
-
-.leader-item {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: baseline;
-}
