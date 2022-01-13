@@ -27,3 +27,11 @@
 .flex-wrapper {
   width: 100%;
 }
+
+.leader-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
