@@ -1,9 +1,9 @@
 import React, { FC, useCallback } from 'react';
 
-import Button from '../../components/Button';
-import NavButton from '../../components/Button/NavButton';
+import Button from '../../Button';
+import NavButton from '../../Button/NavButton';
 
-import { MenuItemType, MenuAction } from '../../types/mainMenu';
+import { MenuItemType, MenuAction } from '../../../types/mainMenu';
 
 type MainMenuItemProps = {
   item: MenuItemType;
