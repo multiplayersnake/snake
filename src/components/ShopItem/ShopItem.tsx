@@ -14,10 +14,15 @@ type ShopItemProps = {
   itemCondition: number;
 };
 
-function GetImgPlace(itemType: any) {
-  if (itemType.itemType === 'part') return <div />;
+type ImgItemProps = {
+  itemType: string;
+};
+
+const ImgItem: FC<ImgItemProps> = (props) => {
+  const { itemType } = props;
+  if (itemType === 'part') return null;
   return <img src={elSource} width={75} height={75} className={'img'} alt={'elixir'} />;
-}
+};
 
 const ShopItemComponent: FC<ShopItemProps> = (props) => {
   const { isSelected, name, desc, itemPrice, itemCondition } = props;
@@ -44,7 +49,7 @@ const ShopItemComponent: FC<ShopItemProps> = (props) => {
   return (
     <div className={cls}>
       <canvas ref={ref} width={75} height={75} className={'img'} />
-      <GetImgPlace itemType={item.type} />
+      <ImgItem itemType={item.type} />
       <div className={'price'}>{itemPrice}</div>
       <img src={coinSource} className={cn('coin', 'img-in-line')} alt={'coin'} />
       <div className={'cond'}>{itemCondition}</div>
