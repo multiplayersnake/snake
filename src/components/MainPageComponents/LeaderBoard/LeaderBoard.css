@@ -1,0 +1,37 @@
+.panel {
+  width: 20%;
+  min-width: 150px;
+  max-width: 300px;
+  height: calc(100% - 2 * var(--gap5-5));
+  overflow: hidden;
+  background: var(--panel-background);
+  border-radius: var(--gap5);
+  padding: var(--gap5-5);
+  box-sizing: border-box;
+  display: flex;
+  position: fixed;
+  top: var(--gap5-5);
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: space-between;
+  gap: var(--gap5-5);
+  font-family: var(--main-font);
+  color: var(--white);
+  font-size: 20px;
+}
+
+.right-panel {
+  right: var(--gap5-5);
+}
+
+.flex-wrapper {
+  width: 100%;
+}
+
+.leader-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: baseline;
+}

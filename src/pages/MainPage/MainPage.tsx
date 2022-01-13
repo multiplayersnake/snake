@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
 
 import Heading from '../../components/Heading';
-import MainMenuItem from '../../components/MainMenuItem';
+import MainMenuItem from '../../components/MainPageComponents/MainMenuItem';
+import InfoPanel from '../../components/MainPageComponents/InfoPanel';
+import LeaderBoard from '../../components/MainPageComponents/LeaderBoard';
 import { MenuAction } from '../../types/mainMenu';
 
 import menuItems from './menuItems';
@@ -24,6 +26,8 @@ const MainPage: FC<MainPageProps> = ({ onAction, authorized }) => {
           <MainMenuItem key={item.title} item={item} onAction={onAction} authorized={authorized} />
         ))}
       </div>
+      <InfoPanel nick={'John'} coins={150} awards={7} />
+      <LeaderBoard />
     </div>
   );
 };
