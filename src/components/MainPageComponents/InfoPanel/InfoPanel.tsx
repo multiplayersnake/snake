@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
+import { useSelector } from 'react-redux';
 
 import './InfoPanel.css';
 import coinSource from '../../../assets/coin.png';
 import awardSource from '../../../assets/award.png';
+import { User } from '../../../types/models';
 
 type InfoPanelProps = {
   nick: string;
@@ -12,16 +14,20 @@ type InfoPanelProps = {
 };
 
 const InfoPanel: FC<InfoPanelProps> = (props) => {
-  const { nick, coins, awards } = props;
+  const { awards } = props;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const userData: User = useSelector((state) => state['user']['item']);
+  console.log(userData);
 
   return (
     <div className={cn('panel', 'left-panel')}>
       <div className={cn('heading', 'h6')}>Позывной:</div>
-      <div className={cn('heading', 'h6')}>{nick}</div>
+      <div className={cn('heading', 'h6')}>{userData.display_name}</div>
       <div className={'flex-wrapper'} />
       <div>Валюта:</div>
       <div>
-        {coins} <img src={coinSource} className={cn('img-in-line')} alt={'coin'} />
+        {userData.login} <img src={coinSource} className={cn('img-in-line')} alt={'coin'} />
       </div>
       <div className={'flex-wrapper'} />
       <div>Награды: </div>

@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import NavMenu from '../NavMenu';
@@ -19,6 +20,9 @@ import './App.css';
 
 const App: FC = () => {
   const { AuthorizedOnly, GuestOnly, authorized, user, handleAction } = useAuth();
+
+  const dispatch = useDispatch();
+  dispatch({ type: 'SET_USER_ITEM', item: user });
 
   return (
     <div className="app">

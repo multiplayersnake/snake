@@ -23,7 +23,9 @@
   "devDependencies": {
     "@types/react": "17.0.37",
     "@types/react-dom": "17.0.11",
+    "@types/react-redux": "^7.1.22",
     "@types/react-router-dom": "5.3.2",
+    "@types/redux": "^3.6.0",
     "@types/sanitize-html": "2.6.0",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
@@ -38,7 +40,6 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "html-webpack-plugin": "5.5.0",
-    "terser-webpack-plugin": "5.3.0",
     "path": "0.12.7",
     "prettier": "^2.4.1",
     "prettier-stylelint": "^0.4.2",
@@ -48,6 +49,7 @@
     "stylelint-config-standard": "^23.0.0",
     "stylelint-prettier": "^1.2.0",
     "stylelint-processor-html": "^1.0.0",
+    "terser-webpack-plugin": "5.3.0",
     "ts-loader": "9.2.6",
     "typescript": "4.5.4",
     "webpack": "5.65.0",
@@ -58,7 +60,9 @@
     "classnames": "2.3.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-redux": "^7.2.6",
     "react-router-dom": "6.2.1",
+    "redux": "^4.1.2",
     "sanitize-html": "2.6.1"
   },
   "eslintConfig": {
