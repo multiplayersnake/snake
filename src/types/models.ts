@@ -10,11 +10,8 @@ export interface User {
 }
 
 export interface GameParameters {
-  snake: boolean;
+  snake: string;
   coins: number;
   awards: number;
-  head: number;
-  body: number;
-  tail: number;
-  elixir: number;
+  parts: number[];
 }

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 
@@ -11,7 +11,6 @@ import awardSource from '../../assets/award.png';
 
 import { part_arr } from './mock';
 import { item_arr } from './mock';
-// import { user_selected } from './mock';
 import SelectorShopItemComponent from '../../components/SelectorShopItem';
 import { User } from '../../types/models';
 import { GameParameters } from '../../types/models';
@@ -22,21 +21,35 @@ const ProfilePage: FC = () => {
   // @ts-ignore
   const userData: User = useSelector((state) => state['user']['item']);
   const userParameters: GameParameters = JSON.parse(userData.second_name);
-  const user_selected = [userParameters.head, userParameters.body, userParameters.tail, userParameters.elixir];
+  let user_selected = userParameters.parts;
 
   const [key, setKey] = useState(0);
 
   const dispatch = useDispatch();
 
-  const onTestPost = useCallback(() => {
-    userParameters.coins = Math.ceil(100 + Math.random() * 200);
-    userParameters.awards = Math.ceil(10 + Math.random() * 20);
-    userData.second_name = JSON.stringify(userParameters);
-    UserAPI.profile(userData).then(() => {
-      dispatch({ type: 'SET_USER_ITEM', item: userData });
-      setKey(key + 1);
-    });
-  }, [key]);
+  function SetSelectItem(partKey: number, ItemKey: number) {
+    const item = item_arr[partKey][ItemKey];
+    if (item.itemPrice > userParameters.coins) {
+      alert('Недостаточно монет для покупки');
+      return;
+    }
+    if (item.itemCondition > userParameters.awards) {
+      alert('Недостаточно наград для покупки');
+      return;
+    }
+    // eslint-disable-next-line no-restricted-globals
+    const res = confirm(`Хотите купить "${item.name}" за "${item.itemPrice}"?`);
+    if (res) {
+      userParameters.coins -= item.itemPrice;
+      userParameters.parts[partKey] = ItemKey;
+      userData.second_name = JSON.stringify(userParameters);
+      user_selected = userParameters.parts;
+      UserAPI.profile(userData).then(() => {
+        dispatch({ type: 'SET_USER_ITEM', item: userData });
+        setKey(key + 1);
+      });
+    }
+  }
 
   return (
     <div className="profile-page" key={key}>
@@ -45,7 +58,6 @@ const ProfilePage: FC = () => {
       </NavButton>
       <div className={cn('title-profile')}>
         <div className={cn('heading', 'h6')}>Позывной: {userData.display_name}</div>
-        <button onClick={onTestPost}>Проверка</button>
         <div className={cn('heading', 'h6')}>
           Валюта: {userParameters.coins} <img src={coinSource} className={cn('img-in-line')} alt={'coin'} />
         </div>
@@ -61,6 +73,8 @@ const ProfilePage: FC = () => {
               title={value.name}
               selected={item_arr[index][user_selected[index]]}
               items={item_arr[index]}
+              selectFunction={SetSelectItem}
+              partKey={index}
             />
           ))}
         </Scroll>

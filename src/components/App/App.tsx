@@ -24,15 +24,12 @@ const App: FC = () => {
   // Если поле не начинается со записи {"snake":true, значит этот пользователь только что зарегистрировался и ему нужно
   // создать параметры по умолчанию
   if (user !== null) {
-    if (user.second_name.substring(0, 13) !== '{"snake":true') {
+    if (user.second_name.substring(0, 13) !== '{"snake":1002') {
       const startParameters = {
-        snake: true,
+        snake: 1002,
         coins: 9000,
         awards: 500,
-        head: 1,
-        body: 1,
-        tail: 1,
-        elixir: 0
+        parts: [1, 1, 1, 0]
       };
       user.second_name = JSON.stringify(startParameters);
     }
@@ -42,7 +39,7 @@ const App: FC = () => {
 
   useEffect(() => {
     dispatch({ type: 'SET_USER_ITEM', item: user });
-  }, [user]);
+  }, [dispatch, user]);
 
   return (
     <div className="app">

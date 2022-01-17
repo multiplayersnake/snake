@@ -5,20 +5,13 @@ import { useSelector } from 'react-redux';
 import './InfoPanel.css';
 import coinSource from '../../../assets/coin.png';
 import awardSource from '../../../assets/award.png';
-import { User } from '../../../types/models';
+import { GameParameters, User } from '../../../types/models';
 
-type InfoPanelProps = {
-  nick: string;
-  coins: number;
-  awards: number;
-};
-
-const InfoPanel: FC<InfoPanelProps> = (props) => {
-  const { awards } = props;
+const InfoPanel: FC = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const userData: User = useSelector((state) => state['user']['item']);
-  console.log(userData);
+  const userParameters: GameParameters = JSON.parse(userData.second_name);
 
   return (
     <div className={cn('panel', 'left-panel')}>
@@ -27,12 +20,12 @@ const InfoPanel: FC<InfoPanelProps> = (props) => {
       <div className={'flex-wrapper'} />
       <div>Валюта:</div>
       <div>
-        {userData.login} <img src={coinSource} className={cn('img-in-line')} alt={'coin'} />
+        {userParameters.coins} <img src={coinSource} className={cn('img-in-line')} alt={'coin'} />
       </div>
       <div className={'flex-wrapper'} />
       <div>Награды: </div>
       <div>
-        {awards} <img src={awardSource} className={cn('img-in-line')} alt={'award'} />
+        {userParameters.awards} <img src={awardSource} className={cn('img-in-line')} alt={'award'} />
       </div>
     </div>
   );

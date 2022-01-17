@@ -17,10 +17,12 @@ type SelectorShopItemProps = {
   title: string;
   selected: ItemType;
   items: ItemType[];
+  selectFunction: (partKey: number, ItemKey: number) => void;
+  partKey: number;
 };
 
 const SelectorShopItemComponent: FC<SelectorShopItemProps> = (props) => {
-  const { title, selected, items } = props;
+  const { title, selected, items, selectFunction, partKey } = props;
 
   return (
     <div className="selector-shop-item">
@@ -33,6 +35,9 @@ const SelectorShopItemComponent: FC<SelectorShopItemProps> = (props) => {
           itemPrice={selected.itemPrice}
           name={selected.name}
           desc={selected.itemDesc}
+          selectFunction={selectFunction}
+          partKey={partKey}
+          itemKey={-1}
         />
       </div>
       <div className={cn('selector-shop-item-items')}>
@@ -44,6 +49,9 @@ const SelectorShopItemComponent: FC<SelectorShopItemProps> = (props) => {
             itemPrice={value.itemPrice}
             name={value.name}
             desc={value.itemDesc}
+            selectFunction={selectFunction}
+            partKey={partKey}
+            itemKey={index}
           />
         ))}
       </div>
