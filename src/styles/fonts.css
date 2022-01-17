@@ -17,7 +17,7 @@
     url('../assets/fonts/OpenSans-SemiBold.woff2') format('woff2'),
     url('../assets/fonts/OpenSans-SemiBold.woff') format('woff'),
     url('../assets/fonts/OpenSans-SemiBold.ttf') format('truetype');
-  font-weight: normal;
+  font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
@@ -28,7 +28,7 @@
   src: url('../assets/fonts/ImpactLTStd.eot?#iefix') format('embedded-opentype'),
     url('../assets/fonts/ImpactLTStd.woff2') format('woff2'), url('../assets/fonts/ImpactLTStd.woff') format('woff'),
     url('../assets/fonts/ImpactLTStd.ttf') format('truetype');
-  font-weight: normal;
+  font-weight: bold;
   font-style: normal;
   font-display: swap;
 }

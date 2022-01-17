@@ -18,6 +18,7 @@
 .button {
   width: 340px;
   margin-top: 20px;
+  font-weight: bold;
 }
 
 .logo {
