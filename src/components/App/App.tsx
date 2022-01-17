@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
@@ -21,9 +21,10 @@ import './App.css';
 const App: FC = () => {
   const { AuthorizedOnly, GuestOnly, authorized, user, handleAction } = useAuth();
   // Игровые данные пользователя договорились пока хранить в поле second_name
-  // Если поле не начинается со записи {"snake": true, значит этот пользователь только что зарегистрировался и ему нужно
+  // Если поле не начинается со записи {"snake":true, значит этот пользователь только что зарегистрировался и ему нужно
+  // создать параметры по умолчанию
   if (user !== null) {
-    if (user.second_name.substring(0, 13) != '{"snake": true') {
+    if (user.second_name.substring(0, 13) !== '{"snake":true') {
       const startParameters = {
         snake: true,
         coins: 9000,
@@ -38,7 +39,10 @@ const App: FC = () => {
   }
 
   const dispatch = useDispatch();
-  dispatch({ type: 'SET_USER_ITEM', item: user });
+
+  useEffect(() => {
+    dispatch({ type: 'SET_USER_ITEM', item: user });
+  }, [user]);
 
   return (
     <div className="app">

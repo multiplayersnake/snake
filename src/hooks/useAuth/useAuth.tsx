@@ -24,13 +24,17 @@ function useAuth(): UseAuth {
 
   const AuthorizedOnly = useCallback(
     ({ children }): ReactElement => {
+      if (!authorizationChecked) {
+        return null;
+      }
+
       if (!authorized) {
         return <Navigate to={GUEST_DEFAULT_ROUTE} />;
       }
 
       return children;
     },
-    [authorized]
+    [authorizationChecked, authorized]
   );
 
   const GuestOnly = useCallback(
