@@ -20,6 +20,22 @@ import './App.css';
 
 const App: FC = () => {
   const { AuthorizedOnly, GuestOnly, authorized, user, handleAction } = useAuth();
+  // Игровые данные пользователя договорились пока хранить в поле second_name
+  // Если поле не начинается со записи {"snake": true, значит этот пользователь только что зарегистрировался и ему нужно
+  if (user !== null) {
+    if (user.second_name.substring(0, 13) != '{"snake": true') {
+      const startParameters = {
+        snake: true,
+        coins: 9000,
+        awards: 500,
+        head: 1,
+        body: 1,
+        tail: 1,
+        elixir: 0
+      };
+      user.second_name = JSON.stringify(startParameters);
+    }
+  }
 
   const dispatch = useDispatch();
   dispatch({ type: 'SET_USER_ITEM', item: user });
