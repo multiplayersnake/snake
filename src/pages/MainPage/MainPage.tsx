@@ -26,7 +26,7 @@ const MainPage: FC<MainPageProps> = ({ onAction, authorized }) => {
           <MainMenuItem key={item.title} item={item} onAction={onAction} authorized={authorized} />
         ))}
       </div>
-      <InfoPanel nick={'John'} coins={150} awards={7} />
+      <InfoPanel />
       <LeaderBoard />
     </div>
   );

@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import NavMenu from '../NavMenu';
@@ -19,6 +20,26 @@ import './App.css';
 
 const App: FC = () => {
   const { AuthorizedOnly, GuestOnly, authorized, user, handleAction } = useAuth();
+  // Игровые данные пользователя договорились пока хранить в поле second_name
+  // Если поле не начинается со записи {"snake":code, значит этот пользователь только что зарегистрировался и ему нужно
+  // создать параметры по умолчанию
+  if (user !== null) {
+    if (user.second_name.substring(0, 13) !== '{"snake":1002') {
+      const startParameters = {
+        snake: 1002,
+        coins: 9000,
+        awards: 500,
+        parts: [1, 1, 1, 0]
+      };
+      user.second_name = JSON.stringify(startParameters);
+    }
+  }
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: 'SET_USER_ITEM', item: user });
+  }, [dispatch, user]);
 
   return (
     <div className="app">

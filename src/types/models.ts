@@ -8,3 +8,10 @@ export interface User {
   phone: string;
   avatar: string;
 }
+
+export interface GameParameters {
+  snake: string;
+  coins: number;
+  awards: number;
+  parts: number[];
+}

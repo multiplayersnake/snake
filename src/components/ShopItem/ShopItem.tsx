@@ -12,6 +12,9 @@ type ShopItemProps = {
   isSelected: boolean;
   itemPrice: number;
   itemCondition: number;
+  selectFunction: (partKey: number, ItemKey: number) => void;
+  partKey: number;
+  itemKey: number;
 };
 
 type ImgItemProps = {
@@ -25,9 +28,13 @@ const ImgItem: FC<ImgItemProps> = (props) => {
 };
 
 const ShopItemComponent: FC<ShopItemProps> = (props) => {
-  const { isSelected, name, desc, itemPrice, itemCondition } = props;
+  const { isSelected, name, desc, itemPrice, itemCondition, selectFunction, partKey, itemKey } = props;
   const ref = useRef(null);
   const item = JSON.parse(desc);
+
+  function SetSelectItem() {
+    selectFunction(partKey, itemKey);
+  }
 
   useEffect(() => {
     const ctx = ref.current?.getContext('2d');
@@ -47,7 +54,7 @@ const ShopItemComponent: FC<ShopItemProps> = (props) => {
   const cls = isSelected ? cn('one-item') : cn('one-item', 'shop_item');
 
   return (
-    <div className={cls}>
+    <div className={cls} onClick={SetSelectItem}>
       <canvas ref={ref} width={75} height={75} className={'img'} />
       <ImgItem itemType={item.type} />
       <div className={'price'}>{itemPrice}</div>
