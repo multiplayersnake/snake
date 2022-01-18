@@ -1,7 +1,12 @@
 import config from './constants';
 import appleSource from '../assets/apple2.png';
+import btnFullScreenSource from '../assets/fullscreen.png';
+
 const appleImage = new Image(20, 20);
 appleImage.src = appleSource;
+
+const btnFullScreenImage = new Image(50, 50);
+btnFullScreenImage.src = btnFullScreenSource;
 
 export type Circle = {
   x: number;
@@ -81,4 +86,12 @@ class Apple {
   }
 }
 
-export { Snake, Coin, Boom, Apple };
+class ButtonFullScreen {
+  public image: CanvasImageSource;
+
+  constructor() {
+    this.image = btnFullScreenImage;
+  }
+}
+
+export { Snake, Coin, Boom, Apple, ButtonFullScreen };
