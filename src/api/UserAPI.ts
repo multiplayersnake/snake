@@ -14,7 +14,7 @@ class UserAPI extends BaseAPI {
     super('/user');
   }
 
-  public profile(data: ProfileRequest): Promise<void> {
+  public updateProfile(data: ProfileRequest): Promise<void> {
     return this.http.put<void>('/profile', { data });
   }
 }

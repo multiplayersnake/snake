@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 
@@ -27,29 +27,32 @@ const ProfilePage: FC = () => {
 
   const dispatch = useDispatch();
 
-  function SetSelectItem(partKey: number, ItemKey: number) {
-    const item = item_arr[partKey][ItemKey];
-    if (item.itemPrice > userParameters.coins) {
-      alert('Недостаточно монет для покупки');
-      return;
-    }
-    if (item.itemCondition > userParameters.awards) {
-      alert('Недостаточно наград для покупки');
-      return;
-    }
-    // eslint-disable-next-line no-restricted-globals
-    const res = confirm(`Хотите купить "${item.name}" за "${item.itemPrice}"?`);
-    if (res) {
-      userParameters.coins -= item.itemPrice;
-      userParameters.parts[partKey] = ItemKey;
-      userData.second_name = JSON.stringify(userParameters);
-      user_selected = userParameters.parts;
-      UserAPI.profile(userData).then(() => {
-        dispatch({ type: 'SET_USER_ITEM', item: userData });
-        setKey(key + 1);
-      });
-    }
-  }
+  const setSelectItem = useCallback(
+    (partKey: number, ItemKey: number) => {
+      const item = item_arr[partKey][ItemKey];
+      if (item.itemPrice > userParameters.coins) {
+        alert('Недостаточно монет для покупки');
+        return;
+      }
+      if (item.itemCondition > userParameters.awards) {
+        alert('Недостаточно наград для покупки');
+        return;
+      }
+      // eslint-disable-next-line no-restricted-globals
+      const res = confirm(`Хотите купить "${item.name}" за "${item.itemPrice}"?`);
+      if (res) {
+        userParameters.coins -= item.itemPrice;
+        userParameters.parts[partKey] = ItemKey;
+        userData.second_name = JSON.stringify(userParameters);
+        user_selected = userParameters.parts;
+        UserAPI.updateProfile(userData).then(() => {
+          dispatch({ type: 'SET_USER_ITEM', item: userData });
+          setKey(key + 1);
+        });
+      }
+    },
+    [key]
+  );
 
   return (
     <div className="profile-page" key={key}>
@@ -73,7 +76,7 @@ const ProfilePage: FC = () => {
               title={value.name}
               selected={item_arr[index][user_selected[index]]}
               items={item_arr[index]}
-              selectFunction={SetSelectItem}
+              selectFunction={setSelectItem}
               partKey={index}
             />
           ))}

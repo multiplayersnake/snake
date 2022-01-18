@@ -21,7 +21,7 @@ import './App.css';
 const App: FC = () => {
   const { AuthorizedOnly, GuestOnly, authorized, user, handleAction } = useAuth();
   // Игровые данные пользователя договорились пока хранить в поле second_name
-  // Если поле не начинается со записи {"snake":true, значит этот пользователь только что зарегистрировался и ему нужно
+  // Если поле не начинается со записи {"snake":code, значит этот пользователь только что зарегистрировался и ему нужно
   // создать параметры по умолчанию
   if (user !== null) {
     if (user.second_name.substring(0, 13) !== '{"snake":1002') {
