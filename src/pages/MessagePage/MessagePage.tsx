@@ -37,7 +37,7 @@ const ForumPage: FC = () => {
       </Heading>
       <div className={cn('messages-forum')}>
         <div className={cn('messages-list')}>
-          <Scroll title={`${topic_arr[topicId].content}`} mode={'Last'}>
+          <Scroll title={`${topic_arr[topicId].content}`} mode={'Last'} id={`messages_${topicId}`}>
             {messages.map((value, index) => (
               <Message key={index} dateTime={value.dateTime} author={value.author} content={value.content} />
             ))}

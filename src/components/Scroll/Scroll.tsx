@@ -7,22 +7,28 @@ import Heading from '../Heading';
 type ScrollProps = {
   title: string;
   mode: 'First' | 'Last';
+  id: string;
 };
 
 const ScrollComponent: FC<ScrollProps> = (props) => {
   const contentRef = useRef(null);
   const trackRef = useRef(null);
-  const { children, title, mode } = props;
+  const { children, title, mode, id } = props;
   let dragMode = 0;
   let dragStartY = 0;
 
   useEffect(() => {
-    scrollContent();
-    if (mode === 'Last') {
-      contentRef.current.scrollTop = contentRef.current.scrollHeight;
+    const savedScrollPosition = localStorage.getItem(`scroll_position_${id}`);
+    if (savedScrollPosition) {
+      contentRef.current.scrollTop = savedScrollPosition;
     } else {
-      contentRef.current.scrollTop = 0;
+      if (mode === 'Last') {
+        contentRef.current.scrollTop = contentRef.current.scrollHeight;
+      } else {
+        contentRef.current.scrollTop = 0;
+      }
     }
+    scrollContent();
   });
 
   function getScrollParameters() {
@@ -68,8 +74,9 @@ const ScrollComponent: FC<ScrollProps> = (props) => {
   };
 
   const upClick = () => {
+    const curPosition = contentRef.current.scrollTop;
     contentRef.current.style.scrollBehavior = 'smooth';
-    contentRef.current.scrollTop -= 300;
+    contentRef.current.scrollTop = curPosition - 300;
     contentRef.current.style.scrollBehavior = '';
   };
 
@@ -89,6 +96,7 @@ const ScrollComponent: FC<ScrollProps> = (props) => {
     const sp = getScrollParameters();
     trackRef.current.style.height = sp.trackHeight + 'px';
     trackRef.current.style.top = Math.ceil(sp.maxTrackTop * (sp.curTop / sp.maxTop)) + 'px';
+    localStorage.setItem(`scroll_position_${id}`, contentRef.current.scrollTop);
   };
 
   return (
