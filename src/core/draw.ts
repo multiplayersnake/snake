@@ -1,6 +1,6 @@
 // Функция отрисовки правой панели
 import config from './constants';
-import { Apple, Coin, Snake, Boom } from './classes';
+import { Apple, Coin, Snake, Boom, ButtonFullScreen } from './classes';
 
 export const draw = {
   drawRightPanel: drawRightPanel,
@@ -65,6 +65,13 @@ function drawLeftPanel(ctx: CanvasRenderingContext2D, snake: Snake): void {
   ctx.fillText('Скорость:', config.leftPanelLeft + 5, textTop);
   ctx.textAlign = 'right';
   ctx.fillText(v.toString(), config.leftPanelLeft + config.leftPanelWidth - 5, textTop);
+
+  const btnFullScreen = new ButtonFullScreen();
+  ctx.drawImage(
+    btnFullScreen.image,
+    config.leftPanelLeft + config.leftPanelWidth / 2 - 25,
+    config.leftPanelHeight - 50
+  );
 }
 
 // Функция отрисовки монет

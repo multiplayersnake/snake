@@ -21,7 +21,7 @@ const ProfilePage: FC = () => {
   // @ts-ignore
   const userData: User = useSelector((state) => state['user']['item']);
   const userParameters: GameParameters = JSON.parse(userData.second_name);
-  let user_selected = userParameters.parts;
+  const user_selected = userParameters.parts;
 
   const [key, setKey] = useState(0);
 
@@ -44,14 +44,13 @@ const ProfilePage: FC = () => {
         userParameters.coins -= item.itemPrice;
         userParameters.parts[partKey] = ItemKey;
         userData.second_name = JSON.stringify(userParameters);
-        user_selected = userParameters.parts;
         UserAPI.updateProfile(userData).then(() => {
           dispatch({ type: 'SET_USER_ITEM', item: userData });
           setKey(key + 1);
         });
       }
     },
-    [key]
+    [dispatch, key, userData, userParameters]
   );
 
   return (
@@ -69,7 +68,7 @@ const ProfilePage: FC = () => {
         </div>
       </div>
       <div className={cn('items-profile')}>
-        <Scroll title={''} mode={'First'}>
+        <Scroll title={''} mode={'First'} id={'profile'}>
           {part_arr.map((value, index) => (
             <SelectorShopItemComponent
               key={index}

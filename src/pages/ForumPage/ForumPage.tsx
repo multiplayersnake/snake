@@ -36,7 +36,7 @@ const ForumPage: FC = () => {
       </Heading>
       <div className={cn('topics-forum')}>
         <div className={cn('topics-list')}>
-          <Scroll title={'Темы'} mode={'First'}>
+          <Scroll title={'Темы'} mode={'First'} id={'topics'}>
             {topics.map((value, index) => (
               <Topic
                 key={index}
