@@ -11,26 +11,45 @@
   align-items: center;
 }
 
-.input-label {
-  color: var(--black);
-  font-size: var(--gap-5);
-  font-family: var(--impact-font);
-  filter: var(--white-shadow);
-}
-
 .input {
+  box-shadow: none;
+  outline: none;
+  appearance: none;
+  font-family: var(--open-sans-font);
+  font-size: var(--gap-4);
+  color: var(--black);
+  background: var(--sub-panel-background);
+  padding: 24px 20px 10px 20px;
   height: var(--input-height);
   width: var(--input-width);
-  padding-left: var(--gap-2);
-  padding-right: var(--gap-2);
-  background: var(--sub-panel-background);
-  color: var(--black);
-  font-family: var(--platform-font);
-  font-size: 100%;
   border-radius: var(--gap5);
   border-width: 0;
   border-style: solid;
   border-color: var(--black);
+}
+
+.input-label {
+  font-family: var(--open-sans-font);
+  font-size: var(--gap-4);
+  color: var(--black);
+  opacity: 0.8;
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+  transform: translateY(-50%);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  transform-origin: left top;
+  pointer-events: none;
+}
+
+.input:focus ~ .input-label,
+.input:valid ~ .input-label {
+  transform: translateY(-90%) scale(0.7);
+  opacity: 0.5;
 }
 
 .input:focus {

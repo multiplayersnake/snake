@@ -1,4 +1,26 @@
 .signup-page {
-  color: var(--yellow);
-  background-image: url('../../assets/yellow-square.jpg');
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.form {
+  padding: var(--gap-10);
+}
+
+.h2 {
+  margin-bottom: 20px;
+}
+
+.button {
+  width: 340px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.logo {
+  margin-top: 70px;
 }
