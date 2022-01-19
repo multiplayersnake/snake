@@ -14,6 +14,8 @@ import SignupPage from '../../pages/SignupPage';
 import MessagePage from '../../pages/MessagePage';
 import GameTypePage from '../../pages/GameTypePage';
 
+import Alert from '../ModalComponents/Alert';
+import Confirm from '../ModalComponents/Confirm';
 import useAuth from '../../hooks/useAuth';
 
 import './App.css';
@@ -24,9 +26,9 @@ const App: FC = () => {
   // Если поле не начинается со записи {"snake":code, значит этот пользователь только что зарегистрировался и ему нужно
   // создать параметры по умолчанию
   if (user !== null) {
-    if (user.second_name.substring(0, 13) !== '{"snake":1002') {
+    if (user.second_name.substring(0, 13) !== '{"snake":1003') {
       const startParameters = {
-        snake: 1002,
+        snake: 1003,
         coins: 9000,
         awards: 500,
         parts: [1, 1, 1, 0]
@@ -43,6 +45,8 @@ const App: FC = () => {
 
   return (
     <div className="app">
+      <Alert />
+      <Confirm />
       <BrowserRouter>
         <main className="content">
           <ErrorBoundary>

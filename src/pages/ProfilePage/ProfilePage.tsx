@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
+import { RootState } from '../../index';
 
 import UserAPI from '../../api/UserAPI';
 import './ProfilePage.css';
@@ -15,11 +16,12 @@ import SelectorShopItemComponent from '../../components/SelectorShopItem';
 import { User } from '../../types/models';
 import { GameParameters } from '../../types/models';
 
+import { showAlert } from '../../store/reducers/alert';
+import { showConfirm } from '../../store/reducers/confirm';
+
 const ProfilePage: FC = () => {
   // Игровые данные пользователя договорились пока хранить в поле second_name
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const userData: User = useSelector((state) => state['user']['item']);
+  const userData: User = useSelector((state: RootState) => state['user']['item']);
   const userParameters: GameParameters = JSON.parse(userData.second_name);
   const user_selected = userParameters.parts;
 
@@ -27,34 +29,42 @@ const ProfilePage: FC = () => {
 
   const dispatch = useDispatch();
 
+  const saveSelectItem = useCallback(
+    (partKey: number, ItemKey: number) => {
+      const item = item_arr[partKey][ItemKey];
+      userParameters.coins -= item.itemPrice;
+      userParameters.parts[partKey] = ItemKey;
+      userData.second_name = JSON.stringify(userParameters);
+      UserAPI.updateProfile(userData).then(() => {
+        dispatch({ type: 'SET_USER_ITEM', item: userData });
+      });
+    },
+    [dispatch, userData, userParameters]
+  );
+
   const setSelectItem = useCallback(
     (partKey: number, ItemKey: number) => {
       const item = item_arr[partKey][ItemKey];
       if (item.itemPrice > userParameters.coins) {
-        alert('Недостаточно монет для покупки');
+        dispatch(showAlert('Недостаточно монет для покупки'));
         return;
       }
       if (item.itemCondition > userParameters.awards) {
-        alert('Недостаточно наград для покупки');
+        dispatch(showAlert('Недостаточно наград для покупки'));
         return;
       }
-      // eslint-disable-next-line no-restricted-globals
-      const res = confirm(`Хотите купить "${item.name}" за "${item.itemPrice}"?`);
-      if (res) {
-        userParameters.coins -= item.itemPrice;
-        userParameters.parts[partKey] = ItemKey;
-        userData.second_name = JSON.stringify(userParameters);
-        UserAPI.updateProfile(userData).then(() => {
-          dispatch({ type: 'SET_USER_ITEM', item: userData });
+      dispatch(
+        showConfirm(`Хотите купить "${item.name}" за "${item.itemPrice}"?`, () => {
+          saveSelectItem(partKey, ItemKey);
           setKey(key + 1);
-        });
-      }
+        })
+      );
     },
-    [dispatch, key, userData, userParameters]
+    [dispatch, key, saveSelectItem, userParameters.awards, userParameters.coins]
   );
 
   return (
-    <div className="profile-page" key={key}>
+    <div className="profile-page">
       <NavButton className={cn('button', 'button-profile-back')} to={'/main'}>
         В меню
       </NavButton>
