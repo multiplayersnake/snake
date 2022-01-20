@@ -36,8 +36,8 @@ const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
         <Input label="Пароль" name="password" type="password" />
 
         <div>
-          <Button type="submit">Войти</Button>
-          <NavButton to="/signup">Регистрация</NavButton>
+          <Button className="button-registration" type="submit">Войти</Button>
+          <NavButton className="button-registration" to="/signup">Регистрация</NavButton>
         </div>
       </Form>
     </div>

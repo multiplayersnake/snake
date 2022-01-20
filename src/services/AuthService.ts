@@ -17,12 +17,13 @@ class AuthService {
 
   public static async signUp(e: FormEvent): Promise<void> {
     try {
-      let newUserData = getSubmittedFormData<SignUpRequest>(e);
-      delete newUserData['nickname'];
-      newUserData = Object.assign({ first_name: '', second_name: '', phone: '89215555555' }, newUserData);
-      await authAPI.signUp(newUserData);
+      const newUserData = getSubmittedFormData<SignUpRequest>(e);
+      const placeholderData = { second_name: '', phone: '0000000000' };
+      const data = { ...newUserData, ...placeholderData };
+      await authAPI.signUp(data);
     } catch (e) {
       handleAPIError(e as Error);
+      alert(e as Error);
     }
   }
 
