@@ -8,13 +8,13 @@ const actions = {
 type ConfirmState = {
   message: string;
   isVisible: boolean;
-  yesFunction: () => void;
+  onConfirm?: () => void;
 };
 
 const defaultState: ConfirmState = {
   message: '',
   isVisible: false,
-  yesFunction: null
+  onConfirm: null
 };
 
 interface BaseActionType<T> {
@@ -24,12 +24,12 @@ interface BaseActionType<T> {
 interface ItemActionType extends BaseActionType<Actions> {
   message: string;
   isVisible: boolean;
-  yesFunction: () => void;
+  onConfirm?: () => void;
 }
 
 export function confirmReducer(
   state: ConfirmState = defaultState,
-  { type, message, yesFunction }: ItemActionType
+  { type, message, onConfirm }: ItemActionType
 ): ConfirmState {
   switch (type) {
     case actions.SHOW_CONFIRM:
@@ -37,24 +37,24 @@ export function confirmReducer(
         ...state,
         message,
         isVisible: true,
-        yesFunction: yesFunction
+        onConfirm: onConfirm
       };
     case actions.HIDE_CONFIRM:
       return {
         ...state,
         message,
         isVisible: false,
-        yesFunction: null
+        onConfirm: null
       };
     default:
       return state;
   }
 }
 
-export function showConfirm(message: string, yesFunction: () => void): ItemActionType {
-  return { type: 'SHOW_CONFIRM', message: message, isVisible: true, yesFunction: yesFunction };
+export function showConfirm(message: string, onConfirm: () => void): ItemActionType {
+  return { type: 'SHOW_CONFIRM', message: message, isVisible: true, onConfirm: onConfirm };
 }
 
 export function hideConfirm(): ItemActionType {
-  return { type: 'HIDE_CONFIRM', message: '', isVisible: false, yesFunction: null };
+  return { type: 'HIDE_CONFIRM', message: '', isVisible: false, onConfirm: null };
 }

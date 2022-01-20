@@ -26,9 +26,10 @@ const App: FC = () => {
   // Если поле не начинается со записи {"snake":code, значит этот пользователь только что зарегистрировался и ему нужно
   // создать параметры по умолчанию
   if (user !== null) {
-    if (user.second_name.substring(0, 13) !== '{"snake":1003') {
+    const userData = user.second_name ? JSON.parse(user.second_name) : {};
+    if (userData.snake !== 1004) {
       const startParameters = {
-        snake: 1003,
+        snake: 1004,
         coins: 9000,
         awards: 500,
         parts: [1, 1, 1, 0]

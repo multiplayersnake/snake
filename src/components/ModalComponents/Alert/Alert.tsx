@@ -1,20 +1,18 @@
 import React, { FC, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import './Alert.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../index';
 import { hideAlert } from '../../../store/reducers/alert';
 import Button from '../../Button';
+
+import './Alert.css';
 
 const Alert: FC = () => {
   const dispatch = useDispatch();
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const message: string = useSelector((state) => state['alert']['message']);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const isVisible: string = useSelector((state) => state['alert']['isVisible']);
+  const message: string = useSelector((state: RootState) => state['alert']['message']);
+  const isVisible: boolean = useSelector((state: RootState) => state['alert']['isVisible']);
 
   const hide = useCallback(() => {
     dispatch(hideAlert());
