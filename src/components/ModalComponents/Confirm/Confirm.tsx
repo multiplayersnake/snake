@@ -23,9 +23,9 @@ const Confirm: FC = () => {
     onConfirm();
   }, [onConfirm]);
 
-  const vClass = isVisible ? 'show' : 'hide';
+  const visibilityClass = isVisible ? 'show' : 'hide';
   return (
-    <div className={cn('shadow', vClass)} onClick={hide}>
+    <div className={cn('shadow', visibilityClass)} onClick={hide}>
       <div className={cn('heading', 'h6', 'confirm')}>
         {message}
         <div className={'flex-wrapper'} />
