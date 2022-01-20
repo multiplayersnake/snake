@@ -69,6 +69,12 @@ function useAuth(): UseAuth {
     setUser(user);
   }, []);
 
+  const signUp = useCallback(async (e: FormEvent) => {
+    await AuthService.signUp(e);
+    const user = await AuthService.checkAuthorization();
+    setUser(user);
+  }, []);
+
   const handleAction = useCallback(
     (action: MenuAction) => {
       switch (action.type) {
@@ -78,6 +84,10 @@ function useAuth(): UseAuth {
 
         case MenuActionType.Logout:
           void logOut();
+          break;
+
+        case MenuActionType.SignUp:
+          void signUp(action.payload);
           break;
 
         default:

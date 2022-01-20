@@ -59,7 +59,7 @@ const App: FC = () => {
                 path="/signup"
                 element={
                   <GuestOnly>
-                    <SignupPage />
+                    <SignupPage onAction={handleAction} />
                   </GuestOnly>
                 }
               />

@@ -2,6 +2,7 @@ import { User } from '../types/models';
 import BaseAPI from './BaseAPI';
 
 export type SignUpRequest = {
+  nickname: string;
   first_name: string;
   second_name: string;
   login: string;

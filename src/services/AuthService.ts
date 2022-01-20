@@ -17,7 +17,9 @@ class AuthService {
 
   public static async signUp(e: FormEvent): Promise<void> {
     try {
-      const newUserData = getSubmittedFormData<SignUpRequest>(e);
+      let newUserData = getSubmittedFormData<SignUpRequest>(e);
+      delete newUserData['nickname'];
+      newUserData = Object.assign({ first_name: '', second_name: '', phone: '89215555555' }, newUserData);
       await authAPI.signUp(newUserData);
     } catch (e) {
       handleAPIError(e as Error);
