@@ -1,7 +1,10 @@
 import { combineReducers } from 'redux';
 import { userReducer } from './user';
+import { alertReducer } from './alert';
+import { confirmReducer } from './confirm';
 
-// В этом файле будем объединять все редьюсеры в один
 export default combineReducers({
-  user: userReducer
+  user: userReducer,
+  alert: alertReducer,
+  confirm: confirmReducer
 });
