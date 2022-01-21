@@ -5,11 +5,5 @@
   flex-flow: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: var(--gap-10);
-  gap: var(--gap-10);
-}
-
-.login-page-buttons {
-  display: flex;
-  gap: var(--gap-5);
+  padding: var(--gap5-5);
 }

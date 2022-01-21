@@ -2,7 +2,8 @@ import { FormEvent } from 'react';
 
 export enum MenuActionType {
   Login = 'Login',
-  Logout = 'Logout'
+  Logout = 'Logout',
+  SignUp = 'SignUp'
 }
 
 export type MenuActionPayload = FormEvent;
