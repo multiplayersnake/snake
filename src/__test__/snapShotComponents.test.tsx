@@ -1,23 +1,21 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
+
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Heading from '../components/Heading';
-import LogoutLink from '../components/LogoutLink';
 import TextArea from '../components/TextArea';
 import Form from '../components/Form';
 import Message from '../components/ForumPageComponents/Message';
 import Topic from '../components/ForumPageComponents/Topic';
 import InfoPanel from '../components/MainPageComponents/InfoPanel';
 import MainMenuItem from '../components/MainPageComponents/MainMenuItem';
-import NavMenu from '../components/NavMenu';
 
-import { MenuActionType } from '../types/mainMenu';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import configureStore from '../store/store';
+import { MenuActionType } from '../types';
 
-const store = configureStore({});
+import { store } from '../store';
 
 it('Button', () => {
   const tree = renderer.create(<Button onClick={() => ''}>Test Button</Button>).toJSON();
@@ -55,11 +53,6 @@ it('Heading', () => {
   expect(tree).toMatchSnapshot();
 });
 
-it('LogoutLink', () => {
-  const tree = renderer.create(<LogoutLink onClick={() => ''} />).toJSON();
-  expect(tree).toMatchSnapshot();
-});
-
 it('InfoPanel', () => {
   const tree = renderer
     .create(
@@ -74,18 +67,7 @@ it('InfoPanel', () => {
 it('MainMenuItem', () => {
   const action: MenuActionType = MenuActionType.Login;
   const item = { title: '', action: action, path: '', authorizedOnly: true };
-  const tree = renderer.create(<MainMenuItem authorized={true} item={item} onAction={() => ''} />).toJSON();
-  expect(tree).toMatchSnapshot();
-});
-
-it('NavMenu', () => {
-  const tree = renderer
-    .create(
-      <BrowserRouter>
-        <NavMenu onAction={() => ''} />
-      </BrowserRouter>
-    )
-    .toJSON();
+  const tree = renderer.create(<MainMenuItem item={item} onAction={() => ''} />).toJSON();
   expect(tree).toMatchSnapshot();
 });
 

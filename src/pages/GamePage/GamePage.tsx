@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux';
 import Canvas from '../../components/GamePageComponents/Canvas';
 import EndGame from '../../components/GamePageComponents/EndGame';
 import { clearGame } from '../../core/core';
-import { hideEndGame } from '../../store/reducers/endGame';
+
+import { hideEndGame } from '../../store';
 
 import './GamePage.css';
 

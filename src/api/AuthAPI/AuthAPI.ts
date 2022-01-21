@@ -1,5 +1,5 @@
-import { User } from '../types/models';
-import BaseAPI from './BaseAPI';
+import { RawUser } from '../../types';
+import BaseAPI from '../BaseAPI';
 
 export type SignUpRequest = {
   first_name: string;
@@ -8,6 +8,13 @@ export type SignUpRequest = {
   email: string;
   password: string;
   phone: string;
+};
+
+export type SignUpFormData = {
+  login: string;
+  password: string;
+  email: string;
+  nickname: string;
 };
 
 export type SignUpResponse = {
@@ -36,9 +43,9 @@ class AuthAPI extends BaseAPI {
     return this.http.post<void>('/logout');
   }
 
-  public getUser(): Promise<User> {
-    return this.http.get<User>('/user');
+  public getUser(): Promise<RawUser> {
+    return this.http.get<RawUser>('/user');
   }
 }
 
-export default new AuthAPI();
+export const authAPI = new AuthAPI();

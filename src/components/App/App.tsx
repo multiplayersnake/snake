@@ -1,8 +1,6 @@
-import React, { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { FC } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import NavMenu from '../NavMenu';
 import ErrorBoundary from '../ErrorBoundary';
 
 import ForumPage from '../../pages/ForumPage';
@@ -14,41 +12,23 @@ import SignupPage from '../../pages/SignupPage';
 import MessagePage from '../../pages/MessagePage';
 import GameTypePage from '../../pages/GameTypePage';
 
-import Alert from '../ModalComponents/Alert';
-import Confirm from '../ModalComponents/Confirm';
 import useAuth from '../../hooks/useAuth';
+
+// обратите внимание как просто можно указывать путь до компонента, если перейти с дефолтных импортов на обычные
+// и создать набор индексных файлов в папках внутри components
+import { Modal } from '..';
+
+import AuthorizedOnly from '../auth/AuthorizedOnly';
+import GuestOnly from '../auth/GuestOnly';
 
 import './App.css';
 
 const App: FC = () => {
-  const { AuthorizedOnly, GuestOnly, authorized, user, handleAction } = useAuth();
-  // Игровые данные пользователя договорились пока хранить в поле second_name
-  // Если поле не начинается со записи {"snake":code, значит этот пользователь только что зарегистрировался и ему нужно
-  // создать параметры по умолчанию
-  if (user !== null) {
-    const userData = user.second_name ? JSON.parse(user.second_name) : {};
-    if (userData.snake !== 1006) {
-      const startParameters = {
-        snake: 1006,
-        coins: 9000,
-        awards: 500,
-        parts: [0, 0, 0],
-        byItems: [[0], [0], [0]]
-      };
-      user.second_name = JSON.stringify(startParameters);
-    }
-  }
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch({ type: 'SET_USER_ITEM', item: user });
-  }, [dispatch, user]);
+  const { handleAction } = useAuth();
 
   return (
     <div className="app">
-      <Alert />
-      <Confirm />
+      <Modal />
       <BrowserRouter>
         <main className="content">
           <ErrorBoundary>
@@ -73,7 +53,7 @@ const App: FC = () => {
                 path="/"
                 element={
                   <AuthorizedOnly>
-                    <MainPage authorized={authorized} onAction={handleAction} />
+                    <MainPage onAction={handleAction} />
                   </AuthorizedOnly>
                 }
               />
@@ -121,7 +101,6 @@ const App: FC = () => {
             </Routes>
           </ErrorBoundary>
         </main>
-        <NavMenu hidden={false} user={user} onAction={handleAction} />
       </BrowserRouter>
     </div>
   );

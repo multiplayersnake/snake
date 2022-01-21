@@ -1,4 +1,4 @@
-.shadow {
+.modal-container {
   position: fixed;
   left: 0;
   top: 0;
@@ -8,12 +8,11 @@
   background: rgba(0, 0, 0, 0.5);
   z-index: 10000;
   display: flex;
-  align-content: space-around;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
-.alert {
+.modal {
   min-width: 50%;
   min-height: 50%;
   background: var(--panel-background);
@@ -22,17 +21,12 @@
   padding: var(--gap5-5);
   font-family: var(--main-font);
   display: flex;
-  align-content: space-around;
-  flex-wrap: wrap;
+  flex-flow: column;
   justify-content: space-between;
-  flex-direction: column;
   align-items: center;
 }
 
-.hide {
-  display: none;
-}
-
-.show {
+.modal-buttons {
   display: flex;
+  gap: var(--gap5-5);
 }

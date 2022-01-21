@@ -1,11 +1,12 @@
 import React, { FC, FormEvent, useCallback } from 'react';
 
-import logo from '../../assets/logo.png';
 import Button from '../../components/Button';
+import NavButton from '../../components/Button/NavButton';
 import Form from '../../components/Form';
 import Heading from '../../components/Heading';
 import Input from '../../components/Input';
-import { MenuAction, MenuActionType } from '../../types/mainMenu';
+
+import { MenuAction, MenuActionType } from '../../types';
 
 import './SignupPage.css';
 
@@ -17,6 +18,7 @@ const SignupPage: FC<SignUpPageProps> = ({ onAction }) => {
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
       onAction({ type: MenuActionType.SignUp, payload: e });
+
       const form = e.target as HTMLFormElement;
       form.reset();
     },
@@ -25,16 +27,26 @@ const SignupPage: FC<SignUpPageProps> = ({ onAction }) => {
 
   return (
     <div className="signup-page">
-      <Heading tag="h1">Боевые змеи</Heading>
-      <Form onSubmit={handleSubmit}>
+      <Heading tag="h1" className="signup-title">
+        Боевые змеи
+      </Heading>
+
+      <Form onSubmit={handleSubmit} className="signup-form">
         <Heading tag="h2">Регистрация</Heading>
 
-        <Input required label="Логин" name="login" />
-        <Input required label="Пароль" name="password" />
-        <Input required label="Почта" name="email" />
-        <Input required label="Позывной" name="first_name" />
+        <Input required label="Логин" name="login" autoComplete="new-password" />
+        <Input required label="Пароль" name="password" type="password" autoComplete="new-password" />
+        <Input required label="Почта" name="email" autoComplete="new-password" />
+        <Input required label="Позывной" name="nickname" autoComplete="new-password" />
 
-        <Button className="button-registration" type="submit">Зарегистрироваться</Button>
+        <div>
+          <Button className="registration-button" type="submit">
+            Зарегистрироваться
+          </Button>
+          <NavButton className="registration-button" to="/login">
+            Вход
+          </NavButton>
+        </div>
       </Form>
     </div>
   );

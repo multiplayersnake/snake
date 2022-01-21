@@ -1,12 +1,12 @@
 import React, { FC, FormEvent, useCallback } from 'react';
 
-import logo from '../../assets/logo.png';
 import Button from '../../components/Button';
 import NavButton from '../../components/Button/NavButton';
 import Form from '../../components/Form';
 import Heading from '../../components/Heading';
 import Input from '../../components/Input';
-import { MenuAction, MenuActionType } from '../../types/mainMenu';
+
+import { MenuAction, MenuActionType } from '../../types';
 
 import './LoginPage.css';
 
@@ -27,17 +27,23 @@ const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
 
   return (
     <div className="login-page">
-      <Heading tag="h1">Боевые змеи</Heading>
+      <Heading tag="h1" className="login-title">
+        Боевые змеи
+      </Heading>
 
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} name={'yyy'} id={'yyy'}>
         <Heading tag="h2">Авторизация</Heading>
 
-        <Input label="Логин" name="login" />
-        <Input label="Пароль" name="password" type="password" />
+        <Input required label="Логин" name="login" />
+        <Input required label="Пароль" name="password" type="password" />
 
         <div>
-          <Button className="button-registration" type="submit">Войти</Button>
-          <NavButton className="button-registration" to="/signup">Регистрация</NavButton>
+          <Button className="registration-button" type="submit">
+            Войти
+          </Button>
+          <NavButton className="registration-button" to="/signup">
+            Регистрация
+          </NavButton>
         </div>
       </Form>
     </div>
