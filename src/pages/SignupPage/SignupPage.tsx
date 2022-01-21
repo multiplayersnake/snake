@@ -25,14 +25,14 @@ const SignupPage: FC<SignUpPageProps> = ({ onAction }) => {
 
   return (
     <div className="signup-page">
-      <img className="logo" src={logo} alt={'logo'} />
+      <Heading tag="h1">Боевые змеи</Heading>
       <Form onSubmit={handleSubmit}>
         <Heading tag="h2">Регистрация</Heading>
 
-        <Input required label="Позывной" name="first_name" />
-        <Input required label="E-mail" name="email" />
         <Input required label="Логин" name="login" />
         <Input required label="Пароль" name="password" />
+        <Input required label="Почта" name="email" />
+        <Input required label="Позывной" name="first_name" />
 
         <Button className="button-registration" type="submit">Зарегистрироваться</Button>
       </Form>

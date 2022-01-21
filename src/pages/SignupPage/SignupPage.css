@@ -5,6 +5,7 @@
   flex-flow: column;
   align-items: center;
   justify-content: flex-start;
+  padding: var(--gap5-5);
 }
 
 .form {
@@ -19,8 +20,4 @@
   width: 340px;
   margin-top: 20px;
   font-weight: bold;
-}
-
-.logo {
-  margin-top: 70px;
 }

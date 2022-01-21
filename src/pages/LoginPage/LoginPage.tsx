@@ -27,7 +27,7 @@ const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
 
   return (
     <div className="login-page">
-      <img className="logo" src={logo} alt={'logo'} />
+      <Heading tag="h1">Боевые змеи</Heading>
 
       <Form onSubmit={handleSubmit}>
         <Heading tag="h2">Авторизация</Heading>

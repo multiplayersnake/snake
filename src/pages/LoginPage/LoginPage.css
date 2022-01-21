@@ -5,8 +5,5 @@
   flex-flow: column;
   align-items: center;
   justify-content: flex-start;
-}
-
-.logo {
-  margin-top: 70px;
+  padding: var(--gap5-5);
 }
