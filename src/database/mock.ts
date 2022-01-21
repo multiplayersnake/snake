@@ -1,28 +1,27 @@
 // Временный массив - заглушка. Эти данные должны приходить из API запроса.
-export const user_selected = [1, 1, 1, 0];
+export const user_selected = [0, 0, 0];
 
 export const part_arr = [
   { id: 0, key: 'head', name: 'Голова' },
   { id: 1, key: 'body', name: 'Туловище' },
-  { id: 2, key: 'tail', name: 'Хвост' },
-  { id: 3, key: 'effect', name: 'Эликсир' }
+  { id: 2, key: 'tail', name: 'Хвост' }
 ];
 
 export const item_arr = [
   [
     {
       id: '0',
-      name: 'Зеленая',
-      itemPrice: 10,
+      name: 'Красная',
+      itemPrice: 0,
       itemCondition: 1,
-      itemDesc: '{"type": "part", "form": "circle", "color": "rgb(0, 255, 0)"}'
+      itemDesc: '{"type": "part", "form": "circle", "color": "rgb(255, 0, 0)"}'
     },
     {
       id: '1',
-      name: 'Красная',
+      name: 'Зеленая',
       itemPrice: 20,
       itemCondition: 1,
-      itemDesc: '{"type": "part", "form": "circle", "color": "rgb(255, 0, 0)"}'
+      itemDesc: '{"type": "part", "form": "circle", "color": "rgb(0, 255, 0)"}'
     },
     {
       id: '2',
@@ -35,17 +34,17 @@ export const item_arr = [
   [
     {
       id: '0',
-      name: 'Зеленое',
-      itemPrice: 10,
+      name: 'Красное',
+      itemPrice: 0,
       itemCondition: 1,
-      itemDesc: '{"type": "part", "form": "circle", "color": "rgb(0, 255, 0)"}'
+      itemDesc: '{"type": "part", "form": "circle", "color": "rgb(255, 0, 0)"}'
     },
     {
       id: '1',
-      name: 'Красное',
+      name: 'Зеленое',
       itemPrice: 20,
       itemCondition: 1,
-      itemDesc: '{"type": "part", "form": "circle", "color": "rgb(255, 0, 0)"}'
+      itemDesc: '{"type": "part", "form": "circle", "color": "rgb(0, 255, 0)"}'
     },
     {
       id: '2',
@@ -65,17 +64,17 @@ export const item_arr = [
   [
     {
       id: '0',
-      name: 'Зеленый',
-      itemPrice: 10,
+      name: 'Красный',
+      itemPrice: 0,
       itemCondition: 1,
-      itemDesc: '{"type": "part", "form": "circle", "color": "rgb(0, 255, 0)"}'
+      itemDesc: '{"type": "part", "form": "circle", "color": "rgb(255, 0, 0)"}'
     },
     {
       id: '1',
-      name: 'Красный',
+      name: 'Зеленый',
       itemPrice: 20,
       itemCondition: 1,
-      itemDesc: '{"type": "part", "form": "circle", "color": "rgb(255, 0, 0)"}'
+      itemDesc: '{"type": "part", "form": "circle", "color": "rgb(0, 255, 0)"}'
     },
     {
       id: '2',
@@ -105,15 +104,5 @@ export const item_arr = [
       itemCondition: 20,
       itemDesc: '{"type": "part", "form": "circle", "color": "rgb(128, 128, 128)"}'
     }
-  ],
-  [
-    {
-      id: '0',
-      name: 'Замедление',
-      itemPrice: 1500,
-      itemCondition: 50,
-      itemDesc: '{"type": "velocity", "k": "0.5"}'
-    },
-    { id: '1', name: 'Ускорение', itemPrice: 1500, itemCondition: 50, itemDesc: '{"type": "velocity", "k": "2"}' }
   ]
 ];

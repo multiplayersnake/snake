@@ -5,6 +5,10 @@ import config from './constants';
 let last = window.performance.now();
 let mainTimerId: number;
 let mainTimerStart: number;
+let timeoutCoinGenerator: number;
+let timeoutAppleGenerator: number;
+let requestAnimationRender: number;
+
 let ctx: CanvasRenderingContext2D;
 const gameStatus = { mode: 'Play' };
 const snakes: Snake[] = [];
@@ -13,10 +17,29 @@ const booms: Boom[] = [];
 const apples: Apple[] = [];
 const indexOfSnakeUnderControl = 0;
 
+function destroyAllObjects() {
+  snakes.length = 0;
+  coins.length = 0;
+  apples.length = 0;
+  booms.length = 0;
+}
+
+function stopAllProcesses() {
+  gameStatus.mode = 'End';
+  clearInterval(mainTimerId);
+  clearTimeout(timeoutCoinGenerator);
+  clearTimeout(timeoutAppleGenerator);
+  window.cancelAnimationFrame(requestAnimationRender);
+}
+
+function clearGame() {
+  stopAllProcesses();
+  destroyAllObjects();
+}
+
 // Функция окончания игры
 function gameOver(): void {
-  clearInterval(mainTimerId);
-  gameStatus.mode = 'End';
+  stopAllProcesses();
 
   ctx.textBaseline = 'top';
   ctx.fillStyle = 'rgba(255,0,0,1.0)';
@@ -231,7 +254,7 @@ function render(): void {
   draw.drawApples(ctx, apples);
 
   if (gameStatus.mode === 'Play') {
-    window.requestAnimationFrame(render);
+    requestAnimationRender = window.requestAnimationFrame(render);
   }
 }
 
@@ -254,7 +277,7 @@ function coinGenerator(): void {
   const timeForNewCoin = coins.length * 2000;
 
   if (gameStatus.mode === 'Play') {
-    setTimeout(coinGenerator, timeForNewCoin);
+    timeoutCoinGenerator = setTimeout(coinGenerator, timeForNewCoin);
   }
 }
 
@@ -269,7 +292,7 @@ function appleGenerator(): void {
   const timeForNewApple = config.appleCreateTime * 1000;
 
   if (gameStatus.mode === 'Play') {
-    setTimeout(appleGenerator, timeForNewApple);
+    timeoutAppleGenerator = setTimeout(appleGenerator, timeForNewApple);
   }
 }
 
@@ -314,7 +337,7 @@ function startGame(inContext: CanvasRenderingContext2D): void {
     mainTimerId = setInterval(tick, 1000);
 
     coinGenerator();
-    setTimeout(appleGenerator, config.appleCreateTime * 1000);
+    timeoutAppleGenerator = setTimeout(appleGenerator, config.appleCreateTime * 1000);
   }
 
   draw.drawLeftPanel(ctx, snakes[indexOfSnakeUnderControl]);
@@ -324,4 +347,4 @@ function startGame(inContext: CanvasRenderingContext2D): void {
 
 document.addEventListener('keydown', onKeyDown);
 
-export { startGame };
+export { startGame, clearGame };

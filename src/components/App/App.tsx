@@ -27,12 +27,12 @@ const App: FC = () => {
   // создать параметры по умолчанию
   if (user !== null) {
     const userData = user.second_name ? JSON.parse(user.second_name) : {};
-    if (userData.snake !== 1004) {
+    if (userData.snake !== 1005) {
       const startParameters = {
-        snake: 1004,
+        snake: 1005,
         coins: 9000,
         awards: 500,
-        parts: [1, 1, 1, 0]
+        parts: [0, 0, 0]
       };
       user.second_name = JSON.stringify(startParameters);
     }

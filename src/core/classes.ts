@@ -17,6 +17,17 @@ export type Circle = {
   col: string;
 };
 
+type PartElements = {
+  form: string;
+  color: string;
+};
+
+export type SnakeElements = {
+  head: PartElements;
+  body: PartElements;
+  tail: PartElements;
+};
+
 class Snake {
   public elements: Circle[] = [];
   public hp = 0;

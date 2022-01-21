@@ -10,8 +10,8 @@ import Scroll from '../../components/Scroll/Scroll';
 import coinSource from '../../assets/coin.png';
 import awardSource from '../../assets/award.png';
 
-import { part_arr } from './mock';
-import { item_arr } from './mock';
+import { part_arr } from '../../database/mock';
+import { item_arr } from '../../database/mock';
 import SelectorShopItemComponent from '../../components/SelectorShopItem';
 import { User } from '../../types/models';
 import { GameParameters } from '../../types/models';
@@ -69,7 +69,7 @@ const ProfilePage: FC = () => {
         В меню
       </NavButton>
       <div className={cn('title-profile')}>
-        <div className={cn('heading', 'h6')}>Позывной: {userData.display_name}</div>
+        <div className={cn('heading', 'h6')}>Позывной: {userData.first_name}</div>
         <div className={cn('heading', 'h6')}>
           Валюта: {userParameters.coins} <img src={coinSource} className={cn('img-in-line')} alt={'coin'} />
         </div>
