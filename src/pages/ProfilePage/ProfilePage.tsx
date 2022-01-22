@@ -30,10 +30,11 @@ const ProfilePage: FC = () => {
   const dispatch = useDispatch();
 
   const saveSelectItem = useCallback(
-    (partKey: number, ItemKey: number) => {
+    (partKey: number, ItemKey: number, isPurchased: boolean) => {
       const item = item_arr[partKey][ItemKey];
-      userParameters.coins -= item.itemPrice;
+      if (isPurchased) userParameters.coins -= item.itemPrice;
       userParameters.parts[partKey] = ItemKey;
+      userParameters.byItems[partKey].push(ItemKey);
       userData.second_name = JSON.stringify(userParameters);
       UserAPI.updateProfile(userData).then(() => {
         dispatch({ type: 'SET_USER_ITEM', item: userData });
@@ -44,23 +45,28 @@ const ProfilePage: FC = () => {
 
   const setSelectItem = useCallback(
     (partKey: number, ItemKey: number) => {
-      const item = item_arr[partKey][ItemKey];
-      if (item.itemPrice > userParameters.coins) {
-        dispatch(showAlert('Недостаточно монет для покупки'));
-        return;
+      if (userParameters.byItems[partKey].includes(ItemKey)) {
+        saveSelectItem(partKey, ItemKey, true);
+        setKey(key + 1);
+      } else {
+        const item = item_arr[partKey][ItemKey];
+        if (item.itemPrice > userParameters.coins) {
+          dispatch(showAlert('Недостаточно монет для покупки'));
+          return;
+        }
+        if (item.itemCondition > userParameters.awards) {
+          dispatch(showAlert('Недостаточно наград для покупки'));
+          return;
+        }
+        dispatch(
+          showConfirm(`Хотите купить "${item.name}" за "${item.itemPrice}"?`, () => {
+            saveSelectItem(partKey, ItemKey, false);
+            setKey(key + 1);
+          })
+        );
       }
-      if (item.itemCondition > userParameters.awards) {
-        dispatch(showAlert('Недостаточно наград для покупки'));
-        return;
-      }
-      dispatch(
-        showConfirm(`Хотите купить "${item.name}" за "${item.itemPrice}"?`, () => {
-          saveSelectItem(partKey, ItemKey);
-          setKey(key + 1);
-        })
-      );
     },
-    [dispatch, key, saveSelectItem, userParameters.awards, userParameters.coins]
+    [dispatch, key, saveSelectItem, userParameters.awards, userParameters.coins, userParameters.byItems]
   );
 
   return (
@@ -87,6 +93,7 @@ const ProfilePage: FC = () => {
               items={item_arr[index]}
               selectFunction={setSelectItem}
               partKey={index}
+              purchasedItems={userParameters.byItems[index]}
             />
           ))}
         </Scroll>

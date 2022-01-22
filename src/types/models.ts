@@ -14,4 +14,5 @@ export interface GameParameters {
   coins: number;
   awards: number;
   parts: number[];
+  byItems: number[][];
 }

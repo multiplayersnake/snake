@@ -10,6 +10,7 @@ type ShopItemProps = {
   name: string;
   desc: string;
   isSelected: boolean;
+  isPurchased: boolean;
   itemPrice: number;
   itemCondition: number;
   selectFunction: (partKey: number, ItemKey: number) => void;
@@ -28,7 +29,7 @@ const ImgItem: FC<ImgItemProps> = (props) => {
 };
 
 const ShopItemComponent: FC<ShopItemProps> = (props) => {
-  const { isSelected, name, desc, itemPrice, itemCondition, selectFunction, partKey, itemKey } = props;
+  const { isSelected, isPurchased, name, desc, itemPrice, itemCondition, selectFunction, partKey, itemKey } = props;
   const ref = useRef(null);
   const item = JSON.parse(desc);
 
@@ -51,16 +52,21 @@ const ShopItemComponent: FC<ShopItemProps> = (props) => {
     }
   }, [item.color, item.form, item.type]);
 
-  const cls = isSelected ? cn('one-item') : cn('one-item', 'shop_item');
+  let cls = 'one-item';
+  if (!isSelected) cls = cn('shop-item', cls);
+  if (isPurchased) cls = cn('purchased-item', cls);
+
+  let imgClass = 'img-shop-item';
+  if (isPurchased) imgClass = cn(imgClass, 'img-shop-item-purchased');
 
   return (
     <div className={cls} onClick={SetSelectItem}>
       <canvas ref={ref} width={75} height={75} className={'img'} />
       <ImgItem itemType={item.type} />
       <div className={'price'}>{itemPrice}</div>
-      <img src={coinSource} className={cn('coin', 'img-in-line')} alt={'coin'} />
+      <img src={coinSource} className={cn('coin', imgClass)} alt={'coin'} />
       <div className={'cond'}>{itemCondition}</div>
-      <img src={awardSource} className={cn('award', 'img-in-line')} alt={'award'} />
+      <img src={awardSource} className={cn('award', imgClass)} alt={'award'} />
       <div className={'title'}>{name}</div>
     </div>
   );
