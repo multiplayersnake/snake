@@ -319,8 +319,16 @@ function tick(): void {
   }
 }
 
+function profileSnake(userElements: { [k: string]: { [k: string]: string } }) {
+  snakes[indexOfSnakeUnderControl].elements.forEach((el, index) => {
+    if (index === 0) el.col = userElements.head.color;
+    if (index > 0 && index < snakes[indexOfSnakeUnderControl].elements.length - 1) el.col = userElements.body.color;
+    if (index === snakes[indexOfSnakeUnderControl].elements.length - 1) el.col = userElements.tail.color;
+  });
+}
+
 // Функция запуска ядра
-function startGame(inContext: CanvasRenderingContext2D): void {
+function startGame(inContext: CanvasRenderingContext2D, userElements: { [k: string]: { [k: string]: string } }): void {
   ctx = inContext;
 
   if (snakes.length === 0) {
@@ -339,6 +347,7 @@ function startGame(inContext: CanvasRenderingContext2D): void {
     coinGenerator();
     timeoutAppleGenerator = setTimeout(appleGenerator, config.appleCreateTime * 1000);
   }
+  profileSnake(userElements);
 
   draw.drawLeftPanel(ctx, snakes[indexOfSnakeUnderControl]);
   draw.drawRightPanel(ctx, snakes);
