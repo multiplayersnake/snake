@@ -29,6 +29,13 @@ export const item_arr = [
       itemPrice: 30,
       itemCondition: 1,
       itemDesc: '{"type": "part", "form": "circle", "color": "rgb(0, 0, 255)"}'
+    },
+    {
+      id: '3',
+      name: 'Белая',
+      itemPrice: 200,
+      itemCondition: 20,
+      itemDesc: '{"type": "part", "form": "circle", "color": "rgb(255, 255, 255)"}'
     }
   ],
   [

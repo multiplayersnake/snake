@@ -24,9 +24,7 @@ interface ItemActionType extends BaseActionType<Actions> {
   isVisible: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-export function alertReducer(state: AlertState = defaultState, { type, message }: ItemActionType = {}): AlertState {
+export function alertReducer(state: AlertState = defaultState, { type, message }: ItemActionType): AlertState {
   switch (type) {
     case actions.SHOW_ALERT:
       return {
