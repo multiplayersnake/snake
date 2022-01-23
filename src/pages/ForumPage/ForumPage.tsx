@@ -4,7 +4,7 @@ import { formatDateTime } from '../../utils';
 
 import Button from '../../components/Button';
 import Heading from '../../components/Heading';
-import Topic from '../../components/Topic';
+import Topic from '../../components/ForumPageComponents/Topic';
 import Scroll from '../../components/Scroll';
 
 import '../../components/TextArea/TextArea.css';

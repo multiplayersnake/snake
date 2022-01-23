@@ -12,7 +12,7 @@ import awardSource from '../../assets/award.png';
 
 import { part_arr } from '../../database/mock';
 import { item_arr } from '../../database/mock';
-import SelectorShopItemComponent from '../../components/SelectorShopItem';
+import SelectorShopItemComponent from '../../components/ProfilePageComponents/SelectorShopItem';
 import { User } from '../../types/models';
 import { GameParameters } from '../../types/models';
 

@@ -38,6 +38,10 @@
   text-align: right;
 }
 
+.text-purchased {
+  opacity: 0.5;
+}
+
 .coin {
   grid-area: coin;
 }

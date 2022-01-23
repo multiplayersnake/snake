@@ -2,9 +2,9 @@ import React, { FC, useEffect, useRef } from 'react';
 import cn from 'classnames';
 
 import './ShopItem.css';
-import elSource from '../../assets/elexir.png';
-import coinSource from '../../assets/coin.png';
-import awardSource from '../../assets/award.png';
+import elSource from '../../../assets/elexir.png';
+import coinSource from '../../../assets/coin.png';
+import awardSource from '../../../assets/award.png';
 
 type ShopItemProps = {
   name: string;
@@ -59,13 +59,19 @@ const ShopItemComponent: FC<ShopItemProps> = (props) => {
   let imgClass = 'img-shop-item';
   if (isPurchased) imgClass = cn(imgClass, 'img-shop-item-purchased');
 
+  let priceClass = 'price';
+  if (isPurchased) priceClass = cn(priceClass, 'text-purchased');
+
+  let condClass = 'cond';
+  if (isPurchased) condClass = cn(condClass, 'text-purchased');
+
   return (
     <div className={cls} onClick={SetSelectItem}>
       <canvas ref={ref} width={75} height={75} className={'img'} />
       <ImgItem itemType={item.type} />
-      <div className={'price'}>{itemPrice}</div>
+      <div className={priceClass}>{itemPrice}</div>
       <img src={coinSource} className={cn('coin', imgClass)} alt={'coin'} />
-      <div className={'cond'}>{itemCondition}</div>
+      <div className={condClass}>{itemCondition}</div>
       <img src={awardSource} className={cn('award', imgClass)} alt={'award'} />
       <div className={'title'}>{name}</div>
     </div>

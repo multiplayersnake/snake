@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import cn from 'classnames';
 
 import './SelectorShopItem.css';
-import Heading from '../Heading';
+import Heading from '../../Heading';
 import ShopItem from '../ShopItem';
 
 type ItemType = {
