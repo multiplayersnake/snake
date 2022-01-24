@@ -1,5 +1,6 @@
 import React, { FC, FormEvent, useCallback } from 'react';
 
+import logo from '../../assets/logo.png';
 import Button from '../../components/Button';
 import NavButton from '../../components/Button/NavButton';
 import Form from '../../components/Form';
@@ -34,9 +35,9 @@ const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
         <Input label="Логин" name="login" />
         <Input label="Пароль" name="password" type="password" />
 
-        <div className="login-page-buttons">
-          <Button type="submit">Войти</Button>
-          <NavButton to="/signup">Регистрация</NavButton>
+        <div>
+          <Button className="button-registration" type="submit">Войти</Button>
+          <NavButton className="button-registration" to="/signup">Регистрация</NavButton>
         </div>
       </Form>
     </div>

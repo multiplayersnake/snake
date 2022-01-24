@@ -18,9 +18,12 @@ class AuthService {
   public static async signUp(e: FormEvent): Promise<void> {
     try {
       const newUserData = getSubmittedFormData<SignUpRequest>(e);
-      await authAPI.signUp(newUserData);
+      const placeholderData = { second_name: '', phone: '0000000000' };
+      const data = { ...newUserData, ...placeholderData };
+      await authAPI.signUp(data);
     } catch (e) {
       handleAPIError(e as Error);
+      alert(e as Error);
     }
   }
 
