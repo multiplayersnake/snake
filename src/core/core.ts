@@ -5,6 +5,11 @@ import config from './constants';
 let last = window.performance.now();
 let mainTimerId: number;
 let mainTimerStart: number;
+let timeoutCoinGenerator: number;
+let timeoutAppleGenerator: number;
+let requestAnimationRender: number;
+let endFunction: (time: string, place: number, coins: number, awards: number) => void;
+
 let ctx: CanvasRenderingContext2D;
 const gameStatus = { mode: 'Play' };
 const snakes: Snake[] = [];
@@ -13,17 +18,38 @@ const booms: Boom[] = [];
 const apples: Apple[] = [];
 const indexOfSnakeUnderControl = 0;
 
+function destroyAllObjects() {
+  snakes.length = 0;
+  coins.length = 0;
+  apples.length = 0;
+  booms.length = 0;
+}
+
+function stopAllProcesses() {
+  gameStatus.mode = 'End';
+  clearInterval(mainTimerId);
+  clearTimeout(timeoutCoinGenerator);
+  clearTimeout(timeoutAppleGenerator);
+  window.cancelAnimationFrame(requestAnimationRender);
+}
+
+function clearGame() {
+  stopAllProcesses();
+  destroyAllObjects();
+}
+
 // Функция окончания игры
 function gameOver(): void {
-  clearInterval(mainTimerId);
-  gameStatus.mode = 'End';
+  stopAllProcesses();
 
-  ctx.textBaseline = 'top';
-  ctx.fillStyle = 'rgba(255,0,0,1.0)';
-  ctx.font = '96px Impact';
-  ctx.textAlign = 'center';
-  ctx.clearRect(config.topPanelLeft, config.topPanelTop, config.topPanelWidth, config.topPanelHeight);
-  ctx.fillText('Игра окончена', config.fieldLeft + config.fieldWidth / 2, 0, config.fieldWidth);
+  const coins = snakes[indexOfSnakeUnderControl].score;
+
+  const now = window.performance.now();
+  const dt = Math.floor((now - mainTimerStart) / 1000);
+  const showTime = new Date(dt * 1000);
+  const stringTime = ('0' + showTime.getMinutes()).slice(-2) + ':' + ('0' + showTime.getSeconds()).slice(-2);
+
+  endFunction(stringTime, 1, coins, 0);
 }
 
 // Функция устанавливающая направление движения змеи
@@ -231,7 +257,7 @@ function render(): void {
   draw.drawApples(ctx, apples);
 
   if (gameStatus.mode === 'Play') {
-    window.requestAnimationFrame(render);
+    requestAnimationRender = window.requestAnimationFrame(render);
   }
 }
 
@@ -254,7 +280,7 @@ function coinGenerator(): void {
   const timeForNewCoin = coins.length * 2000;
 
   if (gameStatus.mode === 'Play') {
-    setTimeout(coinGenerator, timeForNewCoin);
+    timeoutCoinGenerator = setTimeout(coinGenerator, timeForNewCoin);
   }
 }
 
@@ -269,7 +295,7 @@ function appleGenerator(): void {
   const timeForNewApple = config.appleCreateTime * 1000;
 
   if (gameStatus.mode === 'Play') {
-    setTimeout(appleGenerator, timeForNewApple);
+    timeoutAppleGenerator = setTimeout(appleGenerator, timeForNewApple);
   }
 }
 
@@ -296,9 +322,23 @@ function tick(): void {
   }
 }
 
+function profileSnake(userElements: { [k: string]: { [k: string]: string } }) {
+  snakes[indexOfSnakeUnderControl].name = userElements.base.name;
+  snakes[indexOfSnakeUnderControl].elements.forEach((el, index) => {
+    if (index === 0) el.col = userElements.head.color;
+    if (index > 0 && index < snakes[indexOfSnakeUnderControl].elements.length - 1) el.col = userElements.body.color;
+    if (index === snakes[indexOfSnakeUnderControl].elements.length - 1) el.col = userElements.tail.color;
+  });
+}
+
 // Функция запуска ядра
-function startGame(inContext: CanvasRenderingContext2D): void {
+function startGame(
+  inContext: CanvasRenderingContext2D,
+  userElements: { [k: string]: { [k: string]: string } },
+  endGameFunction: (time: string, place: number, coins: number, awards: number) => void
+): void {
   ctx = inContext;
+  endFunction = endGameFunction;
 
   if (snakes.length === 0) {
     const snake1 = new Snake(400, 200, 0.1, 0.0, 100, 'red', 'Smith_123');
@@ -314,8 +354,9 @@ function startGame(inContext: CanvasRenderingContext2D): void {
     mainTimerId = setInterval(tick, 1000);
 
     coinGenerator();
-    setTimeout(appleGenerator, config.appleCreateTime * 1000);
+    timeoutAppleGenerator = setTimeout(appleGenerator, config.appleCreateTime * 1000);
   }
+  profileSnake(userElements);
 
   draw.drawLeftPanel(ctx, snakes[indexOfSnakeUnderControl]);
   draw.drawRightPanel(ctx, snakes);
@@ -324,4 +365,4 @@ function startGame(inContext: CanvasRenderingContext2D): void {
 
 document.addEventListener('keydown', onKeyDown);
 
-export { startGame };
+export { startGame, clearGame };

@@ -16,7 +16,7 @@ const InfoPanel: FC = () => {
   return (
     <div className={cn('panel', 'left-panel')}>
       <div className={cn('heading', 'h6')}>Позывной:</div>
-      <div className={cn('heading', 'h6')}>{userData.display_name}</div>
+      <div className={cn('heading', 'h6')}>{userData.first_name}</div>
       <div className={'flex-wrapper'} />
       <div>Валюта:</div>
       <div>
