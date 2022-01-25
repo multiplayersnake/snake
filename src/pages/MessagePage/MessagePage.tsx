@@ -5,7 +5,7 @@ import { formatDateTime } from '../../utils';
 
 import Button from '../../components/Button';
 import Heading from '../../components/Heading';
-import Message from '../../components/Message';
+import Message from '../../components/ForumPageComponents/Message';
 import Scroll from '../../components/Scroll';
 
 import './MessagePage.css';
