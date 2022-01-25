@@ -13,5 +13,5 @@ export function showEndGame(time: string, place: number, coins: number, awards: 
 }
 
 export function hideEndGame(): EndGameAction {
-  return { type: EndGameActionType.ShowEndGame };
+  return { type: EndGameActionType.HideEndGame };
 }
