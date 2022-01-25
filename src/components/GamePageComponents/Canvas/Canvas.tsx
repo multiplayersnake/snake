@@ -50,7 +50,7 @@ const Canvas: FC<Props> = () => {
 
       // TODO rework to async/await
       UserAPI.updateProfile(rawUser).then(() => {
-        dispatch(setUser(userData));
+        dispatch(setUser(userDataUpdated));
       });
     },
     [dispatch, userData, gameParameters]
