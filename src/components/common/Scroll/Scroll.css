@@ -59,11 +59,11 @@
 .scroll-up-button {
   grid-area: upbutton;
   justify-self: center;
-  background-image: url('../../assets/up.png');
+  background-image: url('../../../assets/up.png');
 }
 
 .scroll-down-button {
   grid-area: downbutton;
   justify-self: center;
-  background-image: url('../../assets/down.png');
+  background-image: url('../../../assets/down.png');
 }

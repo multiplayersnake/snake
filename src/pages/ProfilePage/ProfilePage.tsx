@@ -4,12 +4,11 @@ import cn from 'classnames';
 
 // обратите внимание, как удобно указывать в одном импорте всё, что имеет отношение к redux
 import { RootState, getUser, getUserNickname, getUserGameParameters, setUser, showModal } from '../../store';
+import { NavButton, Scroll } from '../../components';
 
 import UserAPI from '../../api/UserAPI';
 import { mapToRawUser } from '../../api/AuthAPI';
 
-import { NavButton } from '../../components';
-import Scroll from '../../components/Scroll/Scroll';
 import SelectorShopItemComponent from '../../components/ProfilePageComponents/SelectorShopItem';
 
 import coinSource from '../../assets/coin.png';

@@ -9,8 +9,8 @@ type HeadingProps = HTMLAttributes<HTMLHeadingElement> & {
   tag?: HeadingTag;
 };
 
-const Heading: FC<HeadingProps> = (props) => {
-  const { children, className, tag: Tag = 'h2', ...rest } = props;
+export const Heading: FC<HeadingProps> = (props) => {
+  const { children, className, tag: Tag = 'h1', ...rest } = props;
 
   return (
     <Tag {...rest} className={cn('heading', Tag, className)}>
@@ -18,5 +18,3 @@ const Heading: FC<HeadingProps> = (props) => {
     </Tag>
   );
 };
-
-export default Heading;

@@ -1,8 +1,9 @@
 import React, { FC, MouseEvent, WheelEvent, useEffect, useRef } from 'react';
 import cn from 'classnames';
 
+import { Heading } from '..';
+
 import './Scroll.css';
-import Heading from '../Heading';
 
 type ScrollProps = {
   title?: string;
@@ -10,7 +11,7 @@ type ScrollProps = {
   id: string;
 };
 
-const ScrollComponent: FC<ScrollProps> = (props) => {
+export const Scroll: FC<ScrollProps> = (props) => {
   const contentRef = useRef(null);
   const trackRef = useRef(null);
   const { children, title = '', mode, id } = props;
@@ -120,5 +121,3 @@ const ScrollComponent: FC<ScrollProps> = (props) => {
     </div>
   );
 };
-
-export default ScrollComponent;

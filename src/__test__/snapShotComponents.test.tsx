@@ -3,8 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
 
-import { Button, Input, Form } from '../components';
-import Heading from '../components/Heading';
+import { Button, Input, Form, Heading } from '../components';
 import TextArea from '../components/TextArea';
 import Message from '../components/ForumPageComponents/Message';
 import Topic from '../components/ForumPageComponents/Topic';

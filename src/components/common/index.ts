@@ -6,3 +6,5 @@ export * from './Button';
 export * from './ErrorBoundary';
 export * from './Input';
 export * from './Form';
+export * from './Heading';
+export * from './Scroll';

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import Heading from '../../components/Heading';
+import { Heading } from '../../components';
 import MainMenuItem from '../../components/MainPageComponents/MainMenuItem';
 import InfoPanel from '../../components/MainPageComponents/InfoPanel';
 import LeaderBoard from '../../components/MainPageComponents/LeaderBoard';

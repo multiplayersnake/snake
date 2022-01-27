@@ -1,11 +1,9 @@
 import React, { FC, useRef, useState } from 'react';
 import cn from 'classnames';
-import { formatDateTime } from '../../utils';
 
-import { Button, NavButton } from '../../components';
-import Heading from '../../components/Heading';
+import { formatDateTime } from '../../utils';
+import { Button, NavButton, Heading, Scroll } from '../../components';
 import Topic from '../../components/ForumPageComponents/Topic';
-import Scroll from '../../components/Scroll';
 
 import { out_arr } from './mock';
 

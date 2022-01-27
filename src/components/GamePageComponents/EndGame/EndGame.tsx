@@ -1,13 +1,11 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 
-import { NavButton } from '../..';
-import Heading from '../../Heading';
+import { RootState, getEndGameAwards, getEndGameCoins, getEndGamePlace, getEndGameTime } from '../../../store';
+import { NavButton, Heading } from '../..';
 
 import coinSource from '../../../assets/coin.png';
 import awardSource from '../../../assets/award.png';
-
-import { RootState, getEndGameAwards, getEndGameCoins, getEndGamePlace, getEndGameTime } from '../../../store';
 
 import './EndGame.css';
 

@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
 
-import './SelectorShopItem.css';
-import Heading from '../../Heading';
+import { Heading } from '../..';
 import ShopItem from '../ShopItem';
+
+import './SelectorShopItem.css';
 
 type ItemType = {
   id: string;
@@ -27,12 +28,18 @@ const SelectorShopItemComponent: FC<SelectorShopItemProps> = (props) => {
 
   return (
     <div className="selector-shop-item">
-      <Heading className={cn('selector-shop-item-title', 'h5')}>{title}</Heading>
-      <Heading className={cn('selector-shop-item-subtitle', 'h5')}>{'Доступные варианты'}</Heading>
-      <div className={cn('selector-shop-item-select')}>
+      <Heading tag="h5" className="selector-shop-item-title">
+        {title}
+      </Heading>
+
+      <Heading tag="h5" className="selector-shop-item-subtitle">
+        Доступные варианты
+      </Heading>
+
+      <div className="selector-shop-item-select">
         <ShopItem
-          isSelected={true}
-          isPurchased={true}
+          isSelected
+          isPurchased
           itemCondition={selected.itemCondition}
           itemPrice={selected.itemPrice}
           name={selected.name}
