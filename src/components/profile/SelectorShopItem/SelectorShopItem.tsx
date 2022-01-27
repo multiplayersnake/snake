@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import cn from 'classnames';
 
 import { Heading } from '../..';
-import ShopItem from '../ShopItem';
+import { ShopItem } from '../ShopItem';
 
 import './SelectorShopItem.css';
 
@@ -23,7 +23,7 @@ type SelectorShopItemProps = {
   purchasedItems: number[];
 };
 
-const SelectorShopItemComponent: FC<SelectorShopItemProps> = (props) => {
+export const SelectorShopItem: FC<SelectorShopItemProps> = (props) => {
   const { title, selected, items, selectFunction, partKey, purchasedItems } = props;
 
   return (
@@ -68,5 +68,3 @@ const SelectorShopItemComponent: FC<SelectorShopItemProps> = (props) => {
     </div>
   );
 };
-
-export default SelectorShopItemComponent;

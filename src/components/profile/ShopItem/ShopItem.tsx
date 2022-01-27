@@ -1,10 +1,11 @@
 import React, { FC, useEffect, useRef } from 'react';
 import cn from 'classnames';
 
-import './ShopItem.css';
 import elSource from '../../../assets/elexir.png';
 import coinSource from '../../../assets/coin.png';
 import awardSource from '../../../assets/award.png';
+
+import './ShopItem.css';
 
 type ShopItemProps = {
   name: string;
@@ -24,11 +25,13 @@ type ImgItemProps = {
 
 const ImgItem: FC<ImgItemProps> = (props) => {
   const { itemType } = props;
+
   if (itemType === 'part') return null;
-  return <img src={elSource} width={75} height={75} className={'img'} alt={'elixir'} />;
+
+  return <img src={elSource} width={75} height={75} className="img" alt="elixir" />;
 };
 
-const ShopItemComponent: FC<ShopItemProps> = (props) => {
+export const ShopItem: FC<ShopItemProps> = (props) => {
   const { isSelected, isPurchased, name, desc, itemPrice, itemCondition, selectFunction, partKey, itemKey } = props;
   const ref = useRef(null);
   const item = JSON.parse(desc);
@@ -77,5 +80,3 @@ const ShopItemComponent: FC<ShopItemProps> = (props) => {
     </div>
   );
 };
-
-export default ShopItemComponent;
