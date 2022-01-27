@@ -1,29 +1,29 @@
 import React, { FC } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import ErrorBoundary from '../ErrorBoundary';
+import ErrorBoundary from '../components/ErrorBoundary';
 
-import ForumPage from '../../pages/ForumPage';
-import GamePage from '../../pages/GamePage';
-import LoginPage from '../../pages/LoginPage';
-import MainPage from '../../pages/MainPage';
-import ProfilePage from '../../pages/ProfilePage';
-import SignupPage from '../../pages/SignupPage';
-import MessagePage from '../../pages/MessagePage';
-import GameTypePage from '../../pages/GameTypePage';
+import ForumPage from '../pages/ForumPage';
+import GamePage from '../pages/GamePage';
+import LoginPage from '../pages/LoginPage';
+import MainPage from '../pages/MainPage';
+import ProfilePage from '../pages/ProfilePage';
+import SignupPage from '../pages/SignupPage';
+import MessagePage from '../pages/MessagePage';
+import GameTypePage from '../pages/GameTypePage';
 
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../hooks/useAuth';
 
 // обратите внимание как просто можно указывать путь до компонента, если перейти с дефолтных импортов на обычные
 // и создать набор индексных файлов в папках внутри components
-import { Modal } from '..';
+import { Modal } from '../components';
 
-import AuthorizedOnly from '../auth/AuthorizedOnly';
-import GuestOnly from '../auth/GuestOnly';
+import AuthorizedOnly from '../components/auth/AuthorizedOnly';
+import GuestOnly from '../components/auth/GuestOnly';
 
 import './App.css';
 
-const App: FC = () => {
+export const App: FC = () => {
   const { handleAction } = useAuth();
 
   return (
@@ -105,5 +105,3 @@ const App: FC = () => {
     </div>
   );
 };
-
-export default App;
