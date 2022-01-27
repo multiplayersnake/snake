@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import './Form.css';
 
-const Form: FC<FormHTMLAttributes<HTMLFormElement>> = (props) => {
+export const Form: FC<FormHTMLAttributes<HTMLFormElement>> = (props) => {
   const { className, children, ...rest } = props;
 
   const onSubmit = useCallback(
@@ -20,5 +20,3 @@ const Form: FC<FormHTMLAttributes<HTMLFormElement>> = (props) => {
     </form>
   );
 };
-
-export default Form;
