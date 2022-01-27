@@ -9,7 +9,7 @@ const GUEST_DEFAULT_ROUTE = '/login';
 // теперь AuthorizedOnly и GuestOnly - это просто компоненты,
 // нужные данные они берут напрямую из redux
 
-const AuthorizedOnly: FC = ({ children }) => {
+export const AuthorizedOnly: FC = ({ children }) => {
   const authorizationChecked = useSelector<RootState, boolean>(getAuthorizationChecked);
   const authorized = useSelector<RootState, boolean>(getAuthorized);
 
@@ -23,5 +23,3 @@ const AuthorizedOnly: FC = ({ children }) => {
 
   return <>{children}</>;
 };
-
-export default AuthorizedOnly;

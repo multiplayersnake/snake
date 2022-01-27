@@ -16,10 +16,7 @@ import useAuth from '../hooks/useAuth';
 
 // обратите внимание как просто можно указывать путь до компонента, если перейти с дефолтных импортов на обычные
 // и создать набор индексных файлов в папках внутри components
-import { Modal } from '../components';
-
-import AuthorizedOnly from '../components/auth/AuthorizedOnly';
-import GuestOnly from '../components/auth/GuestOnly';
+import { Modal, AuthorizedOnly, GuestOnly } from '../components';
 
 import './App.css';
 
