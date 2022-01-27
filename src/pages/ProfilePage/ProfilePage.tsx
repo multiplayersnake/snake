@@ -4,13 +4,10 @@ import cn from 'classnames';
 
 // обратите внимание, как удобно указывать в одном импорте всё, что имеет отношение к redux
 import { RootState, getUser, getUserNickname, getUserGameParameters, setUser, showModal } from '../../store';
+import { NavButton, Scroll, SelectorShopItem } from '../../components';
 
 import UserAPI from '../../api/UserAPI';
 import { mapToRawUser } from '../../api/AuthAPI';
-
-import NavButton from '../../components/Button/NavButton';
-import Scroll from '../../components/Scroll/Scroll';
-import SelectorShopItemComponent from '../../components/ProfilePageComponents/SelectorShopItem';
 
 import coinSource from '../../assets/coin.png';
 import awardSource from '../../assets/award.png';
@@ -96,7 +93,7 @@ const ProfilePage: FC = () => {
       <div className={cn('items-profile')}>
         <Scroll title={''} mode={'First'} id={'profile'}>
           {part_arr.map((value, index) => (
-            <SelectorShopItemComponent
+            <SelectorShopItem
               key={index}
               title={value.name}
               selected={item_arr[index][gameParameters?.parts[index]]}

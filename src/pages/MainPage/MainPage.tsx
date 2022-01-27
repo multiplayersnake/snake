@@ -1,9 +1,6 @@
 import React, { FC } from 'react';
 
-import Heading from '../../components/Heading';
-import MainMenuItem from '../../components/MainPageComponents/MainMenuItem';
-import InfoPanel from '../../components/MainPageComponents/InfoPanel';
-import LeaderBoard from '../../components/MainPageComponents/LeaderBoard';
+import { Heading, MainMenuItem, InfoPanel, LeaderBoard } from '../../components';
 import { MenuAction } from '../../types';
 
 import menuItems from './menuItems';

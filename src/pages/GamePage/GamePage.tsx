@@ -1,11 +1,9 @@
 import React, { FC, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Canvas from '../../components/GamePageComponents/Canvas';
-import EndGame from '../../components/GamePageComponents/EndGame';
-import { clearGame } from '../../core/core';
-
 import { hideEndGame, getIsGameOver, RootState, saveGameResults, getEndGameCoins } from '../../store';
+import { Canvas, EndGame } from '../../components';
+import { clearGame } from '../../core/core';
 
 import './GamePage.css';
 

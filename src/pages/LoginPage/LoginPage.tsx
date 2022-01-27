@@ -1,11 +1,6 @@
 import React, { FC, FormEvent, useCallback } from 'react';
 
-import Button from '../../components/Button';
-import NavButton from '../../components/Button/NavButton';
-import Form from '../../components/Form';
-import Heading from '../../components/Heading';
-import Input from '../../components/Input';
-
+import { Button, NavButton, Input, Form, Heading } from '../../components';
 import { MenuAction, MenuActionType } from '../../types';
 
 import './LoginPage.css';
