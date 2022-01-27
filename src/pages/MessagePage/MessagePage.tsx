@@ -3,8 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import cn from 'classnames';
 
 import { formatDateTime } from '../../utils';
-import { Button, NavButton, Scroll, Heading } from '../../components';
-import Message from '../../components/ForumPageComponents/Message';
+import { Button, NavButton, Scroll, Heading, Message } from '../../components';
 
 import { out_arr } from './mock';
 import { topic_arr } from './mock';

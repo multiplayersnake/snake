@@ -14,7 +14,7 @@ type TopicProps = {
   href: string;
 };
 
-const Topic: FC<TopicProps> = (props) => {
+export const Topic: FC<TopicProps> = (props) => {
   const { dateTime, author, mesCount, newCount, content, href } = props;
   let newElem = '';
   if (newCount > 0) newElem = ` (новых ${newCount})`;
@@ -46,5 +46,3 @@ const Topic: FC<TopicProps> = (props) => {
     </a>
   );
 };
-
-export default Topic;

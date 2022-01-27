@@ -9,7 +9,7 @@ type MessageProps = {
   content: string;
 };
 
-const Message: FC<MessageProps> = (props) => {
+export const Message: FC<MessageProps> = (props) => {
   const { dateTime, author, content } = props;
 
   return (
@@ -21,5 +21,3 @@ const Message: FC<MessageProps> = (props) => {
     </div>
   );
 };
-
-export default Message;

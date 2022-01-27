@@ -3,10 +3,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
 
-import { Button, Input, Form, Heading } from '../components';
+import { Button, Input, Form, Heading, Message, Topic } from '../components';
+
 import TextArea from '../components/TextArea';
-import Message from '../components/ForumPageComponents/Message';
-import Topic from '../components/ForumPageComponents/Topic';
 import InfoPanel from '../components/MainPageComponents/InfoPanel';
 import MainMenuItem from '../components/MainPageComponents/MainMenuItem';
 
