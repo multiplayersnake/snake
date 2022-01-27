@@ -7,7 +7,7 @@ import { Button, NavButton, Heading, Scroll, Topic } from '../../components';
 import { out_arr } from './mock';
 
 // TODO переработать
-import '../../components/TextArea/TextArea.css';
+import '../../components/common/TextArea/TextArea.css';
 import './ForumPage.css';
 
 const ForumPage: FC = () => {

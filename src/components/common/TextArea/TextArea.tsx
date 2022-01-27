@@ -7,7 +7,7 @@ type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   label?: string;
 };
 
-const TextArea: FC<TextAreaProps> = (props) => {
+export const TextArea: FC<TextAreaProps> = (props) => {
   const { label, className, ...rest } = props;
 
   return (
@@ -17,5 +17,3 @@ const TextArea: FC<TextAreaProps> = (props) => {
     </label>
   );
 };
-
-export default TextArea;

@@ -9,7 +9,7 @@ import { out_arr } from './mock';
 import { topic_arr } from './mock';
 
 // TODO переработать
-import '../../components/TextArea/TextArea.css';
+import '../../components/common/TextArea/TextArea.css';
 import './MessagePage.css';
 
 const ForumPage: FC = () => {
