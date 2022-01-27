@@ -1,8 +1,6 @@
 import React, { FC } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import ErrorBoundary from '../components/ErrorBoundary';
-
 import ForumPage from '../pages/ForumPage';
 import GamePage from '../pages/GamePage';
 import LoginPage from '../pages/LoginPage';
@@ -16,7 +14,7 @@ import useAuth from '../hooks/useAuth';
 
 // обратите внимание как просто можно указывать путь до компонента, если перейти с дефолтных импортов на обычные
 // и создать набор индексных файлов в папках внутри components
-import { Modal, AuthorizedOnly, GuestOnly } from '../components';
+import { ErrorBoundary, Modal, AuthorizedOnly, GuestOnly } from '../components';
 
 import './App.css';
 

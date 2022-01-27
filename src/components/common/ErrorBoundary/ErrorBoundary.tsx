@@ -7,7 +7,7 @@ type ErrorBoundaryState = {
   hasError: boolean;
 };
 
-class ErrorBoundary extends React.Component<unknown, ErrorBoundaryState> {
+export class ErrorBoundary extends React.Component<unknown, ErrorBoundaryState> {
   public state = { hasError: false };
 
   private static getDerivedStateFromError() {
@@ -30,5 +30,3 @@ class ErrorBoundary extends React.Component<unknown, ErrorBoundaryState> {
     return this.props.children;
   }
 }
-
-export default ErrorBoundary;
