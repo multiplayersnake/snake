@@ -5,7 +5,7 @@ import './Scroll.css';
 import Heading from '../Heading';
 
 type ScrollProps = {
-  title: string;
+  title?: string;
   mode: 'First' | 'Last';
   id: string;
 };
@@ -13,7 +13,7 @@ type ScrollProps = {
 const ScrollComponent: FC<ScrollProps> = (props) => {
   const contentRef = useRef(null);
   const trackRef = useRef(null);
-  const { children, title, mode, id } = props;
+  const { children, title = '', mode, id } = props;
   let dragMode = 0;
   let dragStartY = 0;
 

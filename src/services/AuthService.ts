@@ -1,8 +1,9 @@
 import { FormEvent } from 'react';
-import authAPI, { SignInRequest, SignUpRequest } from '../api/AuthAPI';
-import handleAPIError from '../api/handleAPIError';
 
-import { User } from '../types/models';
+import { authAPI, SignInRequest, SignUpRequest, mapToGameUser, mapToRawUser, SignUpFormData } from '../api/AuthAPI';
+import handleAPIError from '../api/handleAPIError';
+import { GameUser } from '../types';
+
 import getSubmittedFormData from './getSubmittedFormData';
 
 class AuthService {
@@ -17,10 +18,10 @@ class AuthService {
 
   public static async signUp(e: FormEvent): Promise<void> {
     try {
-      const newUserData = getSubmittedFormData<SignUpRequest>(e);
-      const placeholderData = { second_name: '', phone: '0000000000' };
-      const data = { ...newUserData, ...placeholderData };
-      await authAPI.signUp(data);
+      const newUserData = getSubmittedFormData<SignUpFormData>(e) as unknown as GameUser;
+      const rawUserData = mapToRawUser(newUserData) as unknown as SignUpRequest;
+
+      await authAPI.signUp(rawUserData);
     } catch (e) {
       handleAPIError(e as Error);
       alert(e as Error);
@@ -35,10 +36,12 @@ class AuthService {
     }
   }
 
-  public static async checkAuthorization(): Promise<User | null> {
+  public static async checkAuthorization(): Promise<GameUser | null> {
     try {
-      const user = await authAPI.getUser();
-      return user;
+      const rawUser = await authAPI.getUser();
+      const gameUser = mapToGameUser(rawUser);
+
+      return gameUser;
     } catch (e) {
       handleAPIError(e as Error);
       return null;

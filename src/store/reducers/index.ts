@@ -1,12 +1,7 @@
-import { combineReducers } from 'redux';
-import { userReducer } from './user';
-import { alertReducer } from './alert';
-import { confirmReducer } from './confirm';
-import { endGameReducer } from './endGame';
+// Такие индексные файлы позволяют импортировать все нужные элементы стора (в основном экшенкриэйторы и типы)
+// просто указав путь до папки store. В большом приложении это очень удобно.
 
-export default combineReducers({
-  user: userReducer,
-  alert: alertReducer,
-  confirm: confirmReducer,
-  endGame: endGameReducer
-});
+export * from './rootReducer';
+export * from './user';
+export * from './modal';
+export * from './endGame';

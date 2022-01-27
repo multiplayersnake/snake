@@ -4,18 +4,17 @@ import Heading from '../../components/Heading';
 import MainMenuItem from '../../components/MainPageComponents/MainMenuItem';
 import InfoPanel from '../../components/MainPageComponents/InfoPanel';
 import LeaderBoard from '../../components/MainPageComponents/LeaderBoard';
-import { MenuAction } from '../../types/mainMenu';
+import { MenuAction } from '../../types';
 
 import menuItems from './menuItems';
 
 import './MainPage.css';
 
 type MainPageProps = {
-  authorized: boolean;
   onAction: (action: MenuAction) => void;
 };
 
-const MainPage: FC<MainPageProps> = ({ onAction, authorized }) => {
+const MainPage: FC<MainPageProps> = ({ onAction }) => {
   return (
     <div className="main-page">
       <Heading tag="h1">Боевые змеи</Heading>
@@ -23,7 +22,7 @@ const MainPage: FC<MainPageProps> = ({ onAction, authorized }) => {
 
       <div className="main-page-menu">
         {menuItems.map((item) => (
-          <MainMenuItem key={item.title} item={item} onAction={onAction} authorized={authorized} />
+          <MainMenuItem key={item.title} item={item} onAction={onAction} />
         ))}
       </div>
       <InfoPanel />

@@ -1,79 +1,50 @@
-import React, { useEffect, useCallback, useState, useMemo, FormEvent, ReactElement, FC } from 'react';
-import { Navigate } from 'react-router-dom';
+import React, { useEffect, useCallback, FormEvent } from 'react';
+import { useDispatch } from 'react-redux';
 
 import AuthService from '../../services/AuthService';
-import { MenuActionType, MenuAction } from '../../types/mainMenu';
-import { User } from '../../types/models';
+import { MenuActionType, MenuAction } from '../../types';
+import { setUser } from '../../store';
 
 type UseAuth = {
-  authorized: boolean;
-  user: User;
-  checkAuthorization: () => void;
   handleAction: (action: MenuAction) => void;
-  AuthorizedOnly: FC;
-  GuestOnly: FC;
 };
 
-const AUTHORIZED_DEFAULT_ROUTE = '/';
-const GUEST_DEFAULT_ROUTE = '/login';
-
 function useAuth(): UseAuth {
-  const [authorizationChecked, setAuthorizationChecked] = useState<boolean>(false);
-  const [user, setUser] = useState<User | null>(null);
-  const authorized = useMemo(() => Boolean(user), [user]);
-
-  const AuthorizedOnly = useCallback(
-    ({ children }): ReactElement => {
-      if (!authorizationChecked) {
-        return null;
-      }
-
-      if (!authorized) {
-        return <Navigate to={GUEST_DEFAULT_ROUTE} />;
-      }
-
-      return children;
-    },
-    [authorizationChecked, authorized]
-  );
-
-  const GuestOnly = useCallback(
-    ({ children }): ReactElement => {
-      if (!authorizationChecked) {
-        return null;
-      }
-
-      if (authorized) {
-        return <Navigate to={AUTHORIZED_DEFAULT_ROUTE} />;
-      }
-
-      return children;
-    },
-    [authorizationChecked, authorized]
-  );
+  const dispatch = useDispatch();
 
   const logOut = useCallback(async () => {
+    // TODO эту логику надо попробовать перенести в redux с помощью redux-thunk
     await AuthService.logOut();
-    setUser(null);
-  }, []);
+    dispatch(setUser(null));
+  }, [dispatch]);
 
   const checkAuthorization = useCallback(async () => {
-    const user = await AuthService.checkAuthorization();
-    setUser(user);
-    setAuthorizationChecked(true);
-  }, []);
+    // TODO эту логику надо попробовать перенести в redux с помощью redux-thunk
+    const gameUser = await AuthService.checkAuthorization();
 
-  const logIn = useCallback(async (e: FormEvent) => {
-    await AuthService.signIn(e);
-    const user = await AuthService.checkAuthorization();
-    setUser(user);
-  }, []);
+    dispatch(setUser(gameUser));
+  }, [dispatch]);
 
-  const signUp = useCallback(async (e: FormEvent) => {
-    await AuthService.signUp(e);
-    const user = await AuthService.checkAuthorization();
-    setUser(user);
-  }, []);
+  const logIn = useCallback(
+    async (e: FormEvent) => {
+      // TODO эту логику надо попробовать перенести в redux с помощью redux-thunk
+      await AuthService.signIn(e);
+      const gameUser = await AuthService.checkAuthorization();
+
+      dispatch(setUser(gameUser));
+    },
+    [dispatch]
+  );
+
+  const signUp = useCallback(
+    async (e: FormEvent) => {
+      await AuthService.signUp(e);
+      const gameUser = await AuthService.checkAuthorization();
+
+      dispatch(setUser(gameUser));
+    },
+    [dispatch]
+  );
 
   const handleAction = useCallback(
     (action: MenuAction) => {
@@ -94,14 +65,14 @@ function useAuth(): UseAuth {
           console.log('Unknown main menu action:', action);
       }
     },
-    [logIn, logOut]
+    [logIn, logOut, signUp]
   );
 
   useEffect(() => {
     void checkAuthorization();
   }, [checkAuthorization]);
 
-  return { AuthorizedOnly, GuestOnly, authorized, user, checkAuthorization, handleAction };
+  return { handleAction };
 }
 
 export default useAuth;

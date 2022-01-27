@@ -1,72 +1,82 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
-import { RootState } from '../../index';
+
+// обратите внимание, как удобно указывать в одном импорте всё, что имеет отношение к redux
+import { RootState, getUser, getUserNickname, getUserGameParameters, setUser, showModal } from '../../store';
 
 import UserAPI from '../../api/UserAPI';
-import './ProfilePage.css';
+import { mapToRawUser } from '../../api/AuthAPI';
+
 import NavButton from '../../components/Button/NavButton';
 import Scroll from '../../components/Scroll/Scroll';
+import SelectorShopItemComponent from '../../components/ProfilePageComponents/SelectorShopItem';
+
 import coinSource from '../../assets/coin.png';
 import awardSource from '../../assets/award.png';
 
 import { part_arr } from '../../database/mock';
 import { item_arr } from '../../database/mock';
-import SelectorShopItemComponent from '../../components/ProfilePageComponents/SelectorShopItem';
-import { User } from '../../types/models';
-import { GameParameters } from '../../types/models';
 
-import { showAlert } from '../../store/reducers/alert';
-import { showConfirm } from '../../store/reducers/confirm';
+import { GameParameters, GameUser } from '../../types';
+
+import './ProfilePage.css';
 
 const ProfilePage: FC = () => {
-  // Игровые данные пользователя договорились пока хранить в поле second_name
-  const userData: User = useSelector((state: RootState) => state['user']['item']);
-  const userParameters: GameParameters = JSON.parse(userData.second_name);
-  const user_selected = userParameters.parts;
-
-  const [key, setKey] = useState(0);
+  const userData = useSelector<RootState, GameUser>(getUser);
+  const nickname = useSelector<RootState, string>(getUserNickname);
+  const gameParameters = useSelector<RootState, GameParameters>(getUserGameParameters);
 
   const dispatch = useDispatch();
 
   const saveSelectItem = useCallback(
-    (partKey: number, ItemKey: number, isPurchased: boolean) => {
-      const item = item_arr[partKey][ItemKey];
-      if (isPurchased) userParameters.coins -= item.itemPrice;
-      userParameters.parts[partKey] = ItemKey;
-      userParameters.byItems[partKey].push(ItemKey);
-      userData.second_name = JSON.stringify(userParameters);
-      UserAPI.updateProfile(userData).then(() => {
-        dispatch({ type: 'SET_USER_ITEM', item: userData });
+    (partKey: number, itemKey: number, isPurchased: boolean) => {
+      const item = item_arr[partKey][itemKey];
+
+      const coinsUpdated = !isPurchased ? gameParameters.coins - item.itemPrice : gameParameters.coins;
+      const partsUpdated = [...gameParameters.parts];
+      partsUpdated[partKey] = itemKey;
+
+      gameParameters.byItems[partKey].push(itemKey);
+
+      const gameParametersUpdated = { ...gameParameters, coins: coinsUpdated, parts: partsUpdated };
+      const userDataUpdated = { ...userData, gameParameters: gameParametersUpdated };
+
+      const rawUser = mapToRawUser(userDataUpdated);
+
+      // TODO rework to async/await
+      UserAPI.updateProfile(rawUser).then(() => {
+        dispatch(setUser(userDataUpdated));
       });
     },
-    [dispatch, userData, userParameters]
+    [dispatch, gameParameters, userData]
   );
 
   const setSelectItem = useCallback(
-    (partKey: number, ItemKey: number) => {
-      if (userParameters.byItems[partKey].includes(ItemKey)) {
-        saveSelectItem(partKey, ItemKey, true);
-        setKey(key + 1);
+    (partKey: number, itemKey: number) => {
+      if (gameParameters.byItems[partKey].includes(itemKey)) {
+        saveSelectItem(partKey, itemKey, true);
       } else {
-        const item = item_arr[partKey][ItemKey];
-        if (item.itemPrice > userParameters.coins) {
-          dispatch(showAlert('Недостаточно монет для покупки'));
+        const item = item_arr[partKey][itemKey];
+
+        if (item.itemPrice > gameParameters.coins) {
+          dispatch(showModal('Недостаточно монет для покупки'));
           return;
         }
-        if (item.itemCondition > userParameters.awards) {
-          dispatch(showAlert('Недостаточно наград для покупки'));
+
+        if (item.itemCondition > gameParameters.awards) {
+          dispatch(showModal('Недостаточно наград для покупки'));
           return;
         }
+
         dispatch(
-          showConfirm(`Хотите купить "${item.name}" за "${item.itemPrice}"?`, () => {
-            saveSelectItem(partKey, ItemKey, false);
-            setKey(key + 1);
+          showModal(`Хотите купить "${item.name}" за "${item.itemPrice}"?`, () => {
+            saveSelectItem(partKey, itemKey, false);
           })
         );
       }
     },
-    [dispatch, key, saveSelectItem, userParameters.awards, userParameters.coins, userParameters.byItems]
+    [gameParameters.byItems, gameParameters.coins, gameParameters.awards, saveSelectItem, dispatch]
   );
 
   return (
@@ -75,12 +85,12 @@ const ProfilePage: FC = () => {
         В меню
       </NavButton>
       <div className={cn('title-profile')}>
-        <div className={cn('heading', 'h6')}>Позывной: {userData.first_name}</div>
+        <div className={cn('heading', 'h6')}>Позывной: {nickname}</div>
         <div className={cn('heading', 'h6')}>
-          Валюта: {userParameters.coins} <img src={coinSource} className={cn('img-in-line')} alt={'coin'} />
+          Валюта: {gameParameters?.coins} <img src={coinSource} className={cn('img-in-line')} alt={'coin'} />
         </div>
         <div className={cn('heading', 'h6')}>
-          Награды: {userParameters.awards} <img src={awardSource} className={cn('img-in-line')} alt={'award'} />
+          Награды: {gameParameters?.awards} <img src={awardSource} className={cn('img-in-line')} alt={'award'} />
         </div>
       </div>
       <div className={cn('items-profile')}>
@@ -89,11 +99,11 @@ const ProfilePage: FC = () => {
             <SelectorShopItemComponent
               key={index}
               title={value.name}
-              selected={item_arr[index][user_selected[index]]}
+              selected={item_arr[index][gameParameters?.parts[index]]}
               items={item_arr[index]}
               selectFunction={setSelectItem}
               partKey={index}
-              purchasedItems={userParameters.byItems[index]}
+              purchasedItems={gameParameters?.byItems[index]}
             />
           ))}
         </Scroll>

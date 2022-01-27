@@ -2,30 +2,32 @@ import React, { FC } from 'react';
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
 
-import './InfoPanel.css';
+import { GameParameters } from '../../../types';
+
 import coinSource from '../../../assets/coin.png';
 import awardSource from '../../../assets/award.png';
-import { GameParameters, User } from '../../../types/models';
+
+import { getUserNickname, getUserGameParameters, RootState } from '../../../store';
+
+import './InfoPanel.css';
 
 const InfoPanel: FC = () => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const userData: User = useSelector((state) => state['user']['item']);
-  const userParameters: GameParameters = userData ? JSON.parse(userData.second_name) : {};
+  const displayName = useSelector<RootState, string>(getUserNickname);
+  const gameParameters = useSelector<RootState, GameParameters>(getUserGameParameters);
 
   return (
     <div className={cn('panel', 'left-panel')}>
       <div className={cn('heading', 'h6')}>Позывной:</div>
-      <div className={cn('heading', 'h6')}>{userData?.first_name}</div>
+      <div className={cn('heading', 'h6')}>{displayName}</div>
       <div className={'flex-wrapper'} />
       <div>Валюта:</div>
       <div>
-        {userParameters?.coins} <img src={coinSource} className={cn('img-in-line')} alt={'coin'} />
+        {gameParameters?.coins} <img src={coinSource} className={cn('img-in-line')} alt={'coin'} />
       </div>
       <div className={'flex-wrapper'} />
       <div>Награды: </div>
       <div>
-        {userParameters?.awards} <img src={awardSource} className={cn('img-in-line')} alt={'award'} />
+        {gameParameters?.awards} <img src={awardSource} className={cn('img-in-line')} alt={'award'} />
       </div>
     </div>
   );
