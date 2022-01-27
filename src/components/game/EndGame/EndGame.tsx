@@ -9,7 +9,7 @@ import awardSource from '../../../assets/award.png';
 
 import './EndGame.css';
 
-const EndGame: FC = () => {
+export const EndGame: FC = () => {
   const time = useSelector<RootState, string>(getEndGameTime);
   const place = useSelector<RootState, number>(getEndGamePlace);
   const coins = useSelector<RootState, number>(getEndGameCoins);

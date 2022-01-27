@@ -18,7 +18,7 @@ type OwnProps = React.CanvasHTMLAttributes<HTMLCanvasElement>;
 
 type Props = OwnProps;
 
-const Canvas: FC<Props> = () => {
+export const Canvas: FC<Props> = () => {
   const dispatch = useDispatch();
 
   const userData = useSelector<RootState, GameUser>(getUser);
@@ -75,5 +75,3 @@ const Canvas: FC<Props> = () => {
 
   return <canvas className="canvas" ref={ref} onClick={onClick} width={1000} height={600} />;
 };
-
-export default Canvas;
