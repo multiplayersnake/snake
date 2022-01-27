@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
 
-import Button from '../components/Button';
+import { Button } from '../components';
 import Input from '../components/Input';
 import Heading from '../components/Heading';
 import TextArea from '../components/TextArea';

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 
-import NavButton from '../../Button/NavButton';
+import { NavButton } from '../..';
 import Heading from '../../Heading';
 
 import coinSource from '../../../assets/coin.png';

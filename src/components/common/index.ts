@@ -2,3 +2,4 @@
 // компонент просто указав путь до папки components
 
 export * from './Modal';
+export * from './Button';

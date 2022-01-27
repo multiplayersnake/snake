@@ -9,7 +9,7 @@ type NavButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   to: string;
 };
 
-const NavButton: FC<NavButtonProps> = (props) => {
+export const NavButton: FC<NavButtonProps> = (props) => {
   const { to, children, className, ...rest } = props;
   const navigate = useNavigate();
   const handleClick = useCallback(

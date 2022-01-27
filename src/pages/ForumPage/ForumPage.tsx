@@ -2,15 +2,16 @@ import React, { FC, useRef, useState } from 'react';
 import cn from 'classnames';
 import { formatDateTime } from '../../utils';
 
-import Button from '../../components/Button';
+import { Button, NavButton } from '../../components';
 import Heading from '../../components/Heading';
 import Topic from '../../components/ForumPageComponents/Topic';
 import Scroll from '../../components/Scroll';
 
+import { out_arr } from './mock';
+
+// TODO переработать
 import '../../components/TextArea/TextArea.css';
 import './ForumPage.css';
-import { out_arr } from './mock';
-import NavButton from '../../components/Button/NavButton';
 
 const ForumPage: FC = () => {
   const contentRef = useRef(null);

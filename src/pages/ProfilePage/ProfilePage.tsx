@@ -8,7 +8,7 @@ import { RootState, getUser, getUserNickname, getUserGameParameters, setUser, sh
 import UserAPI from '../../api/UserAPI';
 import { mapToRawUser } from '../../api/AuthAPI';
 
-import NavButton from '../../components/Button/NavButton';
+import { NavButton } from '../../components';
 import Scroll from '../../components/Scroll/Scroll';
 import SelectorShopItemComponent from '../../components/ProfilePageComponents/SelectorShopItem';
 

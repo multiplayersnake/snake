@@ -3,16 +3,17 @@ import { useSearchParams } from 'react-router-dom';
 import cn from 'classnames';
 import { formatDateTime } from '../../utils';
 
-import Button from '../../components/Button';
+import { Button, NavButton } from '../../components';
 import Heading from '../../components/Heading';
 import Message from '../../components/ForumPageComponents/Message';
 import Scroll from '../../components/Scroll';
 
-import './MessagePage.css';
-import '../../components/TextArea/TextArea.css';
 import { out_arr } from './mock';
 import { topic_arr } from './mock';
-import NavButton from '../../components/Button/NavButton';
+
+// TODO переработать
+import '../../components/TextArea/TextArea.css';
+import './MessagePage.css';
 
 const ForumPage: FC = () => {
   const contentRef = useRef(null);

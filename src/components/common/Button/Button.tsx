@@ -5,7 +5,7 @@ import './Button.css';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button: FC<ButtonProps> = (props) => {
+export const Button: FC<ButtonProps> = (props) => {
   const { type = 'button', children, className, ...rest } = props;
 
   return (

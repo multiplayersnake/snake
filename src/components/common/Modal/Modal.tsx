@@ -10,7 +10,7 @@ import {
   hideModal
 } from '../../../store';
 
-import Button from '../../Button';
+import { Button } from '../..';
 import Heading from '../../Heading';
 
 import './Modal.css';

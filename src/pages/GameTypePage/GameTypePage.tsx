@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import NavButton from '../../components/Button/NavButton';
+import { NavButton } from '../../components';
 
 import coinSource from '../../assets/coin.png';
 import awardSource from '../../assets/award.png';
