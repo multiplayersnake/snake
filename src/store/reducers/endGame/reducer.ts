@@ -5,7 +5,7 @@ const defaultState: EndGameState = {
   place: 0,
   coins: 0,
   awards: 0,
-  isVisible: false
+  isGameOver: false
 };
 
 export function endGameReducer(state: EndGameState = defaultState, action: EndGameAction): EndGameState {
@@ -13,10 +13,10 @@ export function endGameReducer(state: EndGameState = defaultState, action: EndGa
 
   switch (type) {
     case EndGameActionType.ShowEndGame:
-      return { ...state, ...payload, isVisible: true };
+      return { ...state, ...payload, isGameOver: true };
 
     case EndGameActionType.HideEndGame:
-      return { ...state, isVisible: false };
+      return { ...state, isGameOver: false };
 
     default:
       return state;

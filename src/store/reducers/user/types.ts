@@ -1,4 +1,4 @@
-import { Nullable, GameUser } from '../../../types';
+import { Nullable, GameUser, GameParameters } from '../../../types';
 import { BaseAction } from '../../types';
 
 export type UserState = {
@@ -6,16 +6,19 @@ export type UserState = {
 };
 
 export enum UserActionType {
-  SetUser = 'SetUser'
+  SetUser = 'SetUser',
+  MergeGameParameters = 'MergeGameParameters',
+  SaveGameResults = 'SaveGameResults'
 }
 
+export interface UserAction extends BaseAction<UserActionType> {
+  payload: GameUser | Partial<GameParameters>;
+}
+
+// TODO удалить, если не понадобится
 export enum VacancyWorkingActivitiesTabStep {
   ActivityStatusEdit = 'ActivityStatusEdit',
   ActivityTimeEdit = 'ActivityTimeEdit',
   TableView = 'TableView',
   TransferOrRemoval = 'TransferOrRemoval'
-}
-
-export interface UserAction extends BaseAction<UserActionType> {
-  payload: GameUser;
 }

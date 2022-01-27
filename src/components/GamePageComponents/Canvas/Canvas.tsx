@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { startGame } from '../../../core/core';
 
 import { GameParameters, GameUser } from '../../../types';
-import { getUser, getUserGameParameters, getUserNickname, RootState, setUser, showEndGame } from '../../../store';
+import { getUser, getUserGameParameters, getUserNickname, RootState, showEndGame } from '../../../store';
 
 import { part_arr } from '../../../database/mock';
 import { item_arr } from '../../../database/mock';
@@ -37,21 +37,19 @@ const Canvas: FC<Props> = () => {
 
   const endGame = useCallback(
     (time: string, place: number, coins: number, awards: number) => {
+      // dispatch(saveGameResults({ coins }));
+      // TODO сохранить результаты игры здесь в стор здесь нельзя - данные пользователя обновятся и компонент перерендерится - получим бесконечный цикл :-\
+      // поэтому сохраняем их при открытии компонента EndGame
+      // (!) это важный момент, который надо осознать при работе с react (!)
       dispatch(showEndGame(time, place, coins, awards));
-      // ВАЖНОЕ ЗАМЕЧАНИЕ: !!!!
-      // ВАЖНОЕ ЗАМЕЧАНИЕ: нельзя мутировать стейт, который достали из redux
-      // ВАЖНОЕ ЗАМЕЧАНИЕ: !!!!
-      const coinsUpdated = gameParameters.coins + coins;
 
+      const coinsUpdated = gameParameters.coins + coins;
       const gameParametersUpdated = { ...gameParameters, coins: coinsUpdated };
       const userDataUpdated = { ...userData, gameParameters: gameParametersUpdated };
 
+      // сохранить пользователя на сервер можно - это не вызывает никаких побочных эффектов
       const rawUser = mapToRawUser(userDataUpdated);
-
-      // TODO rework to async/await
-      UserAPI.updateProfile(rawUser).then(() => {
-        dispatch(setUser(userDataUpdated));
-      });
+      void UserAPI.updateProfile(rawUser);
     },
     [dispatch, userData, gameParameters]
   );

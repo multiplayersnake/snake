@@ -5,7 +5,7 @@ export type EndGameState = {
   place: number;
   coins: number;
   awards: number;
-  isVisible: boolean;
+  isGameOver: boolean;
 };
 
 export enum EndGameActionType {
@@ -14,5 +14,5 @@ export enum EndGameActionType {
 }
 
 export interface EndGameAction extends BaseAction<EndGameActionType> {
-  payload?: Omit<EndGameState, 'isVisible'>;
+  payload?: Omit<EndGameState, 'isGameOver'>;
 }
