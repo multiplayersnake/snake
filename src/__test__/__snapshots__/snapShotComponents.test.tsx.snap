@@ -1,0 +1,166 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button 1`] = `
+<button
+  className="button"
+  onClick={[Function]}
+  type="button"
+>
+  Test Button
+</button>
+`;
+
+exports[`Form 1`] = `
+<form
+  className="form"
+  onSubmit={[Function]}
+>
+  Test Form
+</form>
+`;
+
+exports[`Heading 1`] = `
+<h1
+  className="heading h1"
+>
+  Test Heading
+</h1>
+`;
+
+exports[`InfoPanel 1`] = `
+<div
+  className="panel left-panel"
+>
+  <div
+    className="heading h6"
+  >
+    Позывной:
+  </div>
+  <div
+    className="heading h6"
+  />
+  <div
+    className="flex-wrapper"
+  />
+  <div>
+    Валюта:
+  </div>
+  <div>
+     
+    <img
+      alt="coin"
+      className="img-in-line"
+      src={Object {}}
+    />
+  </div>
+  <div
+    className="flex-wrapper"
+  />
+  <div>
+    Награды: 
+  </div>
+  <div>
+     
+    <img
+      alt="award"
+      className="img-in-line"
+      src={Object {}}
+    />
+  </div>
+</div>
+`;
+
+exports[`Input 1`] = `
+<label
+  className="input-container"
+>
+  <input
+    className="input"
+    onChange={[Function]}
+    onClick={[Function]}
+  />
+  <span
+    className="input-label"
+  >
+    Input
+  </span>
+</label>
+`;
+
+exports[`MainMenuItem 1`] = `null`;
+
+exports[`Message 1`] = `
+<div
+  className="message text-field"
+>
+  <div
+    className="message-author"
+  >
+    
+        
+    
+  </div>
+  <div
+    className="message-content text-field"
+  >
+    
+  </div>
+</div>
+`;
+
+exports[`TextArea 1`] = `
+<label
+  className="text-area-container"
+>
+  <span
+    className="text-area-label"
+  >
+    Test TextArea
+  </span>
+  <textarea
+    className="text-area"
+  />
+</label>
+`;
+
+exports[`Topic 1`] = `
+<a
+  href=""
+  onClick={[Function]}
+>
+  <div
+    className="topic text-field"
+  >
+    <div
+      className="topic-dateTime text-field"
+    >
+      Создана: 
+      <b>
+        
+      </b>
+    </div>
+    <div
+      className="topic-author text-field"
+    >
+      Автор: 
+      <b>
+        
+      </b>
+    </div>
+    <div
+      className="topic-mes-count text-field"
+    >
+      Сообщений: 
+      1
+      <b>
+         (новых 1)
+      </b>
+    </div>
+    <div
+      className="topic-content text-field"
+    >
+      
+    </div>
+  </div>
+</a>
+`;
