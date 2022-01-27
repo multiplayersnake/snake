@@ -3,15 +3,14 @@ import cn from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { GameParameters } from '../../../types';
+import { getUserNickname, getUserGameParameters, RootState } from '../../../store';
 
 import coinSource from '../../../assets/coin.png';
 import awardSource from '../../../assets/award.png';
 
-import { getUserNickname, getUserGameParameters, RootState } from '../../../store';
-
 import './InfoPanel.css';
 
-const InfoPanel: FC = () => {
+export const InfoPanel: FC = () => {
   const displayName = useSelector<RootState, string>(getUserNickname);
   const gameParameters = useSelector<RootState, GameParameters>(getUserGameParameters);
 
@@ -32,5 +31,3 @@ const InfoPanel: FC = () => {
     </div>
   );
 };
-
-export default InfoPanel;

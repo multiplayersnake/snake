@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
 
-import './LeaderBoard.css';
 import awardSource from '../../../assets/award.png';
 
 import { leaderList } from './mock';
 
-const LeaderBoard: FC = () => {
+import './LeaderBoard.css';
+
+export const LeaderBoard: FC = () => {
   return (
     <div className={cn('panel', 'right-panel')}>
       <div className={cn('heading', 'h6')}>Лучшие из лучших:</div>
@@ -21,5 +22,3 @@ const LeaderBoard: FC = () => {
     </div>
   );
 };
-
-export default LeaderBoard;

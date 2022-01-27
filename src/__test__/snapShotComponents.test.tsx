@@ -3,13 +3,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
 
-import { Button, Input, Form, Heading, Message, Topic, TextArea } from '../components';
-
-import InfoPanel from '../components/MainPageComponents/InfoPanel';
-import MainMenuItem from '../components/MainPageComponents/MainMenuItem';
-
+import { Button, Input, Form, Heading, Message, Topic, TextArea, InfoPanel, MainMenuItem } from '../components';
 import { MenuActionType } from '../types';
-
 import { store } from '../store';
 
 it('Button', () => {

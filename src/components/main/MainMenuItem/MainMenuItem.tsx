@@ -11,7 +11,7 @@ type MainMenuItemProps = {
   onAction: (action: MenuAction) => void;
 };
 
-const MainMenuItem: FC<MainMenuItemProps> = ({ onAction, item }) => {
+export const MainMenuItem: FC<MainMenuItemProps> = ({ onAction, item }) => {
   const authorized = useSelector<RootState, boolean>(getAuthorized);
   const { title, action, path, authorizedOnly } = item;
 
@@ -29,5 +29,3 @@ const MainMenuItem: FC<MainMenuItemProps> = ({ onAction, item }) => {
 
   return <Button onClick={handleAction}>{title}</Button>;
 };
-
-export default MainMenuItem;
