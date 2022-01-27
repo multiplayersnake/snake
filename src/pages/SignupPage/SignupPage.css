@@ -8,15 +8,11 @@
   padding: var(--gap5-5);
 }
 
-.form {
-  padding: var(--gap-10);
+.signup-title {
+  margin-bottom: var(--gap5-5);
 }
 
-.h2 {
-  margin-bottom: 20px;
-}
-
-.button-registration {
+.registration-button {
   width: 340px;
   margin-top: 20px;
   font-weight: bold;

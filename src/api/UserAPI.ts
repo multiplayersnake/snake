@@ -1,6 +1,6 @@
 import BaseAPI from './BaseAPI';
 
-export type ProfileRequest = {
+export type UpdateProfileRequest = {
   first_name: string;
   second_name: string;
   display_name: string;
@@ -14,7 +14,7 @@ class UserAPI extends BaseAPI {
     super('/user');
   }
 
-  public updateProfile(data: ProfileRequest): Promise<void> {
+  public updateProfile(data: UpdateProfileRequest): Promise<void> {
     return this.http.put<void>('/profile', { data });
   }
 }

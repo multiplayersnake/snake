@@ -2,12 +2,15 @@ import React, { FC, MouseEvent, useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { startGame } from '../../../core/core';
-import { GameParameters, User } from '../../../types/models';
-import { RootState } from '../../../index';
+
+import { GameParameters, GameUser } from '../../../types';
+import { getUser, getUserGameParameters, getUserNickname, RootState, showEndGame } from '../../../store';
+
 import { part_arr } from '../../../database/mock';
 import { item_arr } from '../../../database/mock';
-import { showEndGame } from '../../../store/reducers/endGame';
 import UserAPI from '../../../api/UserAPI';
+
+import { mapToRawUser } from '../../../api/AuthAPI';
 
 import './Canvas.css';
 
@@ -18,27 +21,37 @@ type Props = OwnProps;
 const Canvas: FC<Props> = () => {
   const dispatch = useDispatch();
 
-  const userData: User = useSelector((state: RootState) => state['user']['item']);
-  const userParameters: GameParameters = JSON.parse(userData.second_name);
+  const userData = useSelector<RootState, GameUser>(getUser);
+  const nickname = useSelector<RootState, string>(getUserNickname);
+  const gameParameters = useSelector<RootState, GameParameters>(getUserGameParameters);
+
+  // TODO с этим объектом надо будет поработать, скоре всего надо использовать локальный стейт....
   const userElements: { [k: string]: { [k: string]: string } } = {};
 
-  userParameters.parts.forEach((item, index) => {
+  gameParameters.parts.forEach((item, index) => {
     const itemElements = JSON.parse(item_arr[index][item].itemDesc);
     const partKey = part_arr[index].key;
     userElements[partKey] = itemElements;
   });
-  userElements['base'] = { name: userData.first_name };
+  userElements['base'] = { name: nickname };
 
-  const ednGame = useCallback(
+  const endGame = useCallback(
     (time: string, place: number, coins: number, awards: number) => {
+      // dispatch(saveGameResults({ coins }));
+      // TODO сохранить результаты игры здесь в стор здесь нельзя - данные пользователя обновятся и компонент перерендерится - получим бесконечный цикл :-\
+      // поэтому сохраняем их при открытии компонента EndGame
+      // (!) это важный момент, который надо осознать при работе с react (!)
       dispatch(showEndGame(time, place, coins, awards));
-      userParameters.coins += coins;
-      userData.second_name = JSON.stringify(userParameters);
-      UserAPI.updateProfile(userData).then(() => {
-        dispatch({ type: 'SET_USER_ITEM', item: userData });
-      });
+
+      const coinsUpdated = gameParameters.coins + coins;
+      const gameParametersUpdated = { ...gameParameters, coins: coinsUpdated };
+      const userDataUpdated = { ...userData, gameParameters: gameParametersUpdated };
+
+      // сохранить пользователя на сервер можно - это не вызывает никаких побочных эффектов
+      const rawUser = mapToRawUser(userDataUpdated);
+      void UserAPI.updateProfile(rawUser);
     },
-    [dispatch, userData, userParameters]
+    [dispatch, userData, gameParameters]
   );
 
   const ref = useRef(null);
@@ -57,8 +70,8 @@ const Canvas: FC<Props> = () => {
   useEffect(() => {
     const ctx = ref.current?.getContext('2d');
 
-    startGame(ctx, userElements, ednGame);
-  }, [ednGame, userElements]);
+    startGame(ctx, userElements, endGame);
+  }, [endGame, userElements]);
 
   return <canvas className="canvas" ref={ref} onClick={onClick} width={1000} height={600} />;
 };

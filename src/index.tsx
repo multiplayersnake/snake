@@ -2,10 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import configureStore from './store/store';
 import App from './components/App';
-
-const store = configureStore({});
+import { store } from './store';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -15,5 +13,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-export type RootState = ReturnType<typeof store.getState>;

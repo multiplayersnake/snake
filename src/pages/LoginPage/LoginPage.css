@@ -7,3 +7,13 @@
   justify-content: flex-start;
   padding: var(--gap5-5);
 }
+
+.login-title {
+  margin-bottom: var(--gap5-5);
+}
+
+.registration-button {
+  width: 340px;
+  margin-top: 20px;
+  font-weight: bold;
+}
