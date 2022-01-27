@@ -7,7 +7,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
 };
 
-const Input: FC<InputProps> = (props) => {
+export const Input: FC<InputProps> = (props) => {
   const { label, className, ...rest } = props;
 
   return (
@@ -17,5 +17,3 @@ const Input: FC<InputProps> = (props) => {
     </label>
   );
 };
-
-export default Input;

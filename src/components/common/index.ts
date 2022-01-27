@@ -4,3 +4,4 @@
 export * from './Modal';
 export * from './Button';
 export * from './ErrorBoundary';
+export * from './Input';

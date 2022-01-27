@@ -1,9 +1,8 @@
 import React, { FC, FormEvent, useCallback } from 'react';
 
-import { Button, NavButton } from '../../components';
+import { Button, NavButton, Input } from '../../components';
 import Form from '../../components/Form';
 import Heading from '../../components/Heading';
-import Input from '../../components/Input';
 
 import { MenuAction, MenuActionType } from '../../types';
 
