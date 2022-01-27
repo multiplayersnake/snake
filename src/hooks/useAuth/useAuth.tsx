@@ -9,7 +9,7 @@ type UseAuth = {
   handleAction: (action: MenuAction) => void;
 };
 
-function useAuth(): UseAuth {
+export function useAuth(): UseAuth {
   const dispatch = useDispatch();
 
   const logOut = useCallback(async () => {
@@ -74,5 +74,3 @@ function useAuth(): UseAuth {
 
   return { handleAction };
 }
-
-export default useAuth;

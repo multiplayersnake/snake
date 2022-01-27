@@ -10,7 +10,7 @@ import SignupPage from '../pages/SignupPage';
 import MessagePage from '../pages/MessagePage';
 import GameTypePage from '../pages/GameTypePage';
 
-import useAuth from '../hooks/useAuth';
+import { useAuth } from '../hooks';
 
 // обратите внимание как просто можно указывать путь до компонента, если перейти с дефолтных импортов на обычные
 // и создать набор индексных файлов в папках внутри components
