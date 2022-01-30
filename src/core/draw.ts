@@ -110,7 +110,6 @@ function drawBooms(ctx: CanvasRenderingContext2D, booms: Boom[]): void {
   booms.forEach((el) => {
     el.phase++;
     ctx.save();
-    ctx.beginPath();
     ctx.rect(config.fieldLeft, config.fieldTop, config.fieldWidth, config.fieldHeight);
     ctx.clip();
 
