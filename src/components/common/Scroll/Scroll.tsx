@@ -102,7 +102,7 @@ export const Scroll: FC<ScrollProps> = (props) => {
 
   return (
     <div className="scroll" onWheel={wheelProcess} onMouseMove={onMouseMove} onMouseUp={onMouseUpTrack}>
-      <Heading className={cn('scroll-title', 'h4')}>{title}</Heading>
+      <Heading tag="h4">{title}</Heading>
       <span className={cn('scroll-up-button', 'img-button')} onClick={upClick} />
       <div className={cn('scroll-bar')}>
         <div
