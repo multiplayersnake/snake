@@ -1,1 +1,1 @@
-export { default } from './GuestOnly';
+export * from './GuestOnly';

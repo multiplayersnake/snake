@@ -6,7 +6,7 @@ import { getAuthorizationChecked, getAuthorized, RootState } from '../../../stor
 
 const AUTHORIZED_DEFAULT_ROUTE = '/';
 
-const GuestOnly: FC = ({ children }) => {
+export const GuestOnly: FC = ({ children }) => {
   const authorizationChecked = useSelector<RootState, boolean>(getAuthorizationChecked);
   const authorized = useSelector<RootState, boolean>(getAuthorized);
 
@@ -20,5 +20,3 @@ const GuestOnly: FC = ({ children }) => {
 
   return <>{children}</>;
 };
-
-export default GuestOnly;

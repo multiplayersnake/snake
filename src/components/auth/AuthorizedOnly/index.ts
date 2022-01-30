@@ -1,1 +1,1 @@
-export { default } from './AuthorizedOnly';
+export * from './AuthorizedOnly';
