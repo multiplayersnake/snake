@@ -34,6 +34,35 @@ test('Main menu router', async ({ page }) => {
   await page.goBack();
 });
 
+test('Game page router', async ({ page }) => {
+  await logIn(page);
+
+  // Переход на страницу выбора типа игры
+  await page.locator('text=В бой!').click();
+  await expect(page).toHaveURL(/game-type/);
+
+  // Возврат на главную
+  await page.locator('text=В меню').click();
+  await expect(page.locator('h1')).toHaveText('Боевые змеи');
+
+  // Переход на страницу тренировочной игры
+  await page.locator('text=В бой').click();
+  await page.locator('text=Начать').click();
+  await expect(page).toHaveURL(/game/);
+});
+
+test('Profile router', async ({ page }) => {
+  await logIn(page);
+
+  // Переход на страницу профиля
+  await page.locator('text=Профиль').click();
+  await expect(page).toHaveURL(/profile/);
+
+  // Возврат на главную
+  await page.locator('text=В меню').click();
+  await expect(page.locator('h1')).toHaveText('Боевые змеи');
+});
+
 test('Forum page router', async ({ page }) => {
   await logIn(page);
 
