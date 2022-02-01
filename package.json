@@ -10,7 +10,7 @@
     "deploy:push": "heroku container:push web --app=battle-snakes",
     "deploy:release": "heroku container:release web --app=battle-snakes",
     "deploy": "npm run push:container && npm run release:container",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "npm run lint:scripts && npm run lint:styles",
     "lint:fix": "npm run lint:scripts:fix && npm run lint:styles:fix",
     "lint:scripts": "eslint . --ext .ts,.tsx src",
