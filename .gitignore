@@ -10,3 +10,5 @@ npm-debug.log*
 # IDE folders
 .idea
 .vscode
+test-results/
+playwright-report/

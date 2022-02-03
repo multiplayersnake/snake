@@ -51,9 +51,9 @@ const ForumPage: FC = () => {
           </Scroll>
         </div>
         <div className={cn('new-forum')}>
-          <Heading className={cn('h4')}>Новая тема:</Heading>
+          <Heading tag="h4">Новая тема:</Heading>
           <input ref={contentRef} className={cn('input')} />
-          <Heading className={cn('h4')}>Сообщение:</Heading>
+          <Heading tag="h4">Сообщение:</Heading>
           <textarea ref={messageRef} className={cn('text-area')} />
           <Button onClick={createNewTopic}> Создать тему </Button>
         </div>

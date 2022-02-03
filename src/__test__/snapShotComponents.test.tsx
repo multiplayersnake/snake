@@ -57,7 +57,13 @@ it('InfoPanel', () => {
 it('MainMenuItem', () => {
   const action: MenuActionType = MenuActionType.Login;
   const item = { title: '', action: action, path: '', authorizedOnly: true };
-  const tree = renderer.create(<MainMenuItem item={item} onAction={() => ''} />).toJSON();
+  const tree = renderer
+    .create(
+      <Provider store={store}>
+        <MainMenuItem item={item} onAction={() => ''} />
+      </Provider>
+    )
+    .toJSON();
   expect(tree).toMatchSnapshot();
 });
 
