@@ -10,7 +10,7 @@ import { out_arr } from './mock';
 import '../../components/common/TextArea/TextArea.css';
 import './ForumPage.css';
 
-const ForumPage: FC = () => {
+export const ForumPage: FC = () => {
   const contentRef = useRef(null);
   const messageRef = useRef(null);
   const [topics, setTopics] = useState(out_arr);
@@ -61,5 +61,3 @@ const ForumPage: FC = () => {
     </div>
   );
 };
-
-export default ForumPage;

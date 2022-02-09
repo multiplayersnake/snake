@@ -2,7 +2,6 @@ import React, { FC, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 
-// обратите внимание, как удобно указывать в одном импорте всё, что имеет отношение к redux
 import { RootState, getUser, getUserNickname, getUserGameParameters, setUser, showModal } from '../../store';
 import { NavButton, Scroll, SelectorShopItem } from '../../components';
 
@@ -19,7 +18,7 @@ import { GameParameters, GameUser } from '../../types';
 
 import './ProfilePage.css';
 
-const ProfilePage: FC = () => {
+export const ProfilePage: FC = () => {
   const userData = useSelector<RootState, GameUser>(getUser);
   const nickname = useSelector<RootState, string>(getUserNickname);
   const gameParameters = useSelector<RootState, GameParameters>(getUserGameParameters);
@@ -108,5 +107,3 @@ const ProfilePage: FC = () => {
     </div>
   );
 };
-
-export default ProfilePage;
