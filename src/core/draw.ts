@@ -1,15 +1,15 @@
-// Функция отрисовки правой панели
-import config from './constants';
-import { Apple, Boom, Coin, Snake } from './classes';
 import * as THREE from 'three';
 
+import config from './constants';
+import { Apple, Boom, Coin, Snake } from './classes';
+
 export const draw = {
-  drawRightPanel: drawRightPanel,
-  drawLeftPanel: drawLeftPanel,
-  drawCoins: drawCoins,
-  drawApples: drawApples,
-  drawBooms: drawBooms,
-  drawSnakes: drawSnakes
+  drawRightPanel,
+  drawLeftPanel,
+  drawCoins,
+  drawApples,
+  drawBooms,
+  drawSnakes
 };
 
 function drawRightPanel(ctx: CanvasRenderingContext2D, material: THREE.MeshPhongMaterial, snakes: Snake[]): void {

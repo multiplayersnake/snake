@@ -1,13 +1,13 @@
 import config from './constants';
 import appleSource from '../assets/apple2.png';
 import btnFullScreenSource from '../assets/fullscreen.png';
-import gerbSource from '../assets/gerb.png';
+import emblemSource from '../assets/emblem.png';
 
 const appleImage = new Image(20, 20);
 appleImage.src = appleSource;
 
-const gerbImage = new Image(40, 40);
-gerbImage.src = gerbSource;
+const emblemImage = new Image(40, 40);
+emblemImage.src = emblemSource;
 
 const btnFullScreenImage = new Image(50, 50);
 btnFullScreenImage.src = btnFullScreenSource;
@@ -71,7 +71,7 @@ class Coin {
     this.y = y;
     this.id = id;
     this.value = value;
-    this.image = gerbImage;
+    this.image = emblemImage;
   }
 }
 
