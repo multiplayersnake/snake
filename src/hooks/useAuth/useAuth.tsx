@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, FormEvent } from 'react';
+import { useEffect, useCallback, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import AuthService from '../../services/AuthService';

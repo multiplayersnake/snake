@@ -10,7 +10,7 @@ type SignUpPageProps = {
   onAction: (action: MenuAction) => void;
 };
 
-const SignupPage: FC<SignUpPageProps> = ({ onAction }) => {
+export const SignupPage: FC<SignUpPageProps> = ({ onAction }) => {
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
       onAction({ type: MenuActionType.SignUp, payload: e });
@@ -47,5 +47,3 @@ const SignupPage: FC<SignUpPageProps> = ({ onAction }) => {
     </div>
   );
 };
-
-export default SignupPage;

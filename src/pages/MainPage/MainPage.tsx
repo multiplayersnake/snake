@@ -11,7 +11,7 @@ type MainPageProps = {
   onAction: (action: MenuAction) => void;
 };
 
-const MainPage: FC<MainPageProps> = ({ onAction }) => {
+export const MainPage: FC<MainPageProps> = ({ onAction }) => {
   return (
     <div className="main-page">
       <Heading tag="h1">Боевые змеи</Heading>
@@ -27,5 +27,3 @@ const MainPage: FC<MainPageProps> = ({ onAction }) => {
     </div>
   );
 };
-
-export default MainPage;

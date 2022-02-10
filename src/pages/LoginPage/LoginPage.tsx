@@ -9,7 +9,7 @@ type LoginPageProps = {
   onAction: (action: MenuAction) => void;
 };
 
-const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
+export const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
       onAction({ type: MenuActionType.Login, payload: e });
@@ -44,5 +44,3 @@ const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
     </div>
   );
 };
-
-export default LoginPage;
