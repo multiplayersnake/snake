@@ -52,18 +52,18 @@ config.tBorder = config.fieldTop + config.fieldStep / 2;
 config.bBorder = config.fieldTop + config.fieldHeight - config.fieldStep / 2;
 
 config.rightPanelLeft = config.fieldLeft + config.fieldWidth + config.panelIdent;
-config.rightPanelWidth = config.wholeWidth - config.rightPanelLeft - config.panelIdent;
+config.rightPanelWidth = 200;
 config.rightPanelTop = config.panelIdent;
-config.rightPanelHeight = config.wholeHeight - 2 * config.panelIdent;
+config.rightPanelHeight = 140;
 
 config.leftPanelLeft = config.panelIdent;
-config.leftPanelWidth = config.fieldLeft - 2 * config.panelIdent;
+config.leftPanelWidth = 200;
 config.leftPanelTop = config.panelIdent;
-config.leftPanelHeight = config.wholeHeight - 2 * config.panelIdent;
+config.leftPanelHeight = 140;
 
 config.topPanelLeft = config.fieldLeft;
 config.topPanelWidth = config.fieldWidth;
 config.topPanelTop = 0;
-config.topPanelHeight = config.fieldTop;
+config.topPanelHeight = 140;
 
 export default config;
