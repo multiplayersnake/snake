@@ -32,6 +32,13 @@ module.exports = {
         }
       },
       {
+        test: /\.(FBX)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/models3d/[contenthash][ext]'
+        }
+      },
+      {
         test: /\.(eot|ttf|woff?2)$/,
         type: 'asset/resource',
         generator: {
