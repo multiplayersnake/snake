@@ -10,7 +10,7 @@ import { out_arr } from './mock';
 import '../../components/common/TextArea/TextArea.css';
 import './ForumPage.css';
 
-const ForumPage: FC = () => {
+export const ForumPage: FC = () => {
   const contentRef = useRef(null);
   const messageRef = useRef(null);
   const [topics, setTopics] = useState(out_arr);
@@ -51,9 +51,9 @@ const ForumPage: FC = () => {
           </Scroll>
         </div>
         <div className={cn('new-forum')}>
-          <Heading className={cn('h4')}>Новая тема:</Heading>
+          <Heading tag="h4">Новая тема:</Heading>
           <input ref={contentRef} className={cn('input')} />
-          <Heading className={cn('h4')}>Сообщение:</Heading>
+          <Heading tag="h4">Сообщение:</Heading>
           <textarea ref={messageRef} className={cn('text-area')} />
           <Button onClick={createNewTopic}> Создать тему </Button>
         </div>
@@ -61,5 +61,3 @@ const ForumPage: FC = () => {
     </div>
   );
 };
-
-export default ForumPage;

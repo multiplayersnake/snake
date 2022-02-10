@@ -7,7 +7,7 @@ import { clearGame } from '../../core/core';
 
 import './GamePage.css';
 
-const GamePage: FC = () => {
+export const GamePage: FC = () => {
   const isGameOver = useSelector<RootState, boolean>(getIsGameOver);
   const coins = useSelector<RootState, number>(getEndGameCoins);
 
@@ -28,5 +28,3 @@ const GamePage: FC = () => {
 
   return <div className="game-page">{isGameOver ? <EndGame /> : <Canvas />}</div>;
 };
-
-export default GamePage;

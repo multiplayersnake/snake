@@ -12,7 +12,7 @@ import { topic_arr } from './mock';
 import '../../components/common/TextArea/TextArea.css';
 import './MessagePage.css';
 
-const ForumPage: FC = () => {
+export const MessagePage: FC = () => {
   const contentRef = useRef(null);
   const [searchParams] = useSearchParams();
   const topicId: number = parseInt(searchParams.get('id'));
@@ -43,7 +43,7 @@ const ForumPage: FC = () => {
           </Scroll>
         </div>
         <div className={cn('new-message')}>
-          <Heading className={cn('h4')}>Новое сообщение:</Heading>
+          <Heading tag="h4">Новое сообщение:</Heading>
           <textarea ref={contentRef} className={cn('text-area')} />
           <Button onClick={createNewMessage}> Добавить сообщение </Button>
         </div>
@@ -51,5 +51,3 @@ const ForumPage: FC = () => {
     </div>
   );
 };
-
-export default ForumPage;

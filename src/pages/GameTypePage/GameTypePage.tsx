@@ -12,7 +12,7 @@ import { RootState, getUserGameParameters, getUserNickname } from '../../store';
 
 import './GameTypePage.css';
 
-const GameTypePage: FC = () => {
+export const GameTypePage: FC = () => {
   const nickname = useSelector<RootState, string>(getUserNickname);
   const userParameters = useSelector<RootState, GameParameters>(getUserGameParameters);
 
@@ -59,5 +59,3 @@ const GameTypePage: FC = () => {
     </div>
   );
 };
-
-export default GameTypePage;
