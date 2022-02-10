@@ -1,5 +1,5 @@
 import React, { FC, AnchorHTMLAttributes, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import cn from 'classnames';
 
 import './Button.css';
@@ -11,13 +11,13 @@ type NavButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
 
 export const NavButton: FC<NavButtonProps> = (props) => {
   const { to, children, className, ...rest } = props;
-  const navigate = useNavigate();
+  const history = useHistory();
   const handleClick = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
-      navigate(to);
+      history.push(to);
     },
-    [navigate, to]
+    [history, to]
   );
 
   return (
@@ -26,5 +26,3 @@ export const NavButton: FC<NavButtonProps> = (props) => {
     </a>
   );
 };
-
-export default NavButton;

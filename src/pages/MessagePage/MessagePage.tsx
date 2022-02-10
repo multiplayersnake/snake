@@ -1,5 +1,5 @@
 import React, { FC, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import cn from 'classnames';
 
 import { formatDateTime } from '../../utils';
@@ -14,8 +14,10 @@ import './MessagePage.css';
 
 export const MessagePage: FC = () => {
   const contentRef = useRef(null);
-  const [searchParams] = useSearchParams();
-  const topicId: number = parseInt(searchParams.get('id'));
+
+  const { id } = useParams<{ id: string }>();
+  const topicId = parseInt(id);
+
   const [messages, setMessages] = useState(out_arr[topicId]);
 
   const createNewMessage = () => {

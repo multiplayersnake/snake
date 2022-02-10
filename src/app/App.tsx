@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import { ForumPage, GamePage, GameTypePage, LoginPage, MainPage, MessagePage, ProfilePage, SignupPage } from '../pages';
 
@@ -18,73 +18,59 @@ export const App: FC = () => {
       <BrowserRouter>
         <main className="content">
           <ErrorBoundary>
-            <Routes>
-              <Route
-                path="/login"
-                element={
-                  <GuestOnly>
-                    <LoginPage onAction={handleAction} />
-                  </GuestOnly>
-                }
-              />
-              <Route
-                path="/signup"
-                element={
-                  <GuestOnly>
-                    <SignupPage onAction={handleAction} />
-                  </GuestOnly>
-                }
-              />
-              <Route
-                path="/"
-                element={
-                  <AuthorizedOnly>
-                    <MainPage onAction={handleAction} />
-                  </AuthorizedOnly>
-                }
-              />
-              <Route
-                path="/game"
-                element={
-                  <AuthorizedOnly>
-                    <GamePage />
-                  </AuthorizedOnly>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <AuthorizedOnly>
-                    <ProfilePage />
-                  </AuthorizedOnly>
-                }
-              />
-              <Route
-                path="/forum"
-                element={
-                  <AuthorizedOnly>
-                    <ForumPage />
-                  </AuthorizedOnly>
-                }
-              />
-              <Route
-                path="/message"
-                element={
-                  <AuthorizedOnly>
-                    <MessagePage />
-                  </AuthorizedOnly>
-                }
-              />
-              <Route
-                path="/game-type"
-                element={
-                  <AuthorizedOnly>
-                    <GameTypePage />
-                  </AuthorizedOnly>
-                }
-              />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
+            <Switch>
+              <Route path="/login">
+                <GuestOnly>
+                  <LoginPage onAction={handleAction} />
+                </GuestOnly>
+              </Route>
+
+              <Route path="/signup">
+                <GuestOnly>
+                  <SignupPage onAction={handleAction} />
+                </GuestOnly>
+              </Route>
+
+              <Route path="/" exact>
+                <AuthorizedOnly>
+                  <MainPage onAction={handleAction} />
+                </AuthorizedOnly>
+              </Route>
+
+              <Route path="/game">
+                <AuthorizedOnly>
+                  <GamePage />
+                </AuthorizedOnly>
+              </Route>
+
+              <Route path="/profile">
+                <AuthorizedOnly>
+                  <ProfilePage />
+                </AuthorizedOnly>
+              </Route>
+
+              <Route path="/forum">
+                <AuthorizedOnly>
+                  <ForumPage />
+                </AuthorizedOnly>
+              </Route>
+
+              <Route path="/message/:id">
+                <AuthorizedOnly>
+                  <MessagePage />
+                </AuthorizedOnly>
+              </Route>
+
+              <Route path="/game-type">
+                <AuthorizedOnly>
+                  <GameTypePage />
+                </AuthorizedOnly>
+              </Route>
+
+              <Route path="*">
+                <Redirect to="/" />
+              </Route>
+            </Switch>
           </ErrorBoundary>
         </main>
       </BrowserRouter>

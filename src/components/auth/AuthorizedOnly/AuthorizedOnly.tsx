@@ -1,13 +1,10 @@
 import React, { FC } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { getAuthorizationChecked, getAuthorized, RootState } from '../../../store';
 
 const GUEST_DEFAULT_ROUTE = '/login';
-
-// теперь AuthorizedOnly и GuestOnly - это просто компоненты,
-// нужные данные они берут напрямую из redux
 
 export const AuthorizedOnly: FC = ({ children }) => {
   const authorizationChecked = useSelector<RootState, boolean>(getAuthorizationChecked);
@@ -18,7 +15,7 @@ export const AuthorizedOnly: FC = ({ children }) => {
   }
 
   if (!authorized) {
-    return <Navigate to={GUEST_DEFAULT_ROUTE} />;
+    return <Redirect to={GUEST_DEFAULT_ROUTE} />;
   }
 
   return <>{children}</>;
