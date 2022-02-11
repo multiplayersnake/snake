@@ -11,6 +11,7 @@ import { GameParameters } from '../../types';
 import { RootState, getUserGameParameters, getUserNickname } from '../../store';
 
 import './GameTypePage.css';
+import mscMain from '../../assets/sound/main.mp3';
 
 export const GameTypePage: FC = () => {
   const nickname = useSelector<RootState, string>(getUserNickname);
@@ -18,6 +19,7 @@ export const GameTypePage: FC = () => {
 
   return (
     <div className="game-type-page">
+      <audio id={'mainMusic'} src={mscMain} autoPlay={true} preload={'auto'} loop={true} />
       <NavButton className={cn('button', 'button-game-type-back')} to={'/main'}>
         В меню
       </NavButton>
