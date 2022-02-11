@@ -8,6 +8,7 @@ import coinSource from '../../../assets/coin.png';
 import awardSource from '../../../assets/award.png';
 
 import './EndGame.css';
+import mscMain from '../../../assets/sound/endgame.mp3';
 
 export const EndGame: FC = () => {
   const time = useSelector<RootState, string>(getEndGameTime);
@@ -20,6 +21,7 @@ export const EndGame: FC = () => {
 
   return (
     <div className="end-game">
+      <audio id={'mainMusic'} src={mscMain} autoPlay={true} preload={'auto'} loop={true} />
       <Heading tag="h1">
         {/* ВАЖНО не стоит использовать стили с других страниц - в нашем проекте предполагается, что у каждой страницы отдельные стили */}
         Игра окончена

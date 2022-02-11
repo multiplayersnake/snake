@@ -11,12 +11,34 @@ import backImg from '../assets/gameback.jpg';
 import btnFullScreenSource from '../assets/fullscreen.png';
 import btnSmallScreenSource from '../assets/smallscreen.png';
 
+import sndBoom from '../assets/sound/boom.mp3';
+import sndCoin from '../assets/sound/coin.mp3';
+import sndApple from '../assets/sound/apple.mp3';
+
+import mscMain1 from '../assets/sound/fight1.mp3';
+import mscMain2 from '../assets/sound/fight2.mp3';
+import mscMain3 from '../assets/sound/fight3.mp3';
+import mscMain4 from '../assets/sound/fight4.mp3';
+
+let currentTrackIndex: number;
+const musicTracks = [
+  { track: mscMain1, volume: 0.7 },
+  { track: mscMain2, volume: 0.5 },
+  { track: mscMain3, volume: 0.5 },
+  { track: mscMain4, volume: 0.5 }
+];
+
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
 let camera: THREE.Camera;
 let scene: THREE.Scene;
 let renderer: THREE.WebGLRenderer;
+
+const musicListener = new THREE.AudioListener();
+const musicSound = new THREE.Audio(musicListener);
+const musicAudioLoader = new THREE.AudioLoader();
+musicSound.onEnded = changeMusicTrack;
 
 const timerPanel = document.createElement('canvas');
 timerPanel.width = config.topPanelWidth;
@@ -59,6 +81,7 @@ function destroyAllObjects() {
 
 function stopAllProcesses() {
   gameStatus.mode = 'End';
+  musicSound.stop();
   clearInterval(mainTimerId);
   clearTimeout(timeoutCoinGenerator);
   clearTimeout(timeoutAppleGenerator);
@@ -73,7 +96,6 @@ function clearGame() {
 // Функция окончания игры
 function gameOver(): void {
   stopAllProcesses();
-
   const coins = snakes[indexOfSnakeUnderControl].score;
 
   const now = window.performance.now();
@@ -151,6 +173,7 @@ function snakeGetCoin(snake: Snake, coin: Coin, index: number): void {
     };
     snake.elements.splice(1, 0, newElement);
     scene.remove(scene.getObjectByName(coin.id));
+    playSound(sndCoin);
   }
 
   draw.drawRightPanel(rightPanel.getContext('2d'), rightPanelMaterial, snakes);
@@ -177,6 +200,7 @@ function snakeGetApple(snake: Snake, apple: Apple, index: number): void {
   apples.splice(index, 1);
   scene.remove(scene.getObjectByName(apple.id));
   draw.drawLeftPanel(leftPanel.getContext('2d'), leftPanelMaterial, snakes[indexOfSnakeUnderControl]);
+  playSound(sndApple);
 }
 
 // Функция контроля столкновения змеи с яблоком
@@ -193,6 +217,18 @@ function collisionSnakeWithApple(snake: Snake): void {
   });
 }
 
+function playSound(srcSound: string) {
+  const listener = new THREE.AudioListener();
+  const sound = new THREE.Audio(listener);
+  const audioLoader = new THREE.AudioLoader();
+  audioLoader.load(srcSound, function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setLoop(false);
+    sound.setVolume(0.5);
+    sound.play();
+  });
+}
+
 // Функция удара змеи обо что-либо
 function snakeGetBoom(x: number, y: number, snake: Snake): void {
   if (snake.hp > 0) {
@@ -200,6 +236,8 @@ function snakeGetBoom(x: number, y: number, snake: Snake): void {
     booms.push(boom);
     snake.hp = Math.max(0, snake.hp - config.boomHpLoose);
     draw.drawLeftPanel(leftPanel.getContext('2d'), leftPanelMaterial, snakes[indexOfSnakeUnderControl]);
+
+    playSound(sndBoom);
   }
   rotateSnakeRight(snake);
 }
@@ -404,6 +442,17 @@ function appleGenerator(): void {
   }
 }
 
+function changeMusicTrack() {
+  if (currentTrackIndex < musicTracks.length) currentTrackIndex++;
+  if (musicSound.isPlaying) musicSound.stop();
+  musicAudioLoader.load(musicTracks[currentTrackIndex].track, function (buffer) {
+    musicSound.setBuffer(buffer);
+    musicSound.setLoop(false);
+    musicSound.setVolume(musicTracks[currentTrackIndex].volume);
+    musicSound.play();
+  });
+}
+
 // Функция контроля главного таймера игры
 function tick(): void {
   const ctx = timerPanel.getContext('2d');
@@ -500,6 +549,9 @@ function startGame(
 
   endFunction = endGameFunction;
   const textureLoader = new THREE.TextureLoader();
+
+  currentTrackIndex = -1;
+  changeMusicTrack();
 
   camera = new THREE.PerspectiveCamera(50, config.wholeWidth / config.wholeHeight, 1, 5000);
   camera.position.set(config.fieldLeft + config.fieldWidth / 2, 350, config.fieldTop + config.fieldHeight / 2 + 450);
