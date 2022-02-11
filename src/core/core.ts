@@ -443,7 +443,7 @@ function appleGenerator(): void {
 }
 
 function changeMusicTrack() {
-  if (currentTrackIndex < musicTracks.length) currentTrackIndex++;
+  if (currentTrackIndex < musicTracks.length - 1) currentTrackIndex++;
   if (musicSound.isPlaying) musicSound.stop();
   musicAudioLoader.load(musicTracks[currentTrackIndex].track, function (buffer) {
     musicSound.setBuffer(buffer);
