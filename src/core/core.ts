@@ -103,7 +103,7 @@ function gameOver(): void {
   const showTime = new Date(dt * 1000);
   const stringTime = ('0' + showTime.getMinutes()).slice(-2) + ':' + ('0' + showTime.getSeconds()).slice(-2);
 
-  endFunction(stringTime, 1, coins, 0);
+  endFunction(stringTime, 1, coins, 1);
 }
 
 // Функция устанавливающая направление движения змеи

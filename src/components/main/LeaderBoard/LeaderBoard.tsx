@@ -1,35 +1,19 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import cn from 'classnames';
-import HTTP from '../../../api/HTTP';
+import { leaderBoardAPI } from '../../../api/LeaderBoardAPI';
+import { LeaderItem } from '../../../api/LeaderBoardAPI';
 
 import awardSource from '../../../assets/award.png';
 
 import './LeaderBoard.css';
 
-type LeaderItem = {
-  data: {
-    user: string;
-    awards: number;
-  };
-};
-
 export const LeaderBoard: FC = () => {
   const [leaderList, setLeaderList] = useState([{ data: { user: '', awards: 0 } }] as LeaderItem[]);
 
   const getLeaderBoard = useCallback(() => {
-    const http = new HTTP('/leaderboard/snake');
-    http
-      .post('', {
-        data: {
-          ratingFieldName: 'awards',
-          cursor: 0,
-          limit: 10
-        }
-      })
-      .then((result) => {
-        setLeaderList(result as LeaderItem[]);
-        console.log(result);
-      });
+    leaderBoardAPI.getLeaderList().then((result) => {
+      setLeaderList(result as LeaderItem[]);
+    });
   }, []);
 
   useEffect(() => {
