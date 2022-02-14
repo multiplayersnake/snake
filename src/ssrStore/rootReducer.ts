@@ -5,7 +5,13 @@ import { SsrState } from './types';
 
 export default (history: History) =>
   combineReducers<SsrState>({
-    main: function counter(state = { name: 'Yandex' }, action) {
+    ssrTestData: function ssrTestDataReducer(
+      state = {
+        time: 'initial SSR test reducer data',
+        isServer: true
+      },
+      action
+    ) {
       return state;
     },
     router: connectRouter(history)
