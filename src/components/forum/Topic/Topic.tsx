@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import cn from 'classnames';
 
 import './Topic.css';
@@ -19,13 +19,13 @@ export const Topic: FC<TopicProps> = (props) => {
   let newElem = '';
   if (newCount > 0) newElem = ` (новых ${newCount})`;
 
-  const navigate = useNavigate();
+  const history = useHistory();
   const handleClick = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
-      navigate(href);
+      history.push(href);
     },
-    [navigate, href]
+    [history, href]
   );
 
   return (

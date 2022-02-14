@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { getAuthorizationChecked, getAuthorized, RootState } from '../../../store';
@@ -15,7 +15,7 @@ export const GuestOnly: FC = ({ children }) => {
   }
 
   if (authorized) {
-    return <Navigate to={AUTHORIZED_DEFAULT_ROUTE} />;
+    return <Redirect to={AUTHORIZED_DEFAULT_ROUTE} />;
   }
 
   return <>{children}</>;
