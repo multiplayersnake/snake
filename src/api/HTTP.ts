@@ -13,7 +13,7 @@ interface ObjectLike {
 
 interface Options {
   method?: Method;
-  data?: FormData | ObjectLike;
+  data?: unknown;
   headers?: ObjectLike;
   timeout?: number;
   raw?: boolean;
