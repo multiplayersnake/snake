@@ -7,7 +7,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 import { configureStore } from './ssrStore/rootStore';
 import { getInitialState } from './ssrStore/getInitialState';
-import SsrApp from './ssrApp';
+import { SsrApp } from './ssrApp';
 
 // В этой middleware мы формируем первичное состояние приложения на стороне сервера
 // Попробуйте её подебажить, чтобы лучше разобраться, как она работает
