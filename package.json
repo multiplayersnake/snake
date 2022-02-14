@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "12"
+  },
   "scripts": {
     "dev": "webpack serve --mode development --open --hot ",
     "build": "webpack --mode production",
@@ -16,7 +19,11 @@
     "lint:scripts": "eslint . --ext .ts,.tsx src",
     "lint:scripts:fix": "eslint --fix . --ext .ts,.tsx src",
     "lint:styles": "stylelint \"./src/**/*.(css)\" --fix",
-    "lint:styles:fix": "stylelint \"./src/**/*.(css)\""
+    "lint:styles:fix": "stylelint \"./src/**/*.(css)\"",
+    "clean": "rimraf dist",
+    "start:ssr:webpack": "webpack --mode=development",
+    "start:ssr:server": "nodemon index.js --watch dist/server.js",
+    "start:ssr": "cross-env NODE_ENV=development npm-run-all --print-label --parallel start:ssr:*"
   },
   "keywords": [
     "snake"
@@ -135,5 +142,8 @@
     "extends": [
       "./.eslintrc.js"
     ]
-  }
+  },
+  "browserslist": [
+    "last 2 versions"
+  ]
 }
