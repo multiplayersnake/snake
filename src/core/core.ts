@@ -408,7 +408,7 @@ function coinGenerator(): void {
   const timeForNewCoin = coins.length * 2000;
 
   if (gameStatus.mode === 'Play') {
-    timeoutCoinGenerator = setTimeout(coinGenerator, timeForNewCoin);
+    timeoutCoinGenerator = window.setTimeout(coinGenerator, timeForNewCoin);
   }
 }
 
@@ -438,7 +438,7 @@ function appleGenerator(): void {
   const timeForNewApple = config.appleCreateTime * 1000;
 
   if (gameStatus.mode === 'Play') {
-    timeoutAppleGenerator = setTimeout(appleGenerator, timeForNewApple);
+    timeoutAppleGenerator = window.setTimeout(appleGenerator, timeForNewApple);
   }
 }
 
@@ -666,10 +666,10 @@ function startGame(
 
     mainTimerStart = window.performance.now();
     tick();
-    mainTimerId = setInterval(tick, 1000);
+    mainTimerId = window.setInterval(tick, 1000);
 
     coinGenerator();
-    timeoutAppleGenerator = setTimeout(appleGenerator, config.appleCreateTime * 1000);
+    timeoutAppleGenerator = window.setTimeout(appleGenerator, config.appleCreateTime * 1000);
   }
   profileSnake(userElements);
 
