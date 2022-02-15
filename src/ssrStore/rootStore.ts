@@ -1,12 +1,12 @@
 import {
-  createStore
+  createStore,
   // TODO проверить, работает ли стор без routerMiddleware
-  // applyMiddleware,
-  // compose
+  applyMiddleware,
+  compose
 } from 'redux';
 import { createBrowserHistory, createMemoryHistory } from 'history';
 // TODO проверить, работает ли стор без routerMiddleware
-// import { routerMiddleware } from 'connected-react-router'
+import { routerMiddleware } from 'connected-react-router';
 import createRootReducer from './rootReducer';
 import { SsrState } from './types';
 
@@ -17,13 +17,9 @@ export function configureStore(initialState: SsrState, url = '/') {
 
   const store = createStore(
     createRootReducer(history),
-    initialState
+    initialState,
     // TODO проверить, работает ли стор без routerMiddleware
-    // compose(
-    //     applyMiddleware(
-    //         routerMiddleware(history)
-    //     ),
-    // ),
+    compose(applyMiddleware(routerMiddleware(history)))
   );
 
   return { store, history };

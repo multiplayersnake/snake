@@ -1,0 +1,16 @@
+.app {
+  display: flex;
+  flex-flow: column;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.content {
+  flex: 1;
+  /* TODO починить сборку картинок */
+  background-image: url(../assets/mainBack2.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
