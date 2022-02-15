@@ -1,0 +1,27 @@
+.nav-menu {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.nav-menu-items {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  color: white;
+  margin: 0;
+  list-style: none;
+  flex: 1;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.nav-menu-item {
+  font-weight: bold;
+  color: white;
+  margin-left: 32px;
+}
