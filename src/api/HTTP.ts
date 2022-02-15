@@ -8,13 +8,13 @@ enum Method {
 export const BASE_URL = 'https://ya-praktikum.tech/api/v2';
 
 interface ObjectLike {
-  [key: string]: string;
+  [key: string]: string | number | ObjectLike;
 }
 
 interface Options {
   method?: Method;
   data?: FormData | ObjectLike;
-  headers?: ObjectLike;
+  headers?: HeadersInit;
   timeout?: number;
   raw?: boolean;
 }
