@@ -13,6 +13,7 @@ import UserAPI from '../../../api/UserAPI';
 import { mapToRawUser } from '../../../api/AuthAPI';
 
 import './Canvas.css';
+import { leaderBoardAPI } from '../../../api/LeaderBoardAPI';
 
 type OwnProps = React.CanvasHTMLAttributes<HTMLCanvasElement>;
 
@@ -44,12 +45,14 @@ export const Canvas: FC<Props> = () => {
       dispatch(showEndGame(time, place, coins, awards));
 
       const coinsUpdated = gameParameters.coins + coins;
-      const gameParametersUpdated = { ...gameParameters, coins: coinsUpdated };
+      const awardsUpdated = gameParameters.awards + awards;
+      const gameParametersUpdated = { ...gameParameters, coins: coinsUpdated, awards: awardsUpdated };
       const userDataUpdated = { ...userData, gameParameters: gameParametersUpdated };
 
       // сохранить пользователя на сервер можно - это не вызывает никаких побочных эффектов
       const rawUser = mapToRawUser(userDataUpdated);
       void UserAPI.updateProfile(rawUser);
+      void leaderBoardAPI.setUserResult({ user: rawUser.first_name, awards: awardsUpdated });
     },
     [dispatch, userData, gameParameters]
   );

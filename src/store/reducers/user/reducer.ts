@@ -34,13 +34,17 @@ export function userReducer(state: UserState = defaultState, action: UserAction)
       const { data } = state;
       const { gameParameters } = data;
       const { coins } = gameParameters;
+      const { awards } = gameParameters;
 
       const results = payload as Partial<GameParameters>;
 
       const coinsUpdate = results.coins ?? 0;
       const coinsUpdated = coins + coinsUpdate;
 
-      const gameParametersUpdated = { ...gameParameters, coins: coinsUpdated };
+      const awardsUpdate = results.awards ?? 0;
+      const awardsUpdated = awards + awardsUpdate;
+
+      const gameParametersUpdated = { ...gameParameters, coins: coinsUpdated, awards: awardsUpdated };
 
       return {
         ...state,
