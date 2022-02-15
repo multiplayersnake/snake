@@ -5,19 +5,16 @@ import webpack from 'webpack';
 import devMiddleware from 'webpack-dev-middleware';
 import hotMiddleware from 'webpack-hot-middleware';
 
-import serverRenderMiddleware from './server-render-middleware';
-// TODO add webpack config
 import config from '../webpack/client.config';
+import { serverRenderMiddleware } from './server-render-middleware';
 
-// Эта функция возвращает middleware для локального девсервера и HMR
-// Она должна работать только для режима разработки
 function getWebpackMiddlewares(config: webpack.Configuration): RequestHandler[] {
   const compiler = webpack({ ...config, mode: 'development' });
 
   return [
     // Middleware для Webpack-билда проекта в реальном времени. Низкоуровневый аналог webpack-dev-server
     devMiddleware(compiler, {
-      publicPath: config.output!.publicPath!
+      publicPath: config.output.publicPath
     }),
     // Middleware для HMR
     hotMiddleware(compiler, { path: `/__webpack_hmr` })
