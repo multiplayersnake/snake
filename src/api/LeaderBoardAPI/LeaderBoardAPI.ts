@@ -12,27 +12,22 @@ export type UserResultData = {
   awards: number;
 };
 
-export type SignInRequest = {
-  login: string;
-  password: string;
-};
-
 class LeaderBoardAPI extends BaseAPI {
   constructor() {
-    super('');
+    super('/leaderboard');
   }
 
   public setUserResult(userData: UserResultData): Promise<void> {
     console.log({
       data: { data: userData, ratingFieldName: 'awards', teamName: 'snake' }
     });
-    return this.http.post('/leaderboard', {
+    return this.http.post('', {
       data: { data: userData, ratingFieldName: 'awards', teamName: 'snake' }
     });
   }
 
   public getLeaderList(): Promise<LeaderItem[]> {
-    return this.http.post('/leaderboard/snake', {
+    return this.http.post('/snake', {
       data: {
         ratingFieldName: 'awards',
         cursor: 0,
