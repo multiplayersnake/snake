@@ -23,8 +23,8 @@ export const LeaderBoard: FC = () => {
   return (
     <div className={cn('panel', 'right-panel')}>
       <div className={cn('heading', 'h6')}>Лучшие из лучших:</div>
-      {leaderList.map((item) => (
-        <div key={item.data.user} className={'leader-item'}>
+      {leaderList.map((item, index) => (
+        <div key={index} className={'leader-item'}>
           <div> {item.data.user} </div>
           <div>
             {item.data.awards} <img src={awardSource} className={cn('img-in-line')} alt={'award'} />
