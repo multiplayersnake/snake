@@ -23,8 +23,16 @@ class AuthService {
       const redirect_uri = { 'redirect_uri' : 'http://localhost:8080/login' }
       const data = Object.assign(code, redirect_uri);
       console.log(service_id, data);
-      await window.open('https://oauth.yandex.ru/authorize?response_type=code&client_id=2029e8b2bea548d0b0f4a2d59694717&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Flogin')
-      await oauthAPI.signInWithYandex(data)
+
+
+      window.location.assign('https://oauth.yandex.ru/authorize?response_type=code&client_id=2029e8b2bea548d0b0f4a2d59694717d');
+      await setTimeout(() => {
+        const query = window.location;
+        console.log(query);
+        }, 5000);
+
+
+      //await oauthAPI.signInWithYandex(data)
     } catch (e) {
       handleAPIError(e as Error);
     }

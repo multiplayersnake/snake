@@ -15,7 +15,7 @@ export const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
       onAction({ type: MenuActionType.LoginOauth, payload: e });
 
       const form = e.target as HTMLFormElement;
-      form.reset();
+      form.reset()
     },
     [onAction]
   );
