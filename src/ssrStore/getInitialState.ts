@@ -1,17 +1,11 @@
-import { RouterState } from 'connected-react-router';
+import { Indexed } from '../types';
 
-import { SsrState } from './types';
-import { isServer } from './rootStore';
-
-export const getInitialState = (pathname = '/'): SsrState => {
-  return {
-    ssrTestData: {
-      time: new Date().toLocaleString(),
-      isServer: isServer
-    },
-    router: {
-      location: { pathname, search: '', hash: '', key: '' },
-      action: 'POP'
-    } as RouterState
-  };
-};
+export async function getInitialState(pathname = '/'): Promise<Indexed> {
+  return new Promise((ok) => {
+    setTimeout(() => {
+      // TODO здесь возможна асинхронность ?
+      console.log('return initial state...');
+      ok({});
+    }, 3000);
+  });
+}

@@ -1,9 +1,7 @@
-import { RouterState } from 'connected-react-router';
+import { configureStore } from './configureStore';
 
-export interface SsrState {
-  ssrTestData: {
-    time: string;
-    isServer: boolean;
-  };
-  router: RouterState;
+export type SsrState = ReturnType<ReturnType<typeof configureStore>['store']['getState']>;
+
+export interface BaseAction<T> {
+  type: T;
 }

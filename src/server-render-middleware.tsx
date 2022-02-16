@@ -5,14 +5,20 @@ import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
 import { Provider as ReduxProvider } from 'react-redux';
 
-import { configureStore } from './ssrStore/rootStore';
+import { configureStore } from './ssrStore/configureStore';
 import { getInitialState } from './ssrStore/getInitialState';
 import { SsrApp } from './ssrApp';
 
-export function serverRenderMiddleware(req: Request, res: Response) {
+export async function serverRenderMiddleware(req: Request, res: Response) {
   const location = req.url;
   const context: StaticRouterContext = {};
-  const { store } = configureStore(getInitialState(location), location);
+  const initialState = await getInitialState(location);
+
+  const { store } = configureStore(initialState, location);
+
+  // TODO удалить отладочный код
+  console.log('method:', req.method);
+  console.log('url:', req.url);
 
   const jsx = (
     <ReduxProvider store={store}>
@@ -25,9 +31,12 @@ export function serverRenderMiddleware(req: Request, res: Response) {
   const reduxState = store.getState();
 
   if (context.url) {
+    console.log('redirect:', context.url);
     res.redirect(context.url);
     return;
   }
+
+  console.log('NO REDIRECT');
 
   res.status(context.statusCode || 200).send(getHtml(reactHtml, reduxState));
 }

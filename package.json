@@ -7,8 +7,8 @@
     "node": "12"
   },
   "scripts": {
-    "dev": "webpack serve --mode development --open --hot --config=./webpack.config.js",
-    "build": "webpack --mode production --config=./webpack.config.js",
+    "dev": "webpack serve --mode=development --open --hot --config=./webpack.config.js",
+    "build": "webpack --mode=production --config=./webpack.config.js",
     "start": "npm run build && node server",
     "deploy:push": "heroku container:push web --app=battle-snakes",
     "deploy:release": "heroku container:release web --app=battle-snakes",
@@ -24,7 +24,7 @@
     "dev:ssr:client": "webpack --mode=development --config=./webpack.ssr.config.ts",
     "dev:ssr:server": "nodemon index.js --watch dist dist/server.js",
     "dev:ssr": "cross-env NODE_ENV=development npm-run-all --print-label --parallel dev:ssr:*",
-    "build:ssr": "webpack --mode production --config=./webpack.ssr.config.ts",
+    "build:ssr": "webpack --mode=production --config=./webpack.ssr.config.ts",
     "start:ssr": "npm run build:ssr && node index.js"
   },
   "keywords": [

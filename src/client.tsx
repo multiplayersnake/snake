@@ -4,11 +4,12 @@ import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
-import { configureStore } from './ssrStore/rootStore';
+import { configureStore } from './ssrStore/configureStore';
 import { SsrState } from './ssrStore/types';
 import { SsrApp } from './ssrApp';
+import { Indexed } from './types';
 
-const { store, history } = configureStore(window.__INITIAL_STATE__);
+const { store, history } = configureStore(window.__INITIAL_STATE__ as unknown as Indexed);
 
 declare global {
   interface Window {

@@ -7,14 +7,15 @@ import {
 import { createBrowserHistory, createMemoryHistory } from 'history';
 // TODO проверить, работает ли стор без routerMiddleware
 import { routerMiddleware } from 'connected-react-router';
-import createRootReducer from './rootReducer';
-import { SsrState } from './types';
+
+import { Indexed } from '../types';
+
+import { createRootReducer } from './reducers';
 
 export const isServer = !(typeof window !== 'undefined' && window.document && window.document.createElement);
 
-export function configureStore(initialState: SsrState, url = '/') {
+export function configureStore(initialState: Indexed = {}, url = '/') {
   const history = isServer ? createMemoryHistory({ initialEntries: [url] }) : createBrowserHistory();
-
   const store = createStore(
     createRootReducer(history),
     initialState,
@@ -24,3 +25,5 @@ export function configureStore(initialState: SsrState, url = '/') {
 
   return { store, history };
 }
+
+// export const store = configureStore();

@@ -5,16 +5,20 @@ import { Button } from '../../components/common/Button';
 
 import './TestPage.css';
 
-export const TestPage: FC = () => {
+type TestPageProps = {
+  text?: string;
+};
+
+export const TestPage: FC<TestPageProps> = (props) => {
   return (
     <div className="test-page">
       <Heading tag="h1" className="test-title">
-        Тестовая страница
+        {props.text ?? 'Тестовая страница'}
       </Heading>
 
-      <Button>Зарегистрироваться</Button>
+      <Button>Click</Button>
 
-      <div>Здесь будет контент</div>
+      <p>Здесь будет контент</p>
     </div>
   );
 };

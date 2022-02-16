@@ -14,8 +14,16 @@ const ColdSsrApp: React.FC = () => {
       <main className="content">
         <ErrorBoundary>
           <Switch>
-            <Route path="/">
-              <TestPage />
+            <Route path="/login">
+              <TestPage text={'Login'} />
+            </Route>
+
+            <Route path="/signup">
+              <TestPage text={'Signup'} />
+            </Route>
+
+            <Route path="/" exact>
+              <TestPage text={'Root'} />
             </Route>
 
             <Route path="*">
