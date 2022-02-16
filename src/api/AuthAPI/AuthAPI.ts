@@ -26,6 +26,15 @@ export type SignInRequest = {
   password: string;
 };
 
+export type ServiceId = {
+  service_id : string;
+};
+
+export type signInWithYandexRequest = {
+  code : string;
+  redirect_uri : string;
+}
+
 class AuthAPI extends BaseAPI {
   constructor() {
     super('/auth');
@@ -48,4 +57,20 @@ class AuthAPI extends BaseAPI {
   }
 }
 
+class OAuthAPI extends BaseAPI {
+  constructor() {
+    super('/oauth');
+  }
+
+  public getServiceId(): Promise<ServiceId> {
+    return this.http.get<ServiceId>('/yandex/service-id?redirect_uri=http://localhost:8080/login');
+  }
+
+  public signInWithYandex(data: signInWithYandexRequest ): Promise<void> {
+    return this.http.post<void>('/yandex', { data });
+  }
+
+}
+
 export const authAPI = new AuthAPI();
+export const oauthAPI = new OAuthAPI();

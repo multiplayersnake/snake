@@ -36,6 +36,13 @@ export function useAuth(): UseAuth {
     [dispatch]
   );
 
+  const logInOauth = useCallback(
+    async (e: FormEvent) => {
+      await AuthService.signInOauth(e);
+    },
+    [dispatch]
+  )
+
   const signUp = useCallback(
     async (e: FormEvent) => {
       await AuthService.signUp(e);
@@ -53,6 +60,10 @@ export function useAuth(): UseAuth {
           void logIn(action.payload);
           break;
 
+        case MenuActionType.LoginOauth:
+          void logInOauth(action.payload);
+          break;
+
         case MenuActionType.Logout:
           void logOut();
           break;
@@ -65,7 +76,7 @@ export function useAuth(): UseAuth {
           console.log('Unknown main menu action:', action);
       }
     },
-    [logIn, logOut, signUp]
+    [logIn, logInOauth, logOut, signUp]
   );
 
   useEffect(() => {

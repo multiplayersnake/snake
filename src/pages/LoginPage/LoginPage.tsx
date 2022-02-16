@@ -12,7 +12,7 @@ type LoginPageProps = {
 export const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
-      onAction({ type: MenuActionType.Login, payload: e });
+      onAction({ type: MenuActionType.LoginOauth, payload: e });
 
       const form = e.target as HTMLFormElement;
       form.reset();
