@@ -1,6 +1,4 @@
 :root {
-  /* цвета из макетов */
-  /* https://www.figma.com/file/EduXWeAso0ymv9iv5mOGcM/snake */
   --black: #000000;
   --dark-gray: #1e1e1e;
   --light-gray: #e0e0e0;
@@ -9,16 +7,7 @@
   --violet: #55278f;
   --white: #ffffff;
   --yellow: rgba(236, 239, 73, 1);
-  /* цвета для отладки, в конце разработки лишние можно удалить */
-  --blue: #0077ff;
-  --gray: #b2b2b2;
-  --green: #156b39;
-  --orange: #ffa000;
-  --purple: #735ce6;
-  --red: #e64646;
-  --turquoise: #63b9ba;
 
-  /* Основные цвета разметки */
   --panel-background: rgba(0, 196, 255, 0.7);
   --sub-panel-background: rgba(244, 244, 245, 0.7);
 }
