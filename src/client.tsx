@@ -11,6 +11,8 @@ import { Indexed } from './types';
 
 const { store, history } = configureStore(window.__INITIAL_STATE__ as unknown as Indexed);
 
+delete window.__INITIAL_STATE__;
+
 declare global {
   interface Window {
     __INITIAL_STATE__: SsrState;

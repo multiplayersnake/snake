@@ -6,6 +6,6 @@ export async function getInitialState(pathname = '/'): Promise<Indexed> {
       // TODO здесь возможна асинхронность ?
       console.log('return initial state...');
       ok({});
-    }, 3000);
+    }, 0);
   });
 }

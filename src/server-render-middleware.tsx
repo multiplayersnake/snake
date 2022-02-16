@@ -32,13 +32,13 @@ export async function serverRenderMiddleware(req: Request, res: Response) {
   const reduxState = store.getState();
 
   if (context.url) {
+    // TODO удалить
     console.log('redirect:', context.url);
     res.redirect(context.url);
     return;
   }
 
-  console.log('NO REDIRECT');
-
+  res.contentType('text/html');
   res.status(context.statusCode || 200).send(getHtml(reactHtml, reduxState));
 }
 
