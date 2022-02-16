@@ -24,7 +24,7 @@ function getWebpackMiddlewares(config: webpack.Configuration): RequestHandler[] 
 const app = express();
 
 // Отдаём статику приложения
-app.use(express.static(path.resolve(__dirname, '../dist')));
+app.get(/\.(js|css|map|ico|mp3|jpe?g|png|ttf|eot|woff2?|fbx)$/, express.static(path.resolve(__dirname, '../dist')));
 
 // На все get запросы запускаем сначала middleware dev server, а потом middleware рендеринга приложения
 app.get('/*', [...getWebpackMiddlewares(config)], serverRenderMiddleware);

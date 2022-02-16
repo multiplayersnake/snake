@@ -8,6 +8,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { configureStore } from './ssrStore/configureStore';
 import { getInitialState } from './ssrStore/getInitialState';
 import { SsrApp } from './ssrApp';
+import favicon from './assets/images/favicon.ico';
 
 export async function serverRenderMiddleware(req: Request, res: Response) {
   const location = req.url;
@@ -49,7 +50,7 @@ function getHtml(reactHtml: string, reduxState = {}) {
             <meta charset="UTF-8"">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+            <link rel="icon" href="${favicon}" type="image/x-icon" />
             <title>Боевые змеи</title>
             <link href="/main.css" rel="stylesheet">
         </head>
