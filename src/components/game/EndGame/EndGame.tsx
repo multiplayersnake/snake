@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { RootState, getEndGameAwards, getEndGameCoins, getEndGamePlace, getEndGameTime } from '../../../store';
 import { NavButton, Heading } from '../..';
 
-import coinSource from '../../../assets/coin.png';
-import awardSource from '../../../assets/award.png';
+import coinSource from '../../../assets/images/coin.png';
+import awardSource from '../../../assets/images/award.png';
 
 import './EndGame.css';
 import mscMain from '../../../assets/sound/endgame.mp3';

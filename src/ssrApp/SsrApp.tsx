@@ -5,6 +5,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { ErrorBoundary } from '../ssrComponents';
 import { TestPage } from '../ssrPages';
 
+import '../styles/index.css';
 import './SsrApp.css';
 
 const ColdSsrApp: React.FC = () => {

@@ -4,12 +4,12 @@ import { Snake, Coin, Boom, Circle, Apple } from './classes';
 import { draw } from './draw';
 import config from './constants';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import appleModel from '../assets/apple.FBX';
+import appleModel from '../assets/3d/apple.fbx';
 
-import groundImg from '../assets/ground.jpg';
-import backImg from '../assets/gameback.jpg';
-import btnFullScreenSource from '../assets/fullscreen.png';
-import btnSmallScreenSource from '../assets/smallscreen.png';
+import groundImg from '../assets/images/ground.jpg';
+import backImg from '../assets/images/gameback.jpg';
+import btnFullScreenSource from '../assets/images/fullscreen.png';
+import btnSmallScreenSource from '../assets/images/smallscreen.png';
 
 import sndBoom from '../assets/sound/boom.mp3';
 import sndCoin from '../assets/sound/coin.mp3';

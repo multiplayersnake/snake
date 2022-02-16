@@ -32,10 +32,10 @@ module.exports = {
         }
       },
       {
-        test: /\.(FBX)$/,
+        test: /\.(fbx)$/,
         type: 'asset/resource',
         generator: {
-          filename: 'assets/models3d/[contenthash][ext]'
+          filename: 'assets/3d/[contenthash][ext]'
         }
       },
       {
@@ -46,7 +46,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(eot|ttf|woff?2)$/,
+        test: /\.(eot|ttf|woff2?)$/,
         type: 'asset/resource',
         generator: {
           filename: 'assets/fonts/[contenthash][ext]'

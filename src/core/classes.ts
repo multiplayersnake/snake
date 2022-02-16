@@ -1,7 +1,7 @@
 import config from './constants';
-import appleSource from '../assets/apple2.png';
-import btnFullScreenSource from '../assets/fullscreen.png';
-import emblemSource from '../assets/emblem.png';
+import appleSource from '../assets/images/apple2.png';
+import btnFullScreenSource from '../assets/images/fullscreen.png';
+import emblemSource from '../assets/images/emblem.png';
 
 const appleImage = new Image(20, 20);
 appleImage.src = appleSource;

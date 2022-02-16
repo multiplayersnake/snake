@@ -2,10 +2,11 @@ import path from 'path';
 import webpack, { Configuration, Entry, WebpackPluginInstance } from 'webpack';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 
 import { IS_DEV, DIST_DIR, SRC_DIR } from './env';
 
-import fileLoader from './loaders/file';
+import assetsLoader from './loaders/assets';
 import cssLoader from './loaders/css';
 import jsLoader from './loaders/js';
 
@@ -19,7 +20,7 @@ const config: Configuration = {
     path.join(SRC_DIR, 'client')
   ].filter(Boolean) as unknown as Entry,
   module: {
-    rules: [fileLoader.client, cssLoader.client, jsLoader.client]
+    rules: [assetsLoader.client, cssLoader.client, jsLoader.client]
   },
   output: {
     path: DIST_DIR,
@@ -38,11 +39,12 @@ const config: Configuration = {
     // Plugin для HMR
     new webpack.HotModuleReplacementPlugin()
   ].filter(Boolean) as WebpackPluginInstance[],
-
   devtool: 'source-map',
-
   performance: {
     hints: IS_DEV ? false : 'warning'
+  },
+  optimization: {
+    minimizer: [new TerserPlugin({ extractComments: false })]
   }
 };
 

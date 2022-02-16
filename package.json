@@ -21,9 +21,11 @@
     "lint:styles": "stylelint \"./src/**/*.(css)\" --fix",
     "lint:styles:fix": "stylelint \"./src/**/*.(css)\"",
     "clean": "rimraf dist",
-    "start:ssr:webpack": "webpack --mode=development --config=./webpack.ssr.config.ts",
-    "start:ssr:server": "nodemon index.js --watch dist/server.js",
-    "start:ssr": "cross-env NODE_ENV=development npm-run-all --print-label --parallel start:ssr:*"
+    "dev:ssr:client": "webpack --mode=development --config=./webpack.ssr.config.ts",
+    "dev:ssr:server": "nodemon index.js --watch dist dist/server.js",
+    "dev:ssr": "cross-env NODE_ENV=development npm-run-all --print-label --parallel dev:ssr:*",
+    "build:ssr": "webpack --mode production --config=./webpack.ssr.config.ts",
+    "start:ssr": "npm run build:ssr && node index.js"
   },
   "keywords": [
     "snake"
