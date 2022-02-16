@@ -18,15 +18,16 @@ class AuthService {
 
   public static async signInOauth(e: FormEvent): Promise<void> {
     try {
-      const service_id = await oauthAPI.getServiceId();
-      const code = { 'code' : '6435539' }
-      const redirect_uri = { 'redirect_uri' : 'http://localhost:8080/login' }
-      const data = Object.assign(code, redirect_uri);
-      console.log(service_id, data);
+      //const service_id = await oauthAPI.getServiceId();
+      // const code = { 'code' : '6435539' }
+      // const redirect_uri = { 'redirect_uri' : 'http://localhost:8080/login' }
+      // const data = Object.assign(code, redirect_uri);
+      //console.log(service_id, data);
 
 
-      window.location.assign('https://oauth.yandex.ru/authorize?response_type=code&client_id=2029e8b2bea548d0b0f4a2d59694717d');
-      await setTimeout(() => {
+      window.location.assign('https://oauth.yandex.ru/authorize?response_type=code&client_id=59acdab40995401da2c8668002b2886b&redirect_uri=http://localhost:8080/login');
+
+      setTimeout(() => {
         const query = window.location;
         console.log(query);
         }, 5000);

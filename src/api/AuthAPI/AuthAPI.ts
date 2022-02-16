@@ -63,7 +63,7 @@ class OAuthAPI extends BaseAPI {
   }
 
   public getServiceId(): Promise<ServiceId> {
-    return this.http.get<ServiceId>('/yandex/service-id?redirect_uri=http://localhost:8080/login');
+    return this.http.get<ServiceId>('/yandex/service-id?redirect_uri=http://localhost:8080/');
   }
 
   public signInWithYandex(data: signInWithYandexRequest ): Promise<void> {
