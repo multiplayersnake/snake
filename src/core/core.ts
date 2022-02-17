@@ -1,9 +1,9 @@
 import * as THREE from 'three';
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 
 import { Snake, Coin, Boom, Circle, Apple } from './classes';
 import { draw } from './draw';
 import config from './constants';
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import appleModel from '../assets/3d/apple.fbx';
 
 import groundImg from '../assets/images/ground.jpg';

@@ -1,16 +1,6 @@
 import config from './constants';
 import appleSource from '../assets/images/apple2.png';
-import btnFullScreenSource from '../assets/images/fullscreen.png';
 import emblemSource from '../assets/images/emblem.png';
-
-const appleImage = new Image(20, 20);
-appleImage.src = appleSource;
-
-const emblemImage = new Image(40, 40);
-emblemImage.src = emblemSource;
-
-const btnFullScreenImage = new Image(50, 50);
-btnFullScreenImage.src = btnFullScreenSource;
 
 export type Circle = {
   x: number;
@@ -71,7 +61,8 @@ class Coin {
     this.y = y;
     this.id = id;
     this.value = value;
-    this.image = emblemImage;
+    this.image = new Image(40, 40);
+    this.image.src = emblemSource;
   }
 }
 
@@ -98,7 +89,8 @@ class Apple {
     this.x = x;
     this.y = y;
     this.id = id;
-    this.image = appleImage;
+    this.image = new Image(20, 20);
+    this.image.src = appleSource;
   }
 }
 

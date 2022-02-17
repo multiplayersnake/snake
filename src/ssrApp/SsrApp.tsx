@@ -2,28 +2,65 @@ import * as React from 'react';
 import { hot } from 'react-hot-loader/root';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
+import { Modal, ClientOnly } from '../components';
 import { ErrorBoundary } from '../ssrComponents';
-import { TestPage } from '../ssrPages';
+import { ForumPage, GamePage, GameTypePage, LoginPage, MainPage, MessagePage, ProfilePage, SignupPage } from '../pages';
+import { useAuth } from '../hooks';
 
 import '../styles/index.css';
 import './SsrApp.css';
 
 const ColdSsrApp: React.FC = () => {
+  const { handleAction } = useAuth();
+
   return (
     <div className="app">
+      <Modal />
       <main className="content">
         <ErrorBoundary>
           <Switch>
             <Route path="/login">
-              <TestPage text={'Login'} />
+              <LoginPage onAction={handleAction} />
             </Route>
 
             <Route path="/signup">
-              <TestPage text={'Signup'} />
+              <SignupPage onAction={handleAction} />
             </Route>
 
             <Route path="/" exact>
-              <TestPage text={'Root'} />
+              <ClientOnly>
+                <MainPage onAction={handleAction} />
+              </ClientOnly>
+            </Route>
+
+            <Route path="/game">
+              <ClientOnly>
+                <GamePage />
+              </ClientOnly>
+            </Route>
+
+            <Route path="/profile">
+              <ClientOnly>
+                <ProfilePage />
+              </ClientOnly>
+            </Route>
+
+            <Route path="/forum">
+              <ClientOnly>
+                <ForumPage />
+              </ClientOnly>
+            </Route>
+
+            <Route path="/message/:id">
+              <ClientOnly>
+                <MessagePage />
+              </ClientOnly>
+            </Route>
+
+            <Route path="/game-type">
+              <ClientOnly>
+                <GameTypePage />
+              </ClientOnly>
             </Route>
 
             <Route path="*">
