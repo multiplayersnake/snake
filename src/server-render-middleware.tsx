@@ -10,16 +10,12 @@ import { getInitialState } from './ssrStore/getInitialState';
 import { SsrApp } from './ssrApp';
 import favicon from './assets/images/favicon.ico';
 
-export async function serverRenderMiddleware(req: Request, res: Response) {
+export function serverRenderMiddleware(req: Request, res: Response) {
   const location = req.url;
   const context: StaticRouterContext = {};
-  const initialState = await getInitialState(location);
 
+  const initialState = getInitialState(location);
   const { store } = configureStore(initialState, location);
-
-  // TODO удалить отладочный код
-  console.log('method:', req.method);
-  console.log('url:', req.url);
 
   const jsx = (
     <ReduxProvider store={store}>
@@ -32,13 +28,10 @@ export async function serverRenderMiddleware(req: Request, res: Response) {
   const reduxState = store.getState();
 
   if (context.url) {
-    // TODO удалить
-    console.log('redirect:', context.url);
     res.redirect(context.url);
     return;
   }
 
-  res.contentType('text/html');
   res.status(context.statusCode || 200).send(getHtml(reactHtml, reduxState));
 }
 

@@ -37,7 +37,7 @@ const config: Configuration = {
   plugins: [
     new MiniCssExtractPlugin({ filename: '[name].css' }),
     // Plugin для HMR
-    new webpack.HotModuleReplacementPlugin()
+    IS_DEV && new webpack.HotModuleReplacementPlugin()
   ].filter(Boolean) as WebpackPluginInstance[],
   devtool: 'source-map',
   performance: {

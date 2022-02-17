@@ -6,6 +6,8 @@ import devMiddleware from 'webpack-dev-middleware';
 import hotMiddleware from 'webpack-hot-middleware';
 
 import config from '../webpack/client.config';
+import { IS_DEV } from '../webpack/env';
+
 import { serverRenderMiddleware } from './server-render-middleware';
 
 function getWebpackMiddlewares(config: webpack.Configuration): RequestHandler[] {
@@ -24,9 +26,18 @@ function getWebpackMiddlewares(config: webpack.Configuration): RequestHandler[] 
 const app = express();
 
 // Отдаём статику приложения
-app.get(/\.(js|css|map|ico|mp3|jpe?g|png|ttf|eot|woff2?|fbx)$/, express.static(path.resolve(__dirname, '../dist')));
+app.use(express.static(path.resolve(__dirname, '../dist')));
 
 // На все get запросы запускаем сначала middleware dev server, а потом middleware рендеринга приложения
-app.get('/*', [...getWebpackMiddlewares(config)], serverRenderMiddleware);
+if (IS_DEV) {
+  app.use(...getWebpackMiddlewares(config));
+}
+
+// Пока не можем проверить авторизацию, пускаем юзера только страницы входа и регистрации
+app.get(['/login', '/signup'], serverRenderMiddleware);
+
+app.use('*', (request, response) => {
+  response.redirect('/login');
+});
 
 export { app };
