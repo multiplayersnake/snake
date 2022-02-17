@@ -27,10 +27,10 @@ class AuthService {
 
       window.location.assign('https://oauth.yandex.ru/authorize?response_type=code&client_id=59acdab40995401da2c8668002b2886b&redirect_uri=http://localhost:8080/login');
 
-      setTimeout(() => {
-        const query = window.location;
-        console.log(query);
-        }, 5000);
+      // setTimeout(() => {
+      //   const query = window.location;
+      //   console.log(query);
+      //   }, 5000);
 
 
       //await oauthAPI.signInWithYandex(data)

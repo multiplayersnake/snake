@@ -1,21 +1,39 @@
-import React, { FC, FormEvent, useCallback } from 'react';
+import React, { FC, FormEvent, useCallback, useEffect } from 'react';
 
 import { Button, NavButton, Input, Form, Heading } from '../../components';
 import { MenuAction, MenuActionType } from '../../types';
-
+import { useLocation } from 'react-router-dom';
 import './LoginPage.css';
+
 
 type LoginPageProps = {
   onAction: (action: MenuAction) => void;
 };
 
 export const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
+  const { search } = useLocation();
+  const parsed = new URLSearchParams(search);
+  const code = parsed.get('code');
+
+  useEffect(() => {
+    if (code) {
+      console.log(code)
+    }
+  }, [code]);
+
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
-      onAction({ type: MenuActionType.LoginOauth, payload: e });
+      onAction({ type: MenuActionType.Login, payload: e });
 
       const form = e.target as HTMLFormElement;
       form.reset()
+    },
+    [onAction]
+  );
+
+  const yandexClick = useCallback(
+    async (e: FormEvent) => {
+      onAction({ type: MenuActionType.LoginOauth, payload: e });
     },
     [onAction]
   );
@@ -39,6 +57,9 @@ export const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
           <NavButton className="registration-button" to="/signup">
             Регистрация
           </NavButton>
+          <Button onClick={yandexClick} className="registration-button">
+            Войти через Yandex
+          </Button>
         </div>
       </Form>
     </div>
