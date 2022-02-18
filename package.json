@@ -7,9 +7,9 @@
     "node": "12"
   },
   "scripts": {
-    "dev": "webpack serve --mode=development --open --hot --config=./webpack.config.js",
-    "build": "webpack --mode=production --config=./webpack.config.js",
-    "start": "npm run build && node server",
+    "dev:csr": "webpack serve --mode=development --open --hot --config=./webpack.csr.config.js",
+    "build:csr": "webpack --mode=production --config=./webpack.csr.config.js",
+    "start:csr": "npm run build:csr && node csrServer",
     "deploy:push": "heroku container:push web --app=battle-snakes",
     "deploy:release": "heroku container:release web --app=battle-snakes",
     "deploy": "npm run push:container && npm run release:container",

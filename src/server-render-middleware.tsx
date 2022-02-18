@@ -7,7 +7,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 import { configureStore } from './ssrStore/configureStore';
 import { getInitialState } from './ssrStore/getInitialState';
-import { SsrApp } from './ssrApp';
+import { ServerApp } from './app/ServerApp';
 import favicon from './assets/images/favicon.ico';
 
 export function serverRenderMiddleware(req: Request, res: Response) {
@@ -20,7 +20,7 @@ export function serverRenderMiddleware(req: Request, res: Response) {
   const jsx = (
     <ReduxProvider store={store}>
       <StaticRouter context={context} location={location}>
-        <SsrApp />
+        <ServerApp />
       </StaticRouter>
     </ReduxProvider>
   );

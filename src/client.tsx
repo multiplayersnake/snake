@@ -6,7 +6,7 @@ import { ConnectedRouter } from 'connected-react-router';
 
 import { configureStore } from './ssrStore/configureStore';
 import { SsrState } from './ssrStore/types';
-import { SsrApp } from './ssrApp';
+import { ClientApp } from './app/ClientApp';
 import { Indexed } from './types';
 
 const { store, history } = configureStore(window.__INITIAL_STATE__ as unknown as Indexed);
@@ -23,7 +23,7 @@ declare global {
 hydrate(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <SsrApp />
+      <ClientApp />
     </ConnectedRouter>
   </Provider>,
   document.getElementById('mount')

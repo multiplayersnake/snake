@@ -36,7 +36,8 @@ if (IS_DEV) {
 // Пока не можем проверить авторизацию, пускаем юзера только страницы входа и регистрации
 app.get(['/login', '/signup'], serverRenderMiddleware);
 
-app.use('*', (request, response) => {
+// При запросе всех остальных страниц перенаправляем на страницу входа
+app.get('*', (request, response) => {
   response.redirect('/login');
 });
 

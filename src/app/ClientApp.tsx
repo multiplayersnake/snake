@@ -2,15 +2,14 @@ import * as React from 'react';
 import { hot } from 'react-hot-loader/root';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { Modal, ClientOnly } from '../components';
-import { ErrorBoundary } from '../ssrComponents';
 import { ForumPage, GamePage, GameTypePage, LoginPage, MainPage, MessagePage, ProfilePage, SignupPage } from '../pages';
+import { Modal, GuestOnly, AuthorizedOnly, ErrorBoundary } from '../components';
 import { useAuth } from '../hooks';
 
 import '../styles/index.css';
-import './SsrApp.css';
+import './App.css';
 
-const ColdSsrApp: React.FC = () => {
+const ColdClientApp: React.FC = () => {
   const { handleAction } = useAuth();
 
   return (
@@ -20,47 +19,51 @@ const ColdSsrApp: React.FC = () => {
         <ErrorBoundary>
           <Switch>
             <Route path="/login">
-              <LoginPage onAction={handleAction} />
+              <GuestOnly>
+                <LoginPage onAction={handleAction} />
+              </GuestOnly>
             </Route>
 
             <Route path="/signup">
-              <SignupPage onAction={handleAction} />
+              <GuestOnly>
+                <SignupPage onAction={handleAction} />
+              </GuestOnly>
             </Route>
 
             <Route path="/" exact>
-              <ClientOnly>
+              <AuthorizedOnly>
                 <MainPage onAction={handleAction} />
-              </ClientOnly>
+              </AuthorizedOnly>
             </Route>
 
             <Route path="/game">
-              <ClientOnly>
+              <AuthorizedOnly>
                 <GamePage />
-              </ClientOnly>
+              </AuthorizedOnly>
             </Route>
 
             <Route path="/profile">
-              <ClientOnly>
+              <AuthorizedOnly>
                 <ProfilePage />
-              </ClientOnly>
+              </AuthorizedOnly>
             </Route>
 
             <Route path="/forum">
-              <ClientOnly>
+              <AuthorizedOnly>
                 <ForumPage />
-              </ClientOnly>
+              </AuthorizedOnly>
             </Route>
 
             <Route path="/message/:id">
-              <ClientOnly>
+              <AuthorizedOnly>
                 <MessagePage />
-              </ClientOnly>
+              </AuthorizedOnly>
             </Route>
 
             <Route path="/game-type">
-              <ClientOnly>
+              <AuthorizedOnly>
                 <GameTypePage />
-              </ClientOnly>
+              </AuthorizedOnly>
             </Route>
 
             <Route path="*">
@@ -73,4 +76,4 @@ const ColdSsrApp: React.FC = () => {
   );
 };
 
-export const SsrApp = hot(ColdSsrApp);
+export const ClientApp = hot(ColdClientApp);
