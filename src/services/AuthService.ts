@@ -22,7 +22,6 @@ class AuthService {
       const client_id = '2029e8b2bea548d0b0f4a2d59694717d';
       const redirect_uri = 'http://localhost:5000';
       window.location.assign(`https://oauth.yandex.ru/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`);
-
     } catch (e) {
       handleAPIError(e as Error);
     }
@@ -32,13 +31,8 @@ class AuthService {
     try {
       const codeObject = { 'code' : code }
       const redirect_uri = { 'redirect_uri' : 'http://localhost:5000' }
-
       const data = Object.assign(codeObject, redirect_uri);
-      // console.log(client_id, data);
-
       await oauthAPI.signInWithYandex(data)
-
-
     } catch (e) {
       handleAPIError(e as Error);
     }

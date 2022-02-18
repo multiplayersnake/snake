@@ -1,29 +1,14 @@
-import React, { FC, FormEvent, useCallback, useEffect } from 'react';
+import React, { FC, FormEvent, useCallback} from 'react';
 
 import { Button, NavButton, Input, Form, Heading } from '../../components';
 import { MenuAction, MenuActionType } from '../../types';
-import { useLocation } from 'react-router-dom';
 import './LoginPage.css';
-import AuthService from '../../services/AuthService';
-
 
 type LoginPageProps = {
   onAction: (action: MenuAction) => void;
 };
 
 export const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
-  const { search } = useLocation();
-  const parsed = new URLSearchParams(search);
-  const code = parsed.get('code');
-
-  useEffect(() => {
-    console.log('aasdf')
-    if (code) {
-      console.log(code)
-      //void AuthService.sendOauthCode(code);
-      //void AuthService.checkAuthorization();
-    }
-  }, [code]);
 
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
