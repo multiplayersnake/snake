@@ -8,7 +8,7 @@ import hotMiddleware from 'webpack-hot-middleware';
 import config from '../webpack/client.config';
 import { IS_DEV } from '../webpack/env';
 
-import { serverRenderMiddleware } from './server-render-middleware';
+import { serverRenderMiddleware } from './serverRenderMiddleware';
 
 function getWebpackMiddlewares(config: webpack.Configuration): RequestHandler[] {
   const compiler = webpack({ ...config, mode: 'development' });

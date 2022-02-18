@@ -4,16 +4,12 @@ import { Switch, Route } from 'react-router-dom';
 
 import { LoginPage } from '../pages/LoginPage';
 import { SignupPage } from '../pages/SignupPage';
-import { Modal } from '../components/common/Modal';
-import { ErrorBoundary } from '../components/common/ErrorBoundary';
-import { useAuth } from '../hooks';
+import { Modal, ErrorBoundary } from '../components/common';
 
 import '../styles/index.css';
 import './App.css';
 
 const ColdServerApp: React.FC = () => {
-  const { handleAction } = useAuth();
-
   return (
     <div className="app">
       <Modal />
@@ -21,11 +17,11 @@ const ColdServerApp: React.FC = () => {
         <ErrorBoundary>
           <Switch>
             <Route path="/login">
-              <LoginPage onAction={handleAction} />
+              <LoginPage />
             </Route>
 
             <Route path="/signup">
-              <SignupPage onAction={handleAction} />
+              <SignupPage />
             </Route>
           </Switch>
         </ErrorBoundary>
