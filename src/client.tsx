@@ -4,8 +4,8 @@ import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
-import { configureStore } from './ssrStore/configureStore';
-import { SsrState } from './ssrStore/types';
+import { configureStore } from './store/configureStore';
+import { RootState } from './store/types';
 import { ClientApp } from './app/ClientApp';
 import { Indexed } from './types';
 
@@ -15,7 +15,7 @@ delete window.__INITIAL_STATE__;
 
 declare global {
   interface Window {
-    __INITIAL_STATE__: SsrState;
+    __INITIAL_STATE__: RootState;
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: () => void;
   }
 }

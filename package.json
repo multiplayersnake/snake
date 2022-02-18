@@ -7,9 +7,9 @@
     "node": "12"
   },
   "scripts": {
-    "dev:csr": "webpack serve --mode=development --open --hot --config=./webpack.csr.config.js",
-    "build:csr": "webpack --mode=production --config=./webpack.csr.config.js",
-    "start:csr": "npm run build:csr && node csrServer",
+    "csr:dev": "webpack serve --mode=development --open --hot --config=./webpack.csr.config.js",
+    "csr:build": "webpack --mode=production --config=./webpack.csr.config.js",
+    "csr:start": "npm run csr:build && node csrServer",
     "deploy:push": "heroku container:push web --app=battle-snakes",
     "deploy:release": "heroku container:release web --app=battle-snakes",
     "deploy": "npm run push:container && npm run release:container",
@@ -21,11 +21,11 @@
     "lint:styles": "stylelint \"./src/**/*.(css)\" --fix",
     "lint:styles:fix": "stylelint \"./src/**/*.(css)\"",
     "clean": "rimraf dist",
-    "dev:ssr:client": "webpack --mode=development --config=./webpack.ssr.config.ts",
-    "dev:ssr:server": "nodemon index.js --watch dist dist/server.js",
-    "dev:ssr": "cross-env NODE_ENV=development npm-run-all --print-label --parallel dev:ssr:*",
-    "build:ssr": "webpack --mode=production --config=./webpack.ssr.config.ts",
-    "start:ssr": "npm run build:ssr && node index.js"
+    "dev:client": "webpack --mode=development --config=./webpack.ssr.config.ts",
+    "dev:server": "nodemon index.js --watch dist dist/server.js",
+    "dev": "cross-env NODE_ENV=development npm-run-all --print-label --parallel dev:*",
+    "build": "webpack --mode=production --config=./webpack.ssr.config.ts",
+    "start": "npm run build && node index.js"
   },
   "keywords": [
     "snake"

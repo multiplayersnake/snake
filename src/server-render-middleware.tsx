@@ -5,8 +5,8 @@ import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
 import { Provider as ReduxProvider } from 'react-redux';
 
-import { configureStore } from './ssrStore/configureStore';
-import { getInitialState } from './ssrStore/getInitialState';
+import { configureStore } from './store/configureStore';
+import { getInitialState } from './store/getInitialState';
 import { ServerApp } from './app/ServerApp';
 import favicon from './assets/images/favicon.ico';
 
