@@ -1,5 +1,6 @@
 import { useEffect, useCallback, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 import AuthService from '../../services/AuthService';
 import { MenuActionType, MenuAction } from '../../types';
@@ -82,6 +83,23 @@ export function useAuth(): UseAuth {
   useEffect(() => {
     void checkAuthorization();
   }, [checkAuthorization]);
+
+  // const l = useLocation();
+  // const parsedSearch = new URLSearchParams(l?.search);
+  // const code = parsedSearch.get('code');
+  //
+  // useEffect(() => {
+  //   if (!code) {
+  //     // если нет кода - делаем обычную проверку авторизации при открытии страницы
+  //     console.log('no code');
+  //     void checkAuthorization();
+  //     return;
+  //   }
+  //
+  //   // если есть код - выполняем новый метод
+  //   void AuthService.sendOauthCode(code);
+  //   console.log('code', code);
+  // }, [checkAuthorization, code]);
 
   return { handleAction };
 }

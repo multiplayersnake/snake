@@ -4,6 +4,7 @@ import { Button, NavButton, Input, Form, Heading } from '../../components';
 import { MenuAction, MenuActionType } from '../../types';
 import { useLocation } from 'react-router-dom';
 import './LoginPage.css';
+import AuthService from '../../services/AuthService';
 
 
 type LoginPageProps = {
@@ -16,8 +17,11 @@ export const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
   const code = parsed.get('code');
 
   useEffect(() => {
+    console.log('aasdf')
     if (code) {
       console.log(code)
+      //void AuthService.sendOauthCode(code);
+      //void AuthService.checkAuthorization();
     }
   }, [code]);
 

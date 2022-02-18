@@ -1,10 +1,11 @@
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 
 import { authAPI, oauthAPI, SignInRequest, SignUpRequest, mapToGameUser, mapToRawUser, SignUpFormData } from '../api/AuthAPI';
 import handleAPIError from '../api/handleAPIError';
 import { GameUser } from '../types';
 
 import getSubmittedFormData from './getSubmittedFormData';
+import { useLocation } from 'react-router-dom';
 
 class AuthService {
   public static async signIn(e: FormEvent): Promise<void> {
@@ -18,22 +19,26 @@ class AuthService {
 
   public static async signInOauth(e: FormEvent): Promise<void> {
     try {
-      //const service_id = await oauthAPI.getServiceId();
-      // const code = { 'code' : '6435539' }
-      // const redirect_uri = { 'redirect_uri' : 'http://localhost:8080/login' }
-      // const data = Object.assign(code, redirect_uri);
-      //console.log(service_id, data);
+      const client_id = '2029e8b2bea548d0b0f4a2d59694717d';
+      const redirect_uri = 'http://localhost:5000';
+      window.location.assign(`https://oauth.yandex.ru/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}`);
+
+    } catch (e) {
+      handleAPIError(e as Error);
+    }
+  }
+
+  public static async sendOauthCode(code: string): Promise<void> {
+    try {
+      const codeObject = { 'code' : code }
+      const redirect_uri = { 'redirect_uri' : 'http://localhost:5000' }
+
+      const data = Object.assign(codeObject, redirect_uri);
+      // console.log(client_id, data);
+
+      await oauthAPI.signInWithYandex(data)
 
 
-      window.location.assign('https://oauth.yandex.ru/authorize?response_type=code&client_id=59acdab40995401da2c8668002b2886b&redirect_uri=http://localhost:8080/login');
-
-      // setTimeout(() => {
-      //   const query = window.location;
-      //   console.log(query);
-      //   }, 5000);
-
-
-      //await oauthAPI.signInWithYandex(data)
     } catch (e) {
       handleAPIError(e as Error);
     }
