@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import { GameParameters } from '../../../types';
 import { getUserNickname, getUserGameParameters, RootState } from '../../../store';
 
-import coinSource from '../../../assets/coin.png';
-import awardSource from '../../../assets/award.png';
+import coinSource from '../../../assets/images/coin.png';
+import awardSource from '../../../assets/images/award.png';
 
 import './InfoPanel.css';
 

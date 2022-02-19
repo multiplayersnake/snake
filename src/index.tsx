@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import { App } from './app';
-import { store } from './store';
+import { configureStore } from './store';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <Provider store={configureStore().store}>
       <App />
     </Provider>
   </React.StrictMode>,

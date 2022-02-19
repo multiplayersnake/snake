@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { leaderBoardAPI } from '../../../api/LeaderBoardAPI';
 import { LeaderItem } from '../../../api/LeaderBoardAPI';
 
-import awardSource from '../../../assets/award.png';
+import awardSource from '../../../assets/images/award.png';
 
 import './LeaderBoard.css';
 

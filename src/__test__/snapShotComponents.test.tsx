@@ -5,7 +5,9 @@ import renderer from 'react-test-renderer';
 
 import { Button, Input, Form, Heading, Message, Topic, TextArea, InfoPanel, MainMenuItem } from '../components';
 import { MenuActionType } from '../types';
-import { store } from '../store';
+import { configureStore } from '../store';
+
+const { store } = configureStore();
 
 it('Button', () => {
   const tree = renderer.create(<Button onClick={() => ''}>Test Button</Button>).toJSON();

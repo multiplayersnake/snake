@@ -15,7 +15,7 @@
   box-shadow: none;
   outline: none;
   appearance: none;
-  font-family: var(--open-sans-font);
+  font-family: var(--main-font);
   font-size: var(--gap-4);
   color: var(--black);
   background: var(--sub-panel-background);
@@ -29,7 +29,7 @@
 }
 
 .input-label {
-  font-family: var(--open-sans-font);
+  font-family: var(--main-font);
   font-size: var(--gap-4);
   color: var(--black);
   opacity: 0.8;
@@ -53,5 +53,5 @@
 }
 
 .input:focus {
-  box-shadow: var(--gray-shadow);
+  box-shadow: var(--input-focus-shadow);
 }

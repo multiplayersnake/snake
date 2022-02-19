@@ -1,17 +1,19 @@
 import React, { FC, FormEvent, useCallback } from 'react';
 
-import { Button, NavButton, Input, Form, Heading } from '../../components';
+import { Button, NavButton, Input, Form, Heading } from '../../components/common';
 import { MenuAction, MenuActionType } from '../../types';
 
 import './LoginPage.css';
 
 type LoginPageProps = {
-  onAction: (action: MenuAction) => void;
+  onAction?: (action: MenuAction) => void;
 };
 
 export const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
+      if (!onAction) return;
+
       onAction({ type: MenuActionType.Login, payload: e });
 
       const form = e.target as HTMLFormElement;
