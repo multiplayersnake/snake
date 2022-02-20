@@ -8,8 +8,8 @@ import { NavButton, Scroll, SelectorShopItem } from '../../components';
 import UserAPI from '../../api/UserAPI';
 import { mapToRawUser } from '../../api/AuthAPI';
 
-import coinSource from '../../assets/coin.png';
-import awardSource from '../../assets/award.png';
+import coinSource from '../../assets/images/coin.png';
+import awardSource from '../../assets/images/award.png';
 
 import { part_arr } from '../../database/mock';
 import { item_arr } from '../../database/mock';

@@ -4,8 +4,8 @@ import cn from 'classnames';
 
 import { NavButton } from '../../components';
 
-import coinSource from '../../assets/coin.png';
-import awardSource from '../../assets/award.png';
+import coinSource from '../../assets/images/coin.png';
+import awardSource from '../../assets/images/award.png';
 
 import { GameParameters } from '../../types';
 import { RootState, getUserGameParameters, getUserNickname } from '../../store';

@@ -1,7 +1,5 @@
-// такой индекс-файл нужен для того чтобы можно было импортировать
-// компонент просто указав путь до папки components
-
 export * from './Button';
+export * from './ClientOnly';
 export * from './ErrorBoundary';
 export * from './Form';
 export * from './Heading';

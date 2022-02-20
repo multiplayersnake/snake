@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useRef } from 'react';
 import cn from 'classnames';
 
-import elSource from '../../../assets/elexir.png';
-import coinSource from '../../../assets/coin.png';
-import awardSource from '../../../assets/award.png';
+import elSource from '../../../assets/images/elexir.png';
+import coinSource from '../../../assets/images/coin.png';
+import awardSource from '../../../assets/images/award.png';
 
 import './ShopItem.css';
 

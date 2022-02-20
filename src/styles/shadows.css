@@ -1,9 +1,5 @@
 :root {
-  --gray-shadow: 0 0 2px 2px var(--gray);
-  --white-shadow: drop-shadow(0px 0px 4px var(--white));
-  --inset-black-shadow: inset 1px 1px 8px var(--transparent-black);
-
-  /* Основные тени */
+  --input-focus-shadow: 0 0 2px 2px #b2b2b2;
   --text-shadow: 1px 4px 3px rgb(0, 0, 0);
   --box-shadow: 1px 4px 3px rgba(0, 0, 0, 0.5);
   --text-light: 1px 1px rgb(255, 255, 255);

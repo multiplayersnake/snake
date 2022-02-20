@@ -33,5 +33,5 @@
 }
 
 .text-area:focus {
-  box-shadow: var(--gray-shadow);
+  box-shadow: var(--input-focus-shadow);
 }

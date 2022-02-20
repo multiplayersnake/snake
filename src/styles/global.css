@@ -4,7 +4,7 @@
 
 html {
   height: 100%;
-  font-family: var(--platform-font);
+  font-family: var(--main-font);
   font-size: 100%;
 }
 
