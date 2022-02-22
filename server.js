@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 
-const DEFAULT_PORT = 5000;
+const DEFAULT_PORT = 3000;
 const port = process.env.PORT || DEFAULT_PORT;
 
 const STATIC = path.resolve(__dirname, 'dist');

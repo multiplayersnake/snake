@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
-import { BrowserRouter} from 'react-router-dom';
-import { ErrorBoundary, Modal} from '../components';
+import { BrowserRouter } from 'react-router-dom';
+
+import { ErrorBoundary, Modal } from '../components';
+
+import { AppRoutes } from './AppRoutes';
 
 import './App.css';
-
-import { Router } from './Switch';
 
 export const App: FC = () => {
   return (
@@ -13,7 +14,7 @@ export const App: FC = () => {
       <BrowserRouter>
         <main className="content">
           <ErrorBoundary>
-            <Router />
+            <AppRoutes />
           </ErrorBoundary>
         </main>
       </BrowserRouter>
