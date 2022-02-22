@@ -2,7 +2,7 @@ import { DataType, Model } from 'sequelize-typescript';
 import { ModelAttributes } from 'sequelize/types';
 
 export interface IMessage {
-  id: number;
+  id?: number;
   topic_id: number;
   author: string;
   content: string;
