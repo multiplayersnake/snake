@@ -12,7 +12,7 @@ import { topic_arr } from './mock';
 import '../../components/common/TextArea/TextArea.css';
 import './MessagePage.css';
 import MessagesAPI from '../../api/MessagesAPI';
-import { IMessage } from '../../models/message';
+import { IMessage } from '../../database/models/message';
 
 export const MessagePage: FC = () => {
   const contentRef = useRef(null);
