@@ -1,4 +1,4 @@
-import BaseAPI from './dbBaseAPI';
+import BaseAPI from './BaseAPI';
 
 export type GetMessages = {
   topic_id: number;
@@ -13,7 +13,7 @@ export interface IMessage {
 
 class MessagesAPI extends BaseAPI {
   constructor() {
-    super('/messages');
+    super('/messages', 'http://localhost:3000/api');
   }
 
   public GetMessages(topic_id: number): Promise<IMessage[]> {
