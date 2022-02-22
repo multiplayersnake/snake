@@ -56,12 +56,14 @@ app.get('*', (request, response) => {
 
 export { app };
 
+require('dotenv').config();
+
 const sequelizeOptions: SequelizeOptions = {
   host: 'localhost',
-  port: 5432,
-  username: 'root',
-  password: '1234',
-  database: 'snake',
+  port: parseInt(process.env.POSTGRES_PORT),
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB,
   dialect: 'postgres'
 };
 
