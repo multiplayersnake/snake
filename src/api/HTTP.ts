@@ -5,7 +5,7 @@ enum Method {
   DELETE = 'DELETE'
 }
 
-export const BASE_URL = 'https://ya-praktikum.tech/api/v2';
+// export const BASE_URL = 'https://ya-praktikum.tech/api/v2';
 
 interface ObjectLike {
   [key: string]: string | number | ObjectLike;
@@ -24,8 +24,8 @@ const defaultMethod = Method.GET;
 export default class HTTP {
   protected endpoint: string;
 
-  constructor(endpoint: string) {
-    this.endpoint = `${BASE_URL}${endpoint}`;
+  constructor(endpoint: string, baseUrl = 'https://ya-praktikum.tech/api/v2') {
+    this.endpoint = `${baseUrl}${endpoint}`;
   }
 
   public get<Response>(path = '/', options: Options = {}): Promise<Response> {
