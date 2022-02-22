@@ -1,8 +1,10 @@
 import { useEffect, useCallback, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
-import AuthService from '../../services/AuthService';
 import { MenuActionType, MenuAction } from '../../types';
+import AuthService from '../../services/AuthService';
+import OAuthService from '../../services/OAuthService';
 import { setUser } from '../../store';
 
 type UseAuth = {
@@ -18,12 +20,19 @@ export function useAuth(): UseAuth {
     dispatch(setUser(null));
   }, [dispatch]);
 
-  const checkAuthorization = useCallback(async () => {
-    // TODO эту логику надо попробовать перенести в redux с помощью redux-thunk
-    const gameUser = await AuthService.checkAuthorization();
+  const checkAuthorization = useCallback(
+    async (code?: string) => {
+      if (code) {
+        await OAuthService.sendCode(code);
+      }
 
-    dispatch(setUser(gameUser));
-  }, [dispatch]);
+      // TODO эту логику надо попробовать перенести в redux с помощью redux-thunk
+      const gameUser = await AuthService.checkAuthorization();
+
+      dispatch(setUser(gameUser));
+    },
+    [dispatch]
+  );
 
   const logIn = useCallback(
     async (e: FormEvent) => {
@@ -35,6 +44,10 @@ export function useAuth(): UseAuth {
     },
     [dispatch]
   );
+
+  const logInOAuth = useCallback(async () => {
+    await OAuthService.signIn();
+  }, []);
 
   const signUp = useCallback(
     async (e: FormEvent) => {
@@ -53,6 +66,10 @@ export function useAuth(): UseAuth {
           void logIn(action.payload);
           break;
 
+        case MenuActionType.OAuthLogin:
+          void logInOAuth();
+          break;
+
         case MenuActionType.Logout:
           void logOut();
           break;
@@ -65,12 +82,17 @@ export function useAuth(): UseAuth {
           console.log('Unknown main menu action:', action);
       }
     },
-    [logIn, logOut, signUp]
+    [logIn, logInOAuth, logOut, signUp]
   );
 
+  const { search } = useLocation();
+
   useEffect(() => {
-    void checkAuthorization();
-  }, [checkAuthorization]);
+    const parsed = new URLSearchParams(search);
+    const code = parsed.get('code');
+
+    void checkAuthorization(code);
+  }, [checkAuthorization, search]);
 
   return { handleAction };
 }

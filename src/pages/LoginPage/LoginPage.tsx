@@ -10,7 +10,7 @@ type LoginPageProps = {
 };
 
 export const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
-  const handleSubmit = useCallback(
+  const handleLogin = useCallback(
     async (e: FormEvent) => {
       if (!onAction) return;
 
@@ -22,13 +22,17 @@ export const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
     [onAction]
   );
 
+  const handleOAuthLogin = useCallback(async () => {
+    onAction({ type: MenuActionType.OAuthLogin });
+  }, [onAction]);
+
   return (
     <div className="login-page">
       <Heading tag="h1" className="login-title">
         Боевые змеи
       </Heading>
 
-      <Form onSubmit={handleSubmit} name={'yyy'} id={'yyy'}>
+      <Form onSubmit={handleLogin}>
         <Heading tag="h2">Авторизация</Heading>
 
         <Input required label="Логин" name="login" />
@@ -38,9 +42,14 @@ export const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
           <Button className="registration-button" type="submit">
             Войти
           </Button>
+
           <NavButton className="registration-button" to="/signup">
             Регистрация
           </NavButton>
+
+          <Button onClick={handleOAuthLogin} className="registration-button">
+            Войти через Яндекс
+          </Button>
         </div>
       </Form>
     </div>
