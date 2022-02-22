@@ -39,6 +39,7 @@ if (IS_DEV) {
 // Пока не можем проверить авторизацию, пускаем юзера только страницы входа и регистрации
 app.get(['/login', '/signup'], serverRenderMiddleware);
 
+// Обработка запросов к базе данных
 app.get([`/api/messages/get/:topic_id`], async (req, res) => {
   const topic_id = req.params.topic_id;
   const result = await Message.findAll({
@@ -47,6 +48,18 @@ app.get([`/api/messages/get/:topic_id`], async (req, res) => {
     }
   });
   res.status(200).send(result);
+});
+
+app.post([`/api/messages/set`], (req, res) => {
+  req.on('data', async function (chunk) {
+    const data = JSON.parse(chunk.toString());
+    await Message.create({
+      topic_id: data.topic_id,
+      author: data.author,
+      content: data.content
+    });
+    res.status(200).send('OK');
+  });
 });
 
 // При запросе всех остальных страниц перенаправляем на страницу входа
