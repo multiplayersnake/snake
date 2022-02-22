@@ -12,7 +12,6 @@ import { topic_arr } from './mock';
 import '../../components/common/TextArea/TextArea.css';
 import './MessagePage.css';
 import MessagesAPI from '../../api/MessagesAPI';
-import { IMessage } from '../../database/models/message';
 
 export const MessagePage: FC = () => {
   const contentRef = useRef(null);
@@ -23,26 +22,20 @@ export const MessagePage: FC = () => {
   const [messages, setMessages] = useState(out_arr[topicId]);
 
   const createNewMessage = () => {
+    /*
     const dateTime = formatDateTime(new Date());
     const content = contentRef.current.value;
     contentRef.current.value = '';
-    // setMessages(messages.concat([{ dateTime, author: 'Текущий пользователь', content }]));
-
-    setMessage({ content: content, author: 'Текущий пользователь', topic_id: topicId });
+    setMessages(messages.concat([{ dateTime, author: 'Текущий пользователь', content }]));
+    */
     getMessages();
   };
 
   const getMessages = useCallback(() => {
-    MessagesAPI.getMessages(topicId).then((result) => {
+    MessagesAPI.GetMessages(topicId).then((result) => {
       console.log(result);
     });
   }, [topicId]);
-
-  const setMessage = useCallback((data: IMessage) => {
-    MessagesAPI.setMessage(data).then((result) => {
-      console.log(result);
-    });
-  }, []);
 
   return (
     <div className="message-page">

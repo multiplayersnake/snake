@@ -1,11 +1,11 @@
-import BaseAPI from './BaseAPI';
+import BaseAPI from './dbBaseAPI';
 
 export type GetMessages = {
   topic_id: number;
 };
 
 export interface IMessage {
-  id?: number;
+  id: number;
   topic_id: number;
   author: string;
   content: string;
@@ -13,17 +13,11 @@ export interface IMessage {
 
 class MessagesAPI extends BaseAPI {
   constructor() {
-    super('/messages', 'http://localhost:3000/api');
+    super('/messages');
   }
 
-  public getMessages(topic_id: number): Promise<IMessage[]> {
+  public GetMessages(topic_id: number): Promise<IMessage[]> {
     return this.http.get<IMessage[]>(`/get/${topic_id}`);
-  }
-
-  public setMessage(data: IMessage): Promise<void> {
-    return this.http.post('/set', {
-      data: data
-    });
   }
 }
 
