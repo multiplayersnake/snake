@@ -1,3 +1,5 @@
+import { IMessage } from './MessagesAPI';
+
 enum Method {
   GET = 'GET',
   POST = 'POST',
@@ -13,7 +15,7 @@ interface ObjectLike {
 
 interface Options {
   method?: Method;
-  data?: FormData | ObjectLike;
+  data?: FormData | ObjectLike | IMessage;
   headers?: HeadersInit;
   timeout?: number;
   raw?: boolean;

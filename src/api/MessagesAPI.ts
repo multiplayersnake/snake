@@ -5,7 +5,7 @@ export type GetMessages = {
 };
 
 export interface IMessage {
-  id: number;
+  id?: number;
   topic_id: number;
   author: string;
   content: string;
@@ -16,8 +16,14 @@ class MessagesAPI extends BaseAPI {
     super('/messages', 'http://localhost:3000/api');
   }
 
-  public GetMessages(topic_id: number): Promise<IMessage[]> {
+  public getMessages(topic_id: number): Promise<IMessage[]> {
     return this.http.get<IMessage[]>(`/get/${topic_id}`);
+  }
+
+  public setMessage(data: IMessage): Promise<void> {
+    return this.http.post('/set', {
+      data: data
+    });
   }
 }
 
