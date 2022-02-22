@@ -4,11 +4,14 @@ import express, { RequestHandler } from 'express';
 import webpack from 'webpack';
 import devMiddleware from 'webpack-dev-middleware';
 import hotMiddleware from 'webpack-hot-middleware';
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 
 import config from '../webpack/client.config';
 import { IS_DEV } from '../webpack/env';
 
 import { serverRenderMiddleware } from './serverRenderMiddleware';
+import { topicModel } from './models/topic';
+import { messageModel } from './models/message';
 
 function getWebpackMiddlewares(config: webpack.Configuration): RequestHandler[] {
   const compiler = webpack({ ...config, mode: 'development' });
@@ -36,9 +39,49 @@ if (IS_DEV) {
 // Пока не можем проверить авторизацию, пускаем юзера только страницы входа и регистрации
 app.get(['/login', '/signup'], serverRenderMiddleware);
 
+app.get([`/api/messages/get/:topic_id`], async (req, res) => {
+  const topic_id = req.params.topic_id;
+  const result = await Message.findAll({
+    where: {
+      topic_id: topic_id
+    }
+  });
+  res.status(200).send(result);
+});
+
 // При запросе всех остальных страниц перенаправляем на страницу входа
 app.get('*', (request, response) => {
   response.redirect('/login');
 });
 
 export { app };
+
+const sequelizeOptions: SequelizeOptions = {
+  host: 'localhost',
+  port: 5432,
+  username: 'root',
+  password: '1234',
+  database: 'snake',
+  dialect: 'postgres'
+};
+
+export const sequelize = new Sequelize(sequelizeOptions);
+
+// Инициализируем модели
+export const Topic = sequelize.define('Topic', topicModel, {});
+export const Message = sequelize.define('Message', messageModel, {});
+
+export async function dbConnect() {
+  try {
+    await sequelize.authenticate();
+    // await sequelize.sync({ force: true });
+    await sequelize.sync();
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+}
+
+dbConnect().then(() => {
+  console.log('Полный Успех');
+});

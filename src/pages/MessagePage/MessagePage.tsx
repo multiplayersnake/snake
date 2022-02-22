@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useCallback, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import cn from 'classnames';
 
@@ -11,6 +11,7 @@ import { topic_arr } from './mock';
 // TODO переработать
 import '../../components/common/TextArea/TextArea.css';
 import './MessagePage.css';
+import MessagesAPI from '../../api/MessagesAPI';
 
 export const MessagePage: FC = () => {
   const contentRef = useRef(null);
@@ -21,11 +22,20 @@ export const MessagePage: FC = () => {
   const [messages, setMessages] = useState(out_arr[topicId]);
 
   const createNewMessage = () => {
+    /*
     const dateTime = formatDateTime(new Date());
     const content = contentRef.current.value;
     contentRef.current.value = '';
     setMessages(messages.concat([{ dateTime, author: 'Текущий пользователь', content }]));
+    */
+    getMessages();
   };
+
+  const getMessages = useCallback(() => {
+    MessagesAPI.GetMessages(topicId).then((result) => {
+      console.log(result);
+    });
+  }, [topicId]);
 
   return (
     <div className="message-page">
