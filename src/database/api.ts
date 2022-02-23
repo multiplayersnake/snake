@@ -1,7 +1,9 @@
 import { Message } from './init';
 import { IMessage } from './models/message';
 
-export async function getMessages(topic_id: string) {
+// CRUD модель для Message
+
+export async function readMessage(topic_id: string) {
   return await Message.findAll({
     where: {
       topic_id: topic_id
@@ -9,7 +11,7 @@ export async function getMessages(topic_id: string) {
   });
 }
 
-export async function newMessage(data: IMessage) {
+export async function createMessage(data: IMessage) {
   await Message.create({
     topic_id: data.topic_id,
     author: data.author,

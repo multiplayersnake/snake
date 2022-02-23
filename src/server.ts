@@ -9,7 +9,7 @@ import config from '../webpack/client.config';
 import { IS_DEV } from '../webpack/env';
 
 import { serverRenderMiddleware } from './serverRenderMiddleware';
-import { dbConnect } from './database/init';
+import { dbConnect } from './database';
 
 import * as db from './database/index';
 
@@ -41,12 +41,12 @@ app.get(['/login', '/signup'], serverRenderMiddleware);
 
 // Обработка запросов к базе данных
 app.get([`/api/messages/get/:topic_id`], async (req, res) => {
-  res.status(200).send(await db.getMessages(req.params.topic_id));
+  res.status(200).send(await db.readMessage(req.params.topic_id));
 });
 
 app.post([`/api/messages/set`], (req, res) => {
   req.on('data', async function (chunk) {
-    await db.newMessage(JSON.parse(chunk.toString()));
+    await db.createMessage(JSON.parse(chunk.toString()));
     res.status(200).send('OK');
   });
 });
