@@ -1,3 +1,5 @@
+import { IMessage } from '../database/models/message';
+
 enum Method {
   GET = 'GET',
   POST = 'POST',
@@ -5,7 +7,7 @@ enum Method {
   DELETE = 'DELETE'
 }
 
-export const BASE_URL = 'https://ya-praktikum.tech/api/v2';
+// export const BASE_URL = 'https://ya-praktikum.tech/api/v2';
 
 interface ObjectLike {
   [key: string]: string | number | ObjectLike;
@@ -13,7 +15,7 @@ interface ObjectLike {
 
 interface Options {
   method?: Method;
-  data?: FormData | ObjectLike;
+  data?: FormData | ObjectLike | IMessage;
   headers?: HeadersInit;
   timeout?: number;
   raw?: boolean;
@@ -24,8 +26,8 @@ const defaultMethod = Method.GET;
 export default class HTTP {
   protected endpoint: string;
 
-  constructor(endpoint: string) {
-    this.endpoint = `${BASE_URL}${endpoint}`;
+  constructor(endpoint: string, baseUrl: string) {
+    this.endpoint = `${baseUrl}${endpoint}`;
   }
 
   public get<Response>(path = '/', options: Options = {}): Promise<Response> {

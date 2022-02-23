@@ -20,7 +20,19 @@ it('Form', () => {
 });
 
 it('Message', () => {
-  const tree = renderer.create(<Message content={''} author={''} dateTime={''} />).toJSON();
+  const tree = renderer
+    .create(
+      <Message
+        id={0}
+        content={''}
+        author={''}
+        dateTime={''}
+        deleteFunction={() => {
+          console.log(1);
+        }}
+      />
+    )
+    .toJSON();
   expect(tree).toMatchSnapshot();
 });
 
