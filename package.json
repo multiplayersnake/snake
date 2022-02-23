@@ -21,11 +21,16 @@
     "lint:styles": "stylelint \"./src/**/*.(css)\"",
     "lint:styles:fix": "stylelint \"./src/**/*.(css)\" --fix",
     "clean": "rimraf dist",
-    "dev:client": "webpack --mode=development --config=./webpack.ssr.config.ts",
-    "dev:server": "nodemon index.js --watch dist dist/server.js",
-    "dev": "cross-env NODE_ENV=development npm-run-all --print-label --parallel dev:*",
-    "build": "cross-env NODE_ENV=production webpack --mode=production --config=./webpack.ssr.config.ts",
-    "start": "npm run build && cross-env NODE_ENV=production node index.js"
+    "predev": "npm run clean",
+    "dev:build:server": "cross-env NODE_ENV=development webpack --mode=development --config=./webpack/server.config.ts --watch",
+    "dev:build:client": "cross-env NODE_ENV=development webpack --mode=development --config=./webpack/client.config.ts --watch",
+    "dev:serve": "cross-env NODE_ENV=development nodemon --watch dist/server.js index.js",
+    "dev": "npm-run-all --print-label --parallel dev:build:server dev:build:client dev:serve",
+    "build:server": "cross-env NODE_ENV=production webpack --mode=production --config=./webpack/server.config.ts",
+    "build:client": "cross-env NODE_ENV=production webpack --mode=production --config=./webpack/client.config.ts",
+    "build": "npm run build:server && npm run build:client",
+    "serve": "cross-env NODE_ENV=production node index.js",
+    "start": "npm run build && npm run serve"
   },
   "keywords": [
     "snake"

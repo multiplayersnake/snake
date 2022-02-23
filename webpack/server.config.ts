@@ -30,9 +30,9 @@ const config: Configuration = {
     plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
     fallback: { url: false }
   },
-  devtool: 'source-map',
+  devtool: IS_DEV ? 'source-map' : false,
   performance: {
-    hints: IS_DEV ? false : 'warning'
+    hints: false
   },
   externals: [nodeExternals({ allowlist: [/\.(?!(?:tsx?|json)$).{1,5}$/i] })],
   optimization: { nodeEnv: false }

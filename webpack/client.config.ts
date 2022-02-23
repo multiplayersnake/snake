@@ -39,9 +39,9 @@ const config: Configuration = {
     // Plugin для HMR
     IS_DEV && new webpack.HotModuleReplacementPlugin()
   ].filter(Boolean) as WebpackPluginInstance[],
-  devtool: 'source-map',
+  devtool: IS_DEV ? 'source-map' : false,
   performance: {
-    hints: IS_DEV ? 'warning' : false
+    hints: false
   },
   optimization: {
     minimizer: [new TerserPlugin({ extractComments: false })]
