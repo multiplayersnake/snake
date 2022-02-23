@@ -1,6 +1,6 @@
 const fileRegex = /\.(ico|svg|jpe?g|png|gif|eot|woff2?|ttf|mp3|fbx)$/;
 
-export default {
+const loaders = {
   client: {
     test: fileRegex,
     type: 'asset/resource',
@@ -16,3 +16,5 @@ export default {
     }
   }
 };
+
+export default loaders;

@@ -27,6 +27,7 @@ export const Canvas: FC<Props> = () => {
   const gameParameters = useSelector<RootState, GameParameters>(getUserGameParameters);
 
   // TODO с этим объектом надо будет поработать, скоре всего надо использовать локальный стейт....
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const userElements: { [k: string]: { [k: string]: string } } = {};
 
   gameParameters.parts.forEach((item, index) => {

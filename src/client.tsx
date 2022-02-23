@@ -1,11 +1,9 @@
-import 'babel-polyfill';
 import * as React from 'react';
 import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
-import { configureStore } from './store/configureStore';
-import { RootState } from './store/types';
+import { configureStore, RootState } from './store';
 import { ClientApp } from './app/ClientApp';
 import { Indexed } from './types';
 
