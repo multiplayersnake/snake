@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import path from 'path';
 import express, { RequestHandler } from 'express';
 import webpack from 'webpack';
@@ -8,6 +9,9 @@ import config from '../webpack/client.config';
 import { IS_DEV } from '../webpack/env';
 
 import { serverRenderMiddleware } from './serverRenderMiddleware';
+import { dbConnect } from './database/init';
+
+import * as db from './database/index';
 
 function getWebpackMiddlewares(config: webpack.Configuration): RequestHandler[] {
   const compiler = webpack({ ...config, mode: 'development' });
@@ -32,18 +36,28 @@ if (IS_DEV) {
   app.use(...getWebpackMiddlewares(config));
 }
 
-// Пока не можем проверить авторизацию, в боевом режиме пускаем юзера только страницы входа и регистрации
-const allowedPages = IS_DEV ? ['*'] : ['/login', '/signup'];
-app.get(allowedPages, serverRenderMiddleware);
+// Пока не можем проверить авторизацию, пускаем юзера только страницы входа и регистрации
+app.get(['/login', '/signup'], serverRenderMiddleware);
 
-// При запросе всех остальных страниц в боевом режиме перенаправляем на страницу входа
-if (!IS_DEV) {
-  app.get('*', (request, response) => {
-    const { code } = request.query;
-    const redirectUrl = code ? `/login?code=${code}` : '/login';
+// Обработка запросов к базе данных
+app.get([`/api/messages/get/:topic_id`], async (req, res) => {
+  res.status(200).send(await db.getMessages(req.params.topic_id));
+});
 
-    response.redirect(redirectUrl);
+app.post([`/api/messages/set`], (req, res) => {
+  req.on('data', async function (chunk) {
+    await db.newMessage(JSON.parse(chunk.toString()));
+    res.status(200).send('OK');
   });
-}
+});
+
+// При запросе всех остальных страниц перенаправляем на страницу входа
+app.get('*', (request, response) => {
+  response.redirect('/login');
+});
+
+dbConnect().then(() => {
+  console.log('Соединение с базой данных установлено');
+});
 
 export { app };
