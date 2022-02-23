@@ -41,7 +41,7 @@ const config: Configuration = {
   ].filter(Boolean) as WebpackPluginInstance[],
   devtool: 'source-map',
   performance: {
-    hints: IS_DEV ? false : 'warning'
+    hints: IS_DEV ? 'warning' : false
   },
   optimization: {
     minimizer: [new TerserPlugin({ extractComments: false })]

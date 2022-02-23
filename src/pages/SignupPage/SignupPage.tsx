@@ -11,7 +11,7 @@ type SignUpPageProps = {
 };
 
 export const SignupPage: FC<SignUpPageProps> = ({ onAction }) => {
-  const handleSubmit = useCallback(
+  const handleSignUp = useCallback(
     async (e: FormEvent) => {
       if (!onAction) return;
 
@@ -23,13 +23,17 @@ export const SignupPage: FC<SignUpPageProps> = ({ onAction }) => {
     [onAction]
   );
 
+  const handleOAuthLogin = useCallback(async () => {
+    onAction({ type: MenuActionType.OAuthLogin });
+  }, [onAction]);
+
   return (
     <div className="signup-page">
       <Heading tag="h1" className="signup-title">
         Боевые змеи
       </Heading>
 
-      <Form onSubmit={handleSubmit} className="signup-form">
+      <Form onSubmit={handleSignUp} className="signup-form">
         <Heading tag="h2">Регистрация</Heading>
 
         <Input required label="Логин" name="login" autoComplete="new-password" />
@@ -41,9 +45,14 @@ export const SignupPage: FC<SignUpPageProps> = ({ onAction }) => {
           <Button className="registration-button" type="submit">
             Зарегистрироваться
           </Button>
+
           <NavButton className="registration-button" to="/login">
             Вход
           </NavButton>
+
+          <Button onClick={handleOAuthLogin} className="registration-button">
+            Войти через Яндекс
+          </Button>
         </div>
       </Form>
     </div>
