@@ -23,6 +23,8 @@ const ColdServerApp: React.FC = () => {
             <Route path="/signup">
               <SignupPage />
             </Route>
+
+            <Route path="*" />
           </Switch>
         </ErrorBoundary>
       </main>

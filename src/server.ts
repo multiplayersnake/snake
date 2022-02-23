@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import path from 'path';
 import express, { RequestHandler } from 'express';
 import webpack from 'webpack';
@@ -33,12 +32,18 @@ if (IS_DEV) {
   app.use(...getWebpackMiddlewares(config));
 }
 
-// Пока не можем проверить авторизацию, пускаем юзера только страницы входа и регистрации
-app.get(['/login', '/signup'], serverRenderMiddleware);
+// Пока не можем проверить авторизацию, в боевом режиме пускаем юзера только страницы входа и регистрации
+const allowedPages = IS_DEV ? ['*'] : ['/login', '/signup'];
+app.get(allowedPages, serverRenderMiddleware);
 
-// При запросе всех остальных страниц перенаправляем на страницу входа
-app.get('*', (request, response) => {
-  response.redirect('/login');
-});
+// При запросе всех остальных страниц в боевом режиме перенаправляем на страницу входа
+if (!IS_DEV) {
+  app.get('*', (request, response) => {
+    const { code } = request.query;
+    const redirectUrl = code ? `/login?code=${code}` : '/login';
+
+    response.redirect(redirectUrl);
+  });
+}
 
 export { app };
