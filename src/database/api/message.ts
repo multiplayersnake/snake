@@ -1,5 +1,5 @@
-import { Message } from './init';
-import { IMessage } from './models/message';
+import { Message } from '../init';
+import { IMessage } from '../models/message';
 
 // CRUD модель для Message
 
