@@ -48,6 +48,13 @@ app.get([`/api/messages/read/:topic_id`], async (req, res) => {
   res.status(200).send(await db.readMessage(req.params.topic_id));
 });
 
+app.post([`/api/messages/update`], (req, res) => {
+  req.on('data', async function (chunk) {
+    await db.updateMessage(JSON.parse(chunk.toString()));
+    res.status(200).send('OK');
+  });
+});
+
 app.post([`/api/messages/delete`], (req, res) => {
   req.on('data', async function (chunk) {
     await db.deleteMessage(JSON.parse(chunk.toString()));

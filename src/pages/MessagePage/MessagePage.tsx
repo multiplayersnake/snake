@@ -64,6 +64,15 @@ export const MessagePage: FC = () => {
     [dispatch, readMessage]
   );
 
+  const saveMessage = useCallback(
+    (data: IMessage) => {
+      MessagesAPI.updateMessage(data).then(() => {
+        readMessage();
+      });
+    },
+    [readMessage]
+  );
+
   return (
     <div className="message-page">
       <NavButton className={cn('button', 'button-forum-back')} to={'/forum'}>
@@ -83,6 +92,7 @@ export const MessagePage: FC = () => {
                 author={value.author}
                 content={value.content}
                 deleteFunction={deleteMessage}
+                saveFunction={saveMessage}
               />
             ))}
             <br />

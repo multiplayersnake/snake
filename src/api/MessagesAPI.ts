@@ -18,6 +18,12 @@ class MessagesAPI extends BaseAPI {
     return this.http.get<IMessage[]>(`/read/${topic_id}`);
   }
 
+  public updateMessage(data: IMessage): Promise<void> {
+    return this.http.post('/update', {
+      data: data
+    });
+  }
+
   public deleteMessage(data: IMessage): Promise<void> {
     return this.http.post('/delete', {
       data: data

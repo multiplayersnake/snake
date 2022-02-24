@@ -30,6 +30,9 @@ it('Message', () => {
         deleteFunction={() => {
           console.log(1);
         }}
+        saveFunction={() => {
+          console.log(1);
+        }}
       />
     )
     .toJSON();
