@@ -32,7 +32,7 @@ export const NavButton: FC<NavButtonProps> = (props) => {
             // console.log('playing');
           })
           .catch(function (reason) {
-            console.log(reason);
+            // console.log(reason);
           });
     */
   }, []);

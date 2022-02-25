@@ -37,25 +37,25 @@ if (IS_DEV) {
 // Обработка запросов к базе данных
 
 // CRUD для объекта Message
-app.post([`/api/messages/create`], (req, res) => {
+app.post([`/api/messages`], (req, res) => {
   req.on('data', async function (chunk) {
     await db.createMessage(JSON.parse(chunk.toString()));
     res.status(200).send('OK');
   });
 });
 
-app.get([`/api/messages/read/:topic_id`], async (req, res) => {
+app.get([`/api/messages/:topic_id`], async (req, res) => {
   res.status(200).send(await db.readMessage(req.params.topic_id));
 });
 
-app.post([`/api/messages/update`], (req, res) => {
+app.put([`/api/messages`], (req, res) => {
   req.on('data', async function (chunk) {
     await db.updateMessage(JSON.parse(chunk.toString()));
     res.status(200).send('OK');
   });
 });
 
-app.post([`/api/messages/delete`], (req, res) => {
+app.delete([`/api/messages`], (req, res) => {
   req.on('data', async function (chunk) {
     await db.deleteMessage(JSON.parse(chunk.toString()));
     res.status(200).send('OK');

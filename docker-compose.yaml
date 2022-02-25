@@ -13,7 +13,7 @@ services:
       - postgres
       - pgadmin
     networks:
-      - awesome
+      - snake
 
   postgres:
     image: postgres:12
@@ -27,7 +27,7 @@ services:
       - ./postgresdata:/var/lib/postgresql/data
     restart: always
     networks:
-      - awesome
+      - snake
 
   pgadmin:
     container_name: pgadmin
@@ -44,12 +44,11 @@ services:
     depends_on:
       - postgres
     networks:
-      - awesome
-    tty: true
+      - snake
 
 volumes:
   pgadmin-data:
 
 networks:
-  awesome:
+  snake:
     driver: bridge

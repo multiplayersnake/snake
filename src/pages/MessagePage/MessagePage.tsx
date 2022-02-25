@@ -7,7 +7,7 @@ import { Button, NavButton, Scroll, Heading, Message } from '../../components';
 import { topic_arr } from './mock';
 
 import MessagesAPI from '../../api/MessagesAPI';
-import { IMessage } from '../../database/models/message';
+import { MessageType } from '../../database/models/message';
 
 // TODO переработать
 import '../../components/common/TextArea/TextArea.css';
@@ -23,7 +23,7 @@ export const MessagePage: FC = () => {
   const { id } = useParams<{ id: string }>();
   const topicId = parseInt(id);
 
-  const [messages, setMessages] = useState<IMessage[]>([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
 
   const readMessage = useCallback(() => {
     MessagesAPI.readMessage(topicId).then((result) => {
@@ -41,7 +41,7 @@ export const MessagePage: FC = () => {
   };
 
   const createMessage = useCallback(
-    (data: IMessage) => {
+    (data: MessageType) => {
       MessagesAPI.createMessage(data).then(() => {
         contentRef.current.value = '';
         readMessage();
@@ -51,10 +51,9 @@ export const MessagePage: FC = () => {
   );
 
   const deleteMessage = useCallback(
-    (id: number) => {
+    (data: MessageType) => {
       dispatch(
         showModal(`Вы уверены, что хотите удалить сообщение?`, () => {
-          const data = { id: id };
           MessagesAPI.deleteMessage(data).then(() => {
             readMessage();
           });
@@ -65,7 +64,7 @@ export const MessagePage: FC = () => {
   );
 
   const saveMessage = useCallback(
-    (data: IMessage) => {
+    (data: MessageType) => {
       MessagesAPI.updateMessage(data).then(() => {
         readMessage();
       });

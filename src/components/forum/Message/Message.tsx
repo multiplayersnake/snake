@@ -9,15 +9,15 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import './Message.css';
-import { IMessage } from '../../../database/models/message';
+import { MessageType } from '../../../database/models/message';
 
 type MessageProps = {
   id: number;
   dateTime: string;
   author: string;
   content: string;
-  deleteFunction: (id: number) => void;
-  saveFunction: (data: IMessage) => void;
+  deleteFunction: (data: MessageType) => void;
+  saveFunction: (data: MessageType) => void;
 };
 
 export const Message: FC<MessageProps> = (props) => {
@@ -26,11 +26,11 @@ export const Message: FC<MessageProps> = (props) => {
   const [editData, setEditData] = useState(content);
 
   const deleteClick = useCallback(() => {
-    deleteFunction(id);
+    deleteFunction({ id });
   }, [id, deleteFunction]);
 
   const saveClick = useCallback(() => {
-    saveFunction({ id: id, content: editData });
+    saveFunction({ id, content: editData });
   }, [id, saveFunction, editData]);
 
   return (

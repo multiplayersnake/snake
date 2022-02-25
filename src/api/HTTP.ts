@@ -1,5 +1,3 @@
-import { IMessage } from '../database/models/message';
-
 enum Method {
   GET = 'GET',
   POST = 'POST',
@@ -7,15 +5,13 @@ enum Method {
   DELETE = 'DELETE'
 }
 
-// export const BASE_URL = 'https://ya-praktikum.tech/api/v2';
-
 interface ObjectLike {
   [key: string]: string | number | ObjectLike;
 }
 
 interface Options {
   method?: Method;
-  data?: FormData | ObjectLike | IMessage;
+  data?: FormData | ObjectLike;
   headers?: HeadersInit;
   timeout?: number;
   raw?: boolean;

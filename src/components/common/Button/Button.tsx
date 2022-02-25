@@ -20,7 +20,7 @@ export const Button: FC<ButtonProps> = (props) => {
         // console.log('playing');
       })
       .catch(function (reason) {
-        console.log(reason);
+        // console.log(reason);
       });
    */
   }, []);
