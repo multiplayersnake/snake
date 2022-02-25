@@ -9,9 +9,10 @@
 .message {
   display: grid;
   grid-template-areas:
-    'author '
-    'content ';
-  grid-template-columns: auto;
+    'author edit delete'
+    'content content content'
+    '- - save';
+  grid-template-columns: auto 60px 60px;
   gap: var(--gap5-2);
   font-family: var(--main-font);
   font-size: var(--gap-5);
@@ -24,8 +25,43 @@
   text-align: start;
 }
 
+.message-edit {
+  grid-area: edit;
+  text-align: center;
+}
+
+.message-delete {
+  grid-area: delete;
+  text-align: center;
+}
+
+.message-save {
+  grid-area: save;
+  text-align: center;
+}
 .message-content {
   grid-area: content;
   min-height: 100px;
   text-align: left;
+}
+
+.message-button {
+  width: 60px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.ck.ck-content ul,
+.ck.ck-content ul li {
+  list-style-type: inherit;
+}
+
+.ck.ck-content ul {
+  /* Default user agent stylesheet, you can change it to your needs. */
+  padding-left: 40px;
+}
+
+.ck.ck-content ol {
+  /* Default user agent stylesheet, you can change it to your needs. */
+  padding-left: 40px;
 }

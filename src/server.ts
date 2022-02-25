@@ -6,8 +6,10 @@ import hotMiddleware from 'webpack-hot-middleware';
 
 import config from '../webpack/client.config';
 import { IS_DEV } from '../webpack/env';
-
 import { serverRenderMiddleware } from './serverRenderMiddleware';
+
+import { dbConnect } from './database';
+import * as db from './database/index';
 
 function getWebpackMiddlewares(config: webpack.Configuration): RequestHandler[] {
   const compiler = webpack({ ...config, mode: 'development' });
@@ -32,6 +34,34 @@ if (IS_DEV) {
   app.use(...getWebpackMiddlewares(config));
 }
 
+// Обработка запросов к базе данных
+
+// CRUD для объекта Message
+app.post([`/api/messages`], (req, res) => {
+  req.on('data', async function (chunk) {
+    await db.createMessage(JSON.parse(chunk.toString()));
+    res.status(200).send('OK');
+  });
+});
+
+app.get([`/api/messages/:topic_id`], async (req, res) => {
+  res.status(200).send(await db.readMessage(req.params.topic_id));
+});
+
+app.put([`/api/messages`], (req, res) => {
+  req.on('data', async function (chunk) {
+    await db.updateMessage(JSON.parse(chunk.toString()));
+    res.status(200).send('OK');
+  });
+});
+
+app.delete([`/api/messages`], (req, res) => {
+  req.on('data', async function (chunk) {
+    await db.deleteMessage(JSON.parse(chunk.toString()));
+    res.status(200).send('OK');
+  });
+});
+
 // Пока не можем проверить авторизацию, в боевом режиме пускаем юзера только страницы входа и регистрации
 const allowedPages = IS_DEV ? ['*'] : ['/login', '/signup'];
 app.get(allowedPages, serverRenderMiddleware);
@@ -45,5 +75,9 @@ if (!IS_DEV) {
     response.redirect(redirectUrl);
   });
 }
+
+dbConnect().then(() => {
+  console.log('Соединение с базой данных установлено');
+});
 
 export { app };

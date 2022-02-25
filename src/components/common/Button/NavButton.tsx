@@ -23,16 +23,18 @@ export const NavButton: FC<NavButtonProps> = (props) => {
 
   const ref = useRef(null);
   const hover = useCallback(() => {
-    const obj = ref.current as HTMLAudioElement;
-    obj.volume = 0.2;
-    obj
-      .play()
-      .then(function () {
-        // console.log('playing');
-      })
-      .catch(function (reason) {
-        console.log(reason);
-      });
+    /*
+        const obj = ref.current as HTMLAudioElement;
+        obj.volume = 0.2;
+        obj
+          .play()
+          .then(function () {
+            // console.log('playing');
+          })
+          .catch(function (reason) {
+            // console.log(reason);
+          });
+    */
   }, []);
 
   return (

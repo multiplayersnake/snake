@@ -11,6 +11,7 @@ export const Button: FC<ButtonProps> = (props) => {
 
   const ref = useRef(null);
   const hover = useCallback(() => {
+    /*
     const obj = ref.current as HTMLAudioElement;
     obj.volume = 0.2;
     obj
@@ -19,8 +20,9 @@ export const Button: FC<ButtonProps> = (props) => {
         // console.log('playing');
       })
       .catch(function (reason) {
-        console.log(reason);
+        // console.log(reason);
       });
+   */
   }, []);
 
   return (

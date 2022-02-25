@@ -1,31 +1,76 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import cn from 'classnames';
 
-import { formatDateTime } from '../../utils';
 import { Button, NavButton, Scroll, Heading, Message } from '../../components';
 
-import { out_arr } from './mock';
 import { topic_arr } from './mock';
+
+import MessagesAPI from '../../api/MessagesAPI';
+import { MessageType } from '../../database/models/message';
 
 // TODO переработать
 import '../../components/common/TextArea/TextArea.css';
 import './MessagePage.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserNickname, RootState, showModal } from '../../store';
 
 export const MessagePage: FC = () => {
-  const contentRef = useRef(null);
+  const dispatch = useDispatch();
 
+  const contentRef = useRef(null);
+  const displayName = useSelector<RootState, string>(getUserNickname);
   const { id } = useParams<{ id: string }>();
   const topicId = parseInt(id);
 
-  const [messages, setMessages] = useState(out_arr[topicId]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
+
+  const readMessage = useCallback(() => {
+    MessagesAPI.readMessage(topicId).then((result) => {
+      setMessages(result);
+    });
+  }, [topicId]);
+
+  useEffect(() => {
+    readMessage();
+  }, [topicId, readMessage]);
 
   const createNewMessage = () => {
-    const dateTime = formatDateTime(new Date());
     const content = contentRef.current.value;
-    contentRef.current.value = '';
-    setMessages(messages.concat([{ dateTime, author: 'Текущий пользователь', content }]));
+    createMessage({ content: content, author: displayName, topic_id: topicId });
   };
+
+  const createMessage = useCallback(
+    (data: MessageType) => {
+      MessagesAPI.createMessage(data).then(() => {
+        contentRef.current.value = '';
+        readMessage();
+      });
+    },
+    [readMessage]
+  );
+
+  const deleteMessage = useCallback(
+    (data: MessageType) => {
+      dispatch(
+        showModal(`Вы уверены, что хотите удалить сообщение?`, () => {
+          MessagesAPI.deleteMessage(data).then(() => {
+            readMessage();
+          });
+        })
+      );
+    },
+    [dispatch, readMessage]
+  );
+
+  const saveMessage = useCallback(
+    (data: MessageType) => {
+      MessagesAPI.updateMessage(data).then(() => {
+        readMessage();
+      });
+    },
+    [readMessage]
+  );
 
   return (
     <div className="message-page">
@@ -39,7 +84,15 @@ export const MessagePage: FC = () => {
         <div className={cn('messages-list')}>
           <Scroll title={`${topic_arr[topicId].content}`} mode={'Last'} id={`messages_${topicId}`}>
             {messages.map((value, index) => (
-              <Message key={index} dateTime={value.dateTime} author={value.author} content={value.content} />
+              <Message
+                key={index}
+                id={value.id}
+                dateTime={' - '}
+                author={value.author}
+                content={value.content}
+                deleteFunction={deleteMessage}
+                saveFunction={saveMessage}
+              />
             ))}
             <br />
           </Scroll>
