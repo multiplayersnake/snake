@@ -5,9 +5,9 @@ import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
 import { Provider as ReduxProvider } from 'react-redux';
 
-import { getInitialState, configureStore } from './store';
-import { ServerApp } from './app/ServerApp';
-import favicon from './assets/images/favicon.ico';
+import { getInitialState, configureStore } from '../../store';
+import { ServerApp } from '../../app/ServerApp';
+import favicon from '../../assets/images/favicon.ico';
 
 export function serverRenderMiddleware(req: Request, res: Response) {
   const location = req.url;

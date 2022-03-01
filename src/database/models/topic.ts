@@ -1,13 +1,13 @@
 import { DataType, Model } from 'sequelize-typescript';
 import { ModelAttributes } from 'sequelize/types';
 
-export interface ITopic {
+export interface TopicType {
   id: number;
   author: string;
   content: string;
 }
 
-export const topicModel: ModelAttributes<Model, ITopic> = {
+export const topicModel: ModelAttributes<Model, TopicType> = {
   id: {
     type: DataType.INTEGER,
     allowNull: false,
