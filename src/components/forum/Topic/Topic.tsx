@@ -34,13 +34,16 @@ export const Topic: FC<TopicProps> = (props) => {
         <div className={cn('topic-dateTime', 'text-field')}>
           Создана: <b>{dateTime}</b>
         </div>
+
         <div className={cn('topic-author', 'text-field')}>
           Автор: <b>{author}</b>
         </div>
+
         <div className={cn('topic-mes-count', 'text-field')}>
           Сообщений: {mesCount}
           <b>{newElem}</b>
         </div>
+
         <div className={cn('topic-content', 'text-field')}>{content}</div>
       </div>
     </a>

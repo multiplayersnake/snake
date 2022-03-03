@@ -1,14 +1,14 @@
 import { DataType, Model } from 'sequelize-typescript';
 import { ModelAttributes } from 'sequelize/types';
 
-export type MessageType = {
+export type MessageModel = {
   id?: number;
   topic_id?: number;
   author?: string;
   content?: string;
 };
 
-export const messageModel: ModelAttributes<Model, MessageType> = {
+export const messageModel: ModelAttributes<Model, MessageModel> = {
   id: {
     type: DataType.INTEGER,
     allowNull: false,

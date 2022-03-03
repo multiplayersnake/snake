@@ -6,7 +6,7 @@ import { dbConnect } from '../database';
 
 import { messagesPaths, routesPaths } from './paths';
 import { serverRenderMiddleware, getDevModeMiddlewares } from './middlewares';
-import { createMessageHandler, deleteMessageHandler, readMessageHandler, updateMessageHandler } from './handlers';
+import { createMessageHandler, deleteMessageHandler, readMessagesHandler, updateMessageHandler } from './handlers';
 
 const app = express();
 
@@ -20,7 +20,7 @@ app
 // CRUD для объекта Message
 app
   .post(messagesPaths.index, createMessageHandler)
-  .get(messagesPaths.withTopicId, readMessageHandler)
+  .get(messagesPaths.withTopicId, readMessagesHandler)
   .put(messagesPaths.index, updateMessageHandler)
   .delete(messagesPaths.index, deleteMessageHandler);
 

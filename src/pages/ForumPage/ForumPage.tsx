@@ -46,7 +46,7 @@ export const ForumPage: FC = () => {
                 mesCount={value.mesCount}
                 newCount={value.newCount}
                 content={value.content}
-                href={`/message/${value.id}`}
+                href={`/topics/${value.id}`}
               />
             ))}
             <br />

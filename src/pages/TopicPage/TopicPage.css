@@ -1,7 +1,7 @@
-.message-page {
+.topic-page {
   display: grid;
   grid-template-areas:
-    'nav    title .'
+    'nav title .'
     'messages messages messages ';
   grid-template-rows: 55px calc(100vh - 55px);
   grid-template-columns: 300px calc(100% - 600px - 60px) 300px;

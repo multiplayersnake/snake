@@ -1,81 +1,79 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 
 import { Button, NavButton, Scroll, Heading, Message } from '../../components';
 
 import { topic_arr } from './mock';
 
-import MessagesAPI from '../../api/MessagesAPI';
-import { MessageType } from '../../database/models/message';
+import { messagesAPI } from '../../api';
+import { MessageModel } from '../../database/models/message';
 
 // TODO переработать
 import '../../components/common/TextArea/TextArea.css';
-import './MessagePage.css';
-import { useDispatch, useSelector } from 'react-redux';
+import './TopicPage.css';
 import { getUserNickname, RootState, showModal } from '../../store';
 
-export const MessagePage: FC = () => {
+export const TopicPage: FC = () => {
   const dispatch = useDispatch();
 
-  const contentRef = useRef(null);
+  const contentRef = useRef(null); // TODO избавиться от ref ?
   const displayName = useSelector<RootState, string>(getUserNickname);
 
   const { id } = useParams<{ id: string }>();
   const topicId = parseInt(id);
 
-  const [messages, setMessages] = useState<MessageType[]>([]);
+  const [messages, setMessages] = useState<MessageModel[]>([]);
 
-  const readMessage = useCallback(() => {
-    MessagesAPI.readMessage(topicId).then((result) => {
-      setMessages(result);
-    });
+  const readMessages = useCallback(async () => {
+    const topicMessages = await messagesAPI.readMessages(topicId);
+    setMessages(topicMessages);
   }, [topicId]);
 
   useEffect(() => {
-    readMessage();
-  }, [topicId, readMessage]);
+    void readMessages();
+  }, [topicId, readMessages]);
 
   const createNewMessage = () => {
     const content = contentRef.current.value;
-    createMessage({ content: content, author: displayName, topic_id: topicId });
+    void createMessage({ content, author: displayName, topic_id: topicId });
   };
 
   const createMessage = useCallback(
-    (data: MessageType) => {
-      MessagesAPI.createMessage(data).then(() => {
-        contentRef.current.value = '';
-        readMessage();
-      });
+    async (data: MessageModel) => {
+      await messagesAPI.createMessage(data);
+
+      contentRef.current.value = '';
+
+      await readMessages();
     },
-    [readMessage]
+    [readMessages]
   );
 
   const deleteMessage = useCallback(
-    (data: MessageType) => {
+    (data: MessageModel) => {
       dispatch(
-        showModal(`Вы уверены, что хотите удалить сообщение?`, () => {
-          MessagesAPI.deleteMessage(data).then(() => {
-            readMessage();
-          });
+        showModal(`Вы уверены, что хотите удалить сообщение?`, async () => {
+          await messagesAPI.deleteMessage(data);
+          await readMessages();
         })
       );
     },
-    [dispatch, readMessage]
+    [dispatch, readMessages]
   );
 
   const saveMessage = useCallback(
-    (data: MessageType) => {
-      MessagesAPI.updateMessage(data).then(() => {
-        readMessage();
-      });
+    async (data: MessageModel) => {
+      await messagesAPI.updateMessage(data);
+      await readMessages();
     },
-    [readMessage]
+    [readMessages]
   );
 
   return (
-    <div className="message-page">
-      <NavButton className={cn('button', 'button-forum-back')} to="/forum">
+    <div className="topic-page">
+      <NavButton className={cn('button', 'button-forum-back')} to="/topics">
         К темам
       </NavButton>
 
@@ -103,7 +101,9 @@ export const MessagePage: FC = () => {
 
         <div className="new-message">
           <Heading tag="h4">Новое сообщение:</Heading>
+
           <textarea ref={contentRef} className="text-area" />
+
           <Button onClick={createNewMessage}>Добавить сообщение</Button>
         </div>
       </div>

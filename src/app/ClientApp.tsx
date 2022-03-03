@@ -2,7 +2,7 @@ import * as React from 'react';
 import { hot } from 'react-hot-loader/root';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { ForumPage, GamePage, GameTypePage, LoginPage, MainPage, MessagePage, ProfilePage, SignupPage } from '../pages';
+import { ForumPage, GamePage, GameTypePage, LoginPage, MainPage, TopicPage, ProfilePage, SignupPage } from '../pages';
 import { Modal, GuestOnly, AuthorizedOnly, ErrorBoundary } from '../components';
 import { useAuth } from '../hooks';
 
@@ -48,15 +48,15 @@ const ColdClientApp: React.FC = () => {
               </AuthorizedOnly>
             </Route>
 
-            <Route path="/forum">
+            <Route path="/topics" exact>
               <AuthorizedOnly>
                 <ForumPage />
               </AuthorizedOnly>
             </Route>
 
-            <Route path="/message/:id">
+            <Route path="/topics/:id">
               <AuthorizedOnly>
-                <MessagePage />
+                <TopicPage />
               </AuthorizedOnly>
             </Route>
 

@@ -1,9 +1,7 @@
 import { Message } from '../init';
-import { MessageType } from '../models/message';
+import { MessageModel } from '../models/message';
 
-// CRUD модель для Message
-
-export async function readMessage(topic_id: string) {
+export async function readMessages(topic_id: string) {
   return await Message.findAll({
     where: {
       topic_id
@@ -12,7 +10,7 @@ export async function readMessage(topic_id: string) {
   });
 }
 
-export async function createMessage(data: MessageType) {
+export async function createMessage(data: MessageModel) {
   await Message.create({
     topic_id: data.topic_id,
     author: data.author,
@@ -20,7 +18,7 @@ export async function createMessage(data: MessageType) {
   });
 }
 
-export async function updateMessage(data: MessageType) {
+export async function updateMessage(data: MessageModel) {
   await Message.update(
     {
       content: data.content
@@ -31,7 +29,7 @@ export async function updateMessage(data: MessageType) {
   );
 }
 
-export async function deleteMessage(data: MessageType) {
+export async function deleteMessage(data: MessageModel) {
   await Message.destroy({
     where: { id: data.id }
   });

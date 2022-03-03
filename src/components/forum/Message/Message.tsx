@@ -9,15 +9,15 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import './Message.css';
-import { MessageType } from '../../../database/models/message';
+import { MessageModel } from '../../../database/models/message';
 
 type MessageProps = {
   id: number;
   dateTime: string;
   author: string;
   content: string;
-  deleteFunction: (data: MessageType) => void;
-  saveFunction: (data: MessageType) => void;
+  deleteFunction: (data: MessageModel) => void;
+  saveFunction: (data: MessageModel) => void;
 };
 
 export const Message: FC<MessageProps> = (props) => {
