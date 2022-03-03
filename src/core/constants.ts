@@ -3,7 +3,7 @@
 const config = {
   // Игровые параметры
   defaultSnakeLength: 4,
-  wholeSessionTime: 5,
+  wholeSessionTime: 300,
   baseVelocity: 0.1,
   maxVelocityGrowTimes: 3,
   boomHpLoose: 20,
