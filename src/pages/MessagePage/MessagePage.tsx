@@ -20,6 +20,7 @@ export const MessagePage: FC = () => {
 
   const contentRef = useRef(null);
   const displayName = useSelector<RootState, string>(getUserNickname);
+
   const { id } = useParams<{ id: string }>();
   const topicId = parseInt(id);
 
@@ -74,15 +75,17 @@ export const MessagePage: FC = () => {
 
   return (
     <div className="message-page">
-      <NavButton className={cn('button', 'button-forum-back')} to={'/forum'}>
+      <NavButton className={cn('button', 'button-forum-back')} to="/forum">
         К темам
       </NavButton>
-      <Heading tag="h1" className={cn('title-message')}>
+
+      <Heading tag="h1" className="title-message">
         Форум
       </Heading>
-      <div className={cn('messages-forum')}>
-        <div className={cn('messages-list')}>
-          <Scroll title={`${topic_arr[topicId].content}`} mode={'Last'} id={`messages_${topicId}`}>
+
+      <div className="messages-forum">
+        <div className="messages-list">
+          <Scroll title={`${topic_arr[topicId].content}`} mode="Last" id={`messages_${topicId}`}>
             {messages.map((value, index) => (
               <Message
                 key={index}
@@ -97,10 +100,11 @@ export const MessagePage: FC = () => {
             <br />
           </Scroll>
         </div>
-        <div className={cn('new-message')}>
+
+        <div className="new-message">
           <Heading tag="h4">Новое сообщение:</Heading>
-          <textarea ref={contentRef} className={cn('text-area')} />
-          <Button onClick={createNewMessage}> Добавить сообщение </Button>
+          <textarea ref={contentRef} className="text-area" />
+          <Button onClick={createNewMessage}>Добавить сообщение</Button>
         </div>
       </div>
     </div>

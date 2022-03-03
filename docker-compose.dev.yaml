@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+  webdev:
+    env_file: .env
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./shared:/var/www/shared
+    depends_on:
+      - postgresdev
+      - pgadmindev
+    networks:
+      - snakedev
+    command: ./wait-for.sh postgres:5432 -- npm run dev
+
+  postgresdev:
+    image: postgres:12
+    environment:
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - ./postgresdata:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - snakedev
+
+  pgadmindev:
+    container_name: pgadmindev
+    image: dpage/pgadmin4:4.18
+    environment:
+      PGADMIN_DEFAULT_EMAIL: $PGADMIN_DEFAULT_EMAIL
+      PGADMIN_DEFAULT_PASSWORD: $PGADMIN_DEFAULT_PASSWORD
+      PGADMIN_LISTEN_PORT: $PGADMIN_LISTEN_PORT
+    restart: always
+    ports:
+      - "8080:${PGADMIN_LISTEN_PORT}"
+    volumes:
+      - pgadmin-data-dev:/var/lib/pgadmin
+    depends_on:
+      - postgresdev
+    networks:
+      - snakedev
+
+volumes:
+  pgadmin-data-dev:
+
+networks:
+  snakedev:
+    driver: bridge

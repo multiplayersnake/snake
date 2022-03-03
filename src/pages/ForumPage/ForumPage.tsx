@@ -26,15 +26,17 @@ export const ForumPage: FC = () => {
 
   return (
     <div className="forum-page">
-      <NavButton className={cn('button', 'button-forum-back')} to={'/main'}>
+      <NavButton className={cn('button', 'button-forum-back')} to="/main">
         В меню
       </NavButton>
-      <Heading tag="h1" className={cn('title-forum')}>
+
+      <Heading tag="h1" className="title-forum">
         Форум
       </Heading>
-      <div className={cn('topics-forum')}>
-        <div className={cn('topics-list')}>
-          <Scroll title={'Темы'} mode={'First'} id={'topics'}>
+
+      <div className="topics-forum">
+        <div className="topics-list">
+          <Scroll title="Темы" mode="First" id="topics">
             {topics.map((value, index) => (
               <Topic
                 key={index}
@@ -50,11 +52,13 @@ export const ForumPage: FC = () => {
             <br />
           </Scroll>
         </div>
-        <div className={cn('new-forum')}>
+
+        <div className="new-forum">
           <Heading tag="h4">Новая тема:</Heading>
-          <input ref={contentRef} className={cn('input')} />
+          <input ref={contentRef} className="input" />
+
           <Heading tag="h4">Сообщение:</Heading>
-          <textarea ref={messageRef} className={cn('text-area')} />
+          <textarea ref={messageRef} className="text-area" />
           <Button onClick={createNewTopic}> Создать тему </Button>
         </div>
       </div>
