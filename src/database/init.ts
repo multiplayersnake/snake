@@ -1,11 +1,13 @@
+import dotenv from 'dotenv';
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
+
 import { topicModel } from './models/topic';
 import { messageModel } from './models/message';
 
-require('dotenv').config();
+dotenv.config();
 
 const sequelizeOptions: SequelizeOptions = {
-  host: 'localhost',
+  host: 'postgres',
   port: parseInt(process.env.POSTGRES_PORT),
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
@@ -22,7 +24,6 @@ export const Message = sequelize.define('Message', messageModel, {});
 export async function dbConnect() {
   try {
     await sequelize.authenticate();
-    // await sequelize.sync({ force: true });
     await sequelize.sync();
     console.log('Connection has been established successfully.');
   } catch (error) {

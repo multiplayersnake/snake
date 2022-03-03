@@ -1,12 +1,12 @@
 version: "3"
 
 services:
-  server-app:
+  web:
     env_file: .env
     build:
       context: .
     ports:
-      - "4000:3000"
+      - "3000:3000"
     volumes:
       - ./shared:/var/www/shared
     depends_on:
@@ -14,6 +14,7 @@ services:
       - pgadmin
     networks:
       - snake
+    command: ./wait-for.sh postgres:5432 -- npm start
 
   postgres:
     image: postgres:12
