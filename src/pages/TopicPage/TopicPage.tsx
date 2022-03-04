@@ -7,8 +7,9 @@ import { Button, NavButton, Scroll, Heading, Message } from '../../components';
 
 import { topic_arr } from './mock';
 
+import { MessageType } from '../../types';
 import { messagesAPI } from '../../api';
-import { MessageModel } from '../../database/models/message';
+import { MessageModel } from '../../database/models';
 
 // TODO переработать
 import '../../components/common/TextArea/TextArea.css';
@@ -19,37 +20,27 @@ export const TopicPage: FC = () => {
   const dispatch = useDispatch();
 
   const contentRef = useRef(null); // TODO избавиться от ref ?
-  const displayName = useSelector<RootState, string>(getUserNickname);
+  const userNickname = useSelector<RootState, string>(getUserNickname);
 
   const { id } = useParams<{ id: string }>();
   const topicId = parseInt(id);
 
-  const [messages, setMessages] = useState<MessageModel[]>([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
 
   const readMessages = useCallback(async () => {
     const topicMessages = await messagesAPI.readMessages(topicId);
     setMessages(topicMessages);
   }, [topicId]);
 
-  useEffect(() => {
-    void readMessages();
-  }, [topicId, readMessages]);
-
-  const createNewMessage = () => {
+  const createMessage = useCallback(async () => {
     const content = contentRef.current.value;
-    void createMessage({ content, author: displayName, topic_id: topicId });
-  };
 
-  const createMessage = useCallback(
-    async (data: MessageModel) => {
-      await messagesAPI.createMessage(data);
+    await messagesAPI.createMessage({ content, author: userNickname, topic_id: topicId });
 
-      contentRef.current.value = '';
+    contentRef.current.value = '';
 
-      await readMessages();
-    },
-    [readMessages]
-  );
+    await readMessages();
+  }, [readMessages, topicId, userNickname]);
 
   const deleteMessage = useCallback(
     (data: MessageModel) => {
@@ -71,6 +62,10 @@ export const TopicPage: FC = () => {
     [readMessages]
   );
 
+  useEffect(() => {
+    void readMessages();
+  }, [topicId, readMessages]);
+
   return (
     <div className="topic-page">
       <NavButton className={cn('button', 'button-forum-back')} to="/topics">
@@ -84,15 +79,15 @@ export const TopicPage: FC = () => {
       <div className="messages-forum">
         <div className="messages-list">
           <Scroll title={`${topic_arr[topicId].content}`} mode="Last" id={`messages_${topicId}`}>
-            {messages.map((value, index) => (
+            {messages.map((message) => (
               <Message
-                key={index}
-                id={value.id}
-                dateTime={' - '}
-                author={value.author}
-                content={value.content}
-                deleteFunction={deleteMessage}
-                saveFunction={saveMessage}
+                key={message.id}
+                id={message.id}
+                createdAt={message.createdAt}
+                author={message.author}
+                content={message.content}
+                onDelete={deleteMessage}
+                onSave={saveMessage}
               />
             ))}
             <br />
@@ -104,7 +99,7 @@ export const TopicPage: FC = () => {
 
           <textarea ref={contentRef} className="text-area" />
 
-          <Button onClick={createNewMessage}>Добавить сообщение</Button>
+          <Button onClick={createMessage}>Добавить сообщение</Button>
         </div>
       </div>
     </div>

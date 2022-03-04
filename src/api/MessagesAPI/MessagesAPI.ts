@@ -1,5 +1,5 @@
 import BaseAPI from '../BaseAPI';
-import { MessageModel } from '../../database/models/message';
+import { MessageModel, MessageWithTimeStamps } from '../../database/models';
 
 class MessagesAPI extends BaseAPI {
   constructor() {
@@ -10,8 +10,8 @@ class MessagesAPI extends BaseAPI {
     return this.http.post('/', { data });
   }
 
-  public readMessages(topicId: number): Promise<MessageModel[]> {
-    return this.http.get<MessageModel[]>(`/${topicId}`);
+  public readMessages(topicId: number): Promise<MessageWithTimeStamps[]> {
+    return this.http.get<MessageWithTimeStamps[]>(`/${topicId}`);
   }
 
   public updateMessage(data: MessageModel): Promise<void> {

@@ -12,7 +12,7 @@
     'author edit delete'
     'content content content'
     '- - save';
-  grid-template-columns: auto 60px 60px;
+  grid-template-columns: 1fr auto auto;
   gap: var(--gap5-2);
   font-family: var(--main-font);
   font-size: var(--gap-5);
@@ -41,12 +41,10 @@
 }
 .message-content {
   grid-area: content;
-  min-height: 100px;
   text-align: left;
 }
 
 .message-button {
-  width: 60px;
   height: 25px;
   cursor: pointer;
 }

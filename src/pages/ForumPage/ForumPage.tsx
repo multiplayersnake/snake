@@ -1,32 +1,46 @@
-import React, { FC, useRef, useState } from 'react';
-import cn from 'classnames';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-import { formatDateTime } from '../../utils';
 import { Button, NavButton, Heading, Scroll, Topic } from '../../components';
-
-import { out_arr } from './mock';
+import { TopicType } from '../../types';
+import { topicsAPI } from '../../api';
+// import { TopicWithTimeStamps } from '../../database/models';
 
 // TODO переработать
 import '../../components/common/TextArea/TextArea.css';
 import './ForumPage.css';
 
+import { getUserNickname, RootState } from '../../store';
+
 export const ForumPage: FC = () => {
   const contentRef = useRef(null);
-  const messageRef = useRef(null);
-  const [topics, setTopics] = useState(out_arr);
+  const userNickname = useSelector<RootState, string>(getUserNickname);
 
-  const createNewTopic = () => {
-    const id = topics.length;
-    const dateTime = formatDateTime(new Date());
+  const [topics, setTopics] = useState<TopicType[]>([]);
+
+  const readTopics = useCallback(async () => {
+    const allTopics = await topicsAPI.readTopics();
+    setTopics(allTopics);
+  }, []);
+
+  const createTopic = useCallback(async () => {
     const content = contentRef.current.value;
+
+    // TODO не правильней ли сохранять ID юзера вместо ника?
+    await topicsAPI.createTopic({ content, author: userNickname });
+
     contentRef.current.value = '';
-    messageRef.current.value = '';
-    setTopics([{ id, dateTime, author: 'Текущий пользователь', mesCount: 1, newCount: 0, content }].concat(topics));
-  };
+
+    await readTopics();
+  }, [readTopics, userNickname]);
+
+  useEffect(() => {
+    void readTopics();
+  }, [readTopics]);
 
   return (
     <div className="forum-page">
-      <NavButton className={cn('button', 'button-forum-back')} to="/main">
+      <NavButton className="button-forum-back" to="/main">
         В меню
       </NavButton>
 
@@ -37,16 +51,16 @@ export const ForumPage: FC = () => {
       <div className="topics-forum">
         <div className="topics-list">
           <Scroll title="Темы" mode="First" id="topics">
-            {topics.map((value, index) => (
+            {topics.map((topic) => (
               <Topic
-                key={index}
-                id={value.id}
-                dateTime={value.dateTime}
-                author={value.author}
-                mesCount={value.mesCount}
-                newCount={value.newCount}
-                content={value.content}
-                href={`/topics/${value.id}`}
+                key={topic.id}
+                id={topic.id}
+                createdAt={topic.createdAt}
+                author={topic.author}
+                mesCount={'TODO как узнать сколько сообщений в топике?' && 42}
+                newCount={'TODO как понять сколько новых сообщений?' && 24}
+                content={topic.content}
+                href={`/topics/${topic.id}`}
               />
             ))}
             <br />
@@ -55,11 +69,10 @@ export const ForumPage: FC = () => {
 
         <div className="new-forum">
           <Heading tag="h4">Новая тема:</Heading>
+
           <input ref={contentRef} className="input" />
 
-          <Heading tag="h4">Сообщение:</Heading>
-          <textarea ref={messageRef} className="text-area" />
-          <Button onClick={createNewTopic}> Создать тему </Button>
+          <Button onClick={createTopic}>Создать тему</Button>
         </div>
       </div>
     </div>

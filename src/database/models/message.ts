@@ -1,12 +1,16 @@
 import { DataType, Model } from 'sequelize-typescript';
 import { ModelAttributes } from 'sequelize/types';
 
+import { WithTimeStamps } from '../../types';
+
 export type MessageModel = {
   id?: number;
   topic_id?: number;
   author?: string;
   content?: string;
 };
+
+export type MessageWithTimeStamps = WithTimeStamps<MessageModel>;
 
 export const messageModel: ModelAttributes<Model, MessageModel> = {
   id: {

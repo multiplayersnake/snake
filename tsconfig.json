@@ -24,7 +24,7 @@
     "strictNullChecks": false,
     "types": [],
     "typeRoots": [
-      "types",
+      "@types",
       "node_modules/@types"
     ],
     "noFallthroughCasesInSwitch": true

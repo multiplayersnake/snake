@@ -4,9 +4,18 @@ import express from 'express';
 import { IS_DEV } from '../../webpack/env';
 import { dbConnect } from '../database';
 
-import { messagesPaths, routesPaths } from './paths';
+import { topicsPaths, messagesPaths, routesPaths } from './paths';
 import { serverRenderMiddleware, getDevModeMiddlewares } from './middlewares';
-import { createMessageHandler, deleteMessageHandler, readMessagesHandler, updateMessageHandler } from './handlers';
+import {
+  createTopicHandler,
+  readTopicsHandler,
+  updateTopicHandler,
+  deleteTopicHandler,
+  createMessageHandler,
+  readMessagesHandler,
+  updateMessageHandler,
+  deleteMessageHandler
+} from './handlers';
 
 const app = express();
 
@@ -16,9 +25,15 @@ app
   // На все get запросы запускаем сначала middleware dev server, а потом middleware рендеринга приложения
   .use(...getDevModeMiddlewares());
 
-// Обработка запросов к базе данных
-// CRUD для объекта Message
+// Обработка запросов к API
+
 app
+  // CRUD для топиков
+  .post(topicsPaths.index, createTopicHandler)
+  .get(topicsPaths.index, readTopicsHandler)
+  .put(topicsPaths.withId, updateTopicHandler)
+  .delete(topicsPaths.withId, deleteTopicHandler)
+  // CRUD для сообщений
   .post(messagesPaths.index, createMessageHandler)
   .get(messagesPaths.withTopicId, readMessagesHandler)
   .put(messagesPaths.index, updateMessageHandler)

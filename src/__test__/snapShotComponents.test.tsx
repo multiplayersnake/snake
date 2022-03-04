@@ -26,11 +26,11 @@ it('Message', () => {
         id={0}
         content={''}
         author={''}
-        dateTime={''}
-        deleteFunction={() => {
+        createdAt={''}
+        onDelete={() => {
           console.log(1);
         }}
-        saveFunction={() => {
+        onSave={() => {
           console.log(1);
         }}
       />
@@ -43,7 +43,7 @@ it('Topic', () => {
   const tree = renderer
     .create(
       <BrowserRouter>
-        <Topic id={1} newCount={1} href={''} mesCount={1} content={''} author={''} dateTime={''} />
+        <Topic id={1} newCount={1} href={''} mesCount={1} content={''} author={''} createdAt={''} />
       </BrowserRouter>
     )
     .toJSON();

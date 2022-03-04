@@ -4,5 +4,7 @@ export type Indexed = Record<string, unknown>;
 
 export type Fn = () => void;
 
-// TODO удалить ?
-export type LoadStatus = 'success' | 'pending' | 'failed';
+export type WithTimeStamps<T = Indexed> = T & {
+  createdAt: string;
+  updatedAt: string;
+};

@@ -1,5 +1,5 @@
 import { Message } from '../init';
-import { MessageModel } from '../models/message';
+import { MessageModel } from '../models';
 
 export async function readMessages(topic_id: string) {
   return await Message.findAll({
