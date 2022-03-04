@@ -1,21 +1,6 @@
 version: "3"
 
 services:
-  webdev:
-    env_file: .env
-    build:
-      context: .
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./shared:/var/www/shared
-    depends_on:
-      - postgresdev
-      - pgadmindev
-    networks:
-      - snakedev
-    command: ./wait-for.sh postgres:5432 -- npm run dev
-
   postgresdev:
     image: postgres:12
     environment:

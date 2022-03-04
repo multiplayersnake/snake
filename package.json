@@ -26,15 +26,15 @@
     "dev:build:client": "cross-env NODE_ENV=development webpack --mode=development --config=./webpack/client.config.ts --watch",
     "dev:serve": "cross-env NODE_ENV=development nodemon --watch dist/server.js index.js",
     "dev": "npm-run-all --print-label --parallel dev:build:server dev:build:client dev:serve",
-    "build:container:dev": "docker-compose -p snake-dev -f docker-compose.dev.yaml build webdev",
+    "build:container:dev": "docker-compose -p snake-dev -f docker-compose.dev.yaml build pgadmindev",
     "build:container": "docker-compose build web",
     "build:server": "cross-env NODE_ENV=production webpack --mode=production --config=./webpack/server.config.ts",
     "build:client": "cross-env NODE_ENV=production webpack --mode=production --config=./webpack/client.config.ts",
     "build": "npm run build:server && npm run build:client",
     "serve": "cross-env NODE_ENV=production node index.js",
     "start": "npm run build && npm run serve",
-    "start:container": "docker-compose up web --remove-orphans",
-    "start:container:dev": "docker-compose -p snake-dev -f docker-compose.dev.yaml up webdev --remove-orphans"
+    "start:container": "docker-compose --remove-orphans up web",
+    "start:container:dev": "docker-compose -p snake-dev -f docker-compose.dev.yaml up pgadmindev"
   },
   "keywords": [
     "snake"
