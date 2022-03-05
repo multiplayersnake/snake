@@ -1,11 +1,7 @@
 import React, { FC, useCallback, useState } from 'react';
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import EditorEvent from '@ckeditor/ckeditor5-utils/src/eventinfo';
 
 import './Message.css';
 import { MessageModel } from '../../../database/models';
@@ -35,7 +31,7 @@ export const Message: FC<MessageProps> = (props) => {
     setEditMode(true);
   }, [content, editMode]);
 
-  const handleChange = useCallback((event: Event, editor: CKEditor) => {
+  const handleChange = useCallback((event: EditorEvent, editor: ClassicEditor) => {
     setMessageContent(editor.getData());
   }, []);
 
@@ -75,7 +71,7 @@ export const Message: FC<MessageProps> = (props) => {
             toolbar: editMode ? ['bold', 'italic', 'link', 'numberedList', 'bulletedList', '|', 'undo', 'redo'] : []
           }}
           disabled={!editMode}
-          key={editMode}
+          key={`${editMode}`}
         />
       </div>
 
