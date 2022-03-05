@@ -43,7 +43,21 @@ it('Topic', () => {
   const tree = renderer
     .create(
       <BrowserRouter>
-        <Topic id={1} newCount={1} href={''} mesCount={1} content={''} author={''} createdAt={''} />
+        <Topic
+          id={1}
+          newCount={1}
+          href={''}
+          mesCount={1}
+          content={''}
+          author={''}
+          createdAt={''}
+          onDelete={() => {
+            console.log(1);
+          }}
+          onSave={() => {
+            console.log(1);
+          }}
+        />
       </BrowserRouter>
     )
     .toJSON();

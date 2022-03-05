@@ -31,8 +31,8 @@ app
   // CRUD для топиков
   .post(topicsPaths.index, createTopicHandler)
   .get(topicsPaths.index, readTopicsHandler)
-  .put(topicsPaths.withId, updateTopicHandler)
-  .delete(topicsPaths.withId, deleteTopicHandler)
+  .put(topicsPaths.index, updateTopicHandler)
+  .delete(topicsPaths.index, deleteTopicHandler)
   // CRUD для сообщений
   .post(messagesPaths.index, createMessageHandler)
   .get(messagesPaths.withTopicId, readMessagesHandler)

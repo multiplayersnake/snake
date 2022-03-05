@@ -65,7 +65,7 @@ export const Message: FC<MessageProps> = (props) => {
       <div className="message-content">
         <CKEditor
           editor={ClassicEditor}
-          data={content}
+          data={messageContent}
           onChange={handleChange}
           config={{
             toolbar: editMode ? ['bold', 'italic', 'link', 'numberedList', 'bulletedList', '|', 'undo', 'redo'] : []

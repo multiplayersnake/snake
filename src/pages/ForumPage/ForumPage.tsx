@@ -1,18 +1,21 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, NavButton, Heading, Scroll, Topic } from '../../components';
 import { TopicType } from '../../types';
-import { topicsAPI } from '../../api';
+import { messagesAPI, topicsAPI } from '../../api';
 // import { TopicWithTimeStamps } from '../../database/models';
 
 // TODO переработать
 import '../../components/common/TextArea/TextArea.css';
 import './ForumPage.css';
 
-import { getUserNickname, RootState } from '../../store';
+import { getUserNickname, RootState, showModal } from '../../store';
+import { TopicModel } from '../../database/models';
 
 export const ForumPage: FC = () => {
+  const dispatch = useDispatch();
+
   const contentRef = useRef(null);
   const userNickname = useSelector<RootState, string>(getUserNickname);
 
@@ -33,6 +36,26 @@ export const ForumPage: FC = () => {
 
     await readTopics();
   }, [readTopics, userNickname]);
+
+  const deleteTopic = useCallback(
+    (data: TopicModel) => {
+      dispatch(
+        showModal(`Вы уверены, что хотите удалить топик?`, async () => {
+          await topicsAPI.deleteTopic(data);
+          await readTopics();
+        })
+      );
+    },
+    [dispatch, readTopics]
+  );
+
+  const saveTopic = useCallback(
+    async (data: TopicModel) => {
+      await topicsAPI.updateTopic(data);
+      await readTopics();
+    },
+    [readTopics]
+  );
 
   useEffect(() => {
     void readTopics();
@@ -61,6 +84,8 @@ export const ForumPage: FC = () => {
                 newCount={'TODO как понять сколько новых сообщений?' && 24}
                 content={topic.content}
                 href={`/topics/${topic.id}`}
+                onDelete={deleteTopic}
+                onSave={saveTopic}
               />
             ))}
             <br />
