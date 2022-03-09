@@ -1,9 +1,9 @@
-import { MenuActionType } from '../../types/mainMenu';
+import { MenuActionType } from '../../types';
 
 const menuItems = [
   { path: '/game-type', title: 'В бой!' },
   { path: '/profile', title: 'Профиль' },
-  { path: '/forum', title: 'Форум' },
+  { path: '/topics', title: 'Форум' },
   { action: MenuActionType.Logout, title: 'Выйти', authorizedOnly: true }
 ];
 

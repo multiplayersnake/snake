@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import { ForumPage, GamePage, GameTypePage, LoginPage, MainPage, MessagePage, ProfilePage, SignupPage } from '../pages';
+import { ForumPage, GamePage, GameTypePage, LoginPage, MainPage, TopicPage, ProfilePage, SignupPage } from '../pages';
 import { AuthorizedOnly, GuestOnly } from '../components';
 import { useAuth } from '../hooks';
 
@@ -40,15 +40,15 @@ export const AppRoutes = () => {
         </AuthorizedOnly>
       </Route>
 
-      <Route path="/forum">
+      <Route path="/topics">
         <AuthorizedOnly>
           <ForumPage />
         </AuthorizedOnly>
       </Route>
 
-      <Route path="/message/:id">
+      <Route path="/topics/:id">
         <AuthorizedOnly>
-          <MessagePage />
+          <TopicPage />
         </AuthorizedOnly>
       </Route>
 

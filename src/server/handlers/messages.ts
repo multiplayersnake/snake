@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { readMessage, createMessage, updateMessage, deleteMessage } from '../../database';
+import { readMessages, createMessage, updateMessage, deleteMessage } from '../../database';
 
 export async function createMessageHandler(req: Request, res: Response) {
   req.on('data', async (chunk) => {
@@ -9,8 +9,8 @@ export async function createMessageHandler(req: Request, res: Response) {
   });
 }
 
-export async function readMessageHandler(req: Request, res: Response) {
-  const message = await readMessage(req.params.topic_id);
+export async function readMessagesHandler(req: Request, res: Response) {
+  const message = await readMessages(req.params.topic_id);
   res.status(200).send(message);
 }
 

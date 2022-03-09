@@ -1,13 +1,15 @@
 import dotenv from 'dotenv';
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 
+import { IS_DEV } from '../../webpack/env';
+
 import { topicModel } from './models/topic';
 import { messageModel } from './models/message';
 
 dotenv.config();
 
 const sequelizeOptions: SequelizeOptions = {
-  host: 'postgres',
+  host: IS_DEV ? 'localhost' : 'postgres',
   port: parseInt(process.env.POSTGRES_PORT),
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,

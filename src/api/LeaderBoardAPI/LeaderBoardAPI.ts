@@ -18,9 +18,6 @@ class LeaderBoardAPI extends BaseAPI {
   }
 
   public setUserResult(userData: UserResultData): Promise<void> {
-    console.log({
-      data: { data: userData, ratingFieldName: 'awards', teamName: 'snake' }
-    });
     return this.http.post('', {
       data: { data: userData, ratingFieldName: 'awards', teamName: 'snake' }
     });

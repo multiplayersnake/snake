@@ -1,13 +1,17 @@
 import { DataType, Model } from 'sequelize-typescript';
 import { ModelAttributes } from 'sequelize/types';
 
-export interface TopicType {
-  id: number;
-  author: string;
-  content: string;
-}
+import { WithTimeStamps } from '../../types';
 
-export const topicModel: ModelAttributes<Model, TopicType> = {
+export type TopicModel = {
+  id?: number;
+  author?: string;
+  content?: string;
+};
+
+export type TopicWithTimeStamps = WithTimeStamps<TopicModel>;
+
+export const topicModel: ModelAttributes<Model, TopicModel> = {
   id: {
     type: DataType.INTEGER,
     allowNull: false,

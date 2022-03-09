@@ -9,9 +9,10 @@
 .topic {
   display: grid;
   grid-template-areas:
-    'dateTime  author  mesCount'
-    'content   content content ';
-  grid-template-columns: 30% auto 30%;
+    'dateTime author  mesCount edit    delete'
+    'content  content content  content content'
+    '-        -       -        -       save';
+  grid-template-columns: 1fr 1fr 1fr auto auto;
   gap: var(--gap5-2);
   font-family: var(--main-font);
   font-size: var(--gap-4);
@@ -39,9 +40,32 @@
   text-align: right;
 }
 
+.topic-edit {
+  grid-area: edit;
+  text-align: center;
+}
+
+.topic-delete {
+  grid-area: delete;
+  text-align: center;
+}
+
+.topic-save {
+  grid-area: save;
+  text-align: center;
+}
+
 .topic-content {
   grid-area: content;
-  min-height: 100px;
   text-align: left;
   font-size: var(--gap-5);
+}
+
+.topic-button {
+  height: 25px;
+  cursor: pointer;
+}
+
+.topic-button:hover {
+  box-shadow: 0 0 5px rgb(255, 255, 255);
 }

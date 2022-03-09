@@ -26,7 +26,7 @@ test('Main menu router', async ({ page }) => {
   await page.goBack();
 
   await page.locator('text=Форум').click();
-  await expect(page).toHaveURL(/forum/);
+  await expect(page).toHaveURL(/topics/);
   await page.goBack();
 
   await page.locator('text=Выйти').click();
@@ -68,7 +68,7 @@ test('Forum page router', async ({ page }) => {
 
   // Переход в форум
   await page.locator('text=Форум').click();
-  await expect(page).toHaveURL(/forum/);
+  await expect(page).toHaveURL(/topics/);
 
   // Возврат на главную
   await page.locator('text=В меню').click();
@@ -77,9 +77,9 @@ test('Forum page router', async ({ page }) => {
   // Переход на страницу сообщений
   await page.locator('text=Форум').click();
   await page.locator('_react=Topic').first().click();
-  await expect(page).toHaveURL(/message/);
+  await expect(page).toHaveURL(/topics/);
 
   // Возврат в форум
   await page.locator('text=К темам').click();
-  await expect(page).toHaveURL(/forum/);
+  await expect(page).toHaveURL(/topics/);
 });

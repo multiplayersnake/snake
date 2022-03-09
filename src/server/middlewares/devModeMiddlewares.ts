@@ -6,8 +6,12 @@ import hotMiddleware from 'webpack-hot-middleware';
 import { IS_DEV } from '../../../webpack/env';
 import config from '../../../webpack/client.config';
 
+const emptyMiddleware: RequestHandler = (req, res, next) => {
+  next();
+};
+
 export function getDevModeMiddlewares(): RequestHandler[] {
-  if (IS_DEV) return [];
+  if (IS_DEV) return [emptyMiddleware];
 
   const compiler = webpack({ ...config, mode: 'development' });
 
