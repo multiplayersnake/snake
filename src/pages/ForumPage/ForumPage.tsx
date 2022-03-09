@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, NavButton, Heading, Scroll, Topic } from '../../components';
 import { TopicType } from '../../types';
-import { messagesAPI, topicsAPI } from '../../api';
-// import { TopicWithTimeStamps } from '../../database/models';
+import { topicsAPI } from '../../api';
 
 // TODO переработать
 import '../../components/common/TextArea/TextArea.css';
@@ -21,6 +20,7 @@ export const ForumPage: FC = () => {
 
   const [topics, setTopics] = useState<TopicType[]>([]);
 
+  // TODO перенести работу с API в redux
   const readTopics = useCallback(async () => {
     const allTopics = await topicsAPI.readTopics();
     setTopics(allTopics);
