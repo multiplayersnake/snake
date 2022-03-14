@@ -6,7 +6,7 @@ import { WithTimeStamps } from '../../types';
 export type MessageModel = {
   id?: number;
   topic_id?: number;
-  author?: string;
+  user_id?: number;
   content?: string;
 };
 
@@ -20,11 +20,10 @@ export const messageModel: ModelAttributes<Model, MessageModel> = {
     autoIncrement: true
   },
   topic_id: {
-    type: DataType.INTEGER,
-    allowNull: false
+    type: DataType.INTEGER
   },
-  author: {
-    type: DataType.STRING
+  user_id: {
+    type: DataType.INTEGER
   },
   content: {
     type: DataType.STRING

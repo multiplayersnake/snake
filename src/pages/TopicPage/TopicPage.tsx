@@ -1,46 +1,46 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 
 import { Button, NavButton, Scroll, Heading, Message } from '../../components';
 
-import { topic_arr } from './mock';
-
 import { MessageType } from '../../types';
-import { messagesAPI } from '../../api';
 import { MessageModel } from '../../database/models';
 
-// TODO переработать
-import '../../components/common/TextArea/TextArea.css';
 import './TopicPage.css';
-import { getUserNickname, RootState, showModal } from '../../store';
+import { getUserId, RootState, showModal } from '../../store';
+import { messagesAPI, topicsAPI } from '../../api';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import EditorEvent from '@ckeditor/ckeditor5-utils/src/eventinfo';
 
 export const TopicPage: FC = () => {
   const dispatch = useDispatch();
 
-  const contentRef = useRef(null); // TODO избавиться от ref ?
-  const userNickname = useSelector<RootState, string>(getUserNickname);
+  const userId = useSelector<RootState, number>(getUserId);
+  const [newMessageContent, setNewMessageContent] = useState('');
 
   const { id } = useParams<{ id: string }>();
   const topicId = parseInt(id);
 
   const [messages, setMessages] = useState<MessageType[]>([]);
+  const [title, setTitle] = useState('');
 
-  const readMessages = useCallback(async () => {
-    const topicMessages = await messagesAPI.readMessages(topicId);
-    setMessages(topicMessages);
+  const readTitle = useCallback(async () => {
+    setTitle(await topicsAPI.readTitle(topicId));
   }, [topicId]);
 
+  const readMessages = useCallback(async () => {
+    const topicMessages = await messagesAPI.readMessages(topicId, userId);
+    setMessages(topicMessages);
+  }, [topicId, userId]);
+
   const createMessage = useCallback(async () => {
-    const content = contentRef.current.value;
-
-    await messagesAPI.createMessage({ content, author: userNickname, topic_id: topicId });
-
-    contentRef.current.value = '';
-
+    await messagesAPI.createMessage({ content: newMessageContent, user_id: userId, topic_id: topicId });
     await readMessages();
-  }, [readMessages, topicId, userNickname]);
+    setNewMessageContent('');
+  }, [newMessageContent, readMessages, topicId, userId]);
 
   const deleteMessage = useCallback(
     (data: MessageModel) => {
@@ -54,6 +54,10 @@ export const TopicPage: FC = () => {
     [dispatch, readMessages]
   );
 
+  const handleNewMessageChange = useCallback((event: EditorEvent, editor: ClassicEditor) => {
+    setNewMessageContent(editor.getData());
+  }, []);
+
   const saveMessage = useCallback(
     async (data: MessageModel) => {
       await messagesAPI.updateMessage(data);
@@ -64,7 +68,8 @@ export const TopicPage: FC = () => {
 
   useEffect(() => {
     void readMessages();
-  }, [topicId, readMessages]);
+    void readTitle();
+  }, [topicId, readMessages, readTitle]);
 
   return (
     <div className="topic-page">
@@ -78,13 +83,15 @@ export const TopicPage: FC = () => {
 
       <div className="messages-forum">
         <div className="messages-list">
-          <Scroll title={`${topic_arr[topicId].content}`} mode="Last" id={`messages_${topicId}`}>
+          <Scroll title={title} mode="Last" id={`messages_${topicId}`}>
             {messages.map((message) => (
               <Message
                 key={message.id}
                 id={message.id}
                 createdAt={message.createdAt}
-                author={message.author}
+                author={message.nick}
+                authorId={message.user_id}
+                currentUserId={userId}
                 content={message.content}
                 onDelete={deleteMessage}
                 onSave={saveMessage}
@@ -97,7 +104,21 @@ export const TopicPage: FC = () => {
         <div className="new-message">
           <Heading tag="h4">Новое сообщение:</Heading>
 
-          <textarea ref={contentRef} className="text-area" />
+          <div className="text-area">
+            <CKEditor
+              editor={ClassicEditor}
+              data={newMessageContent}
+              onChange={handleNewMessageChange}
+              config={{
+                toolbar: ['bold', 'italic', 'link', 'numberedList', 'bulletedList', '|', 'undo', 'redo']
+              }}
+              onReady={(editor) => {
+                editor.editing.view.change((writer) => {
+                  writer.setStyle('height', '400px', editor.editing.view.document.getRoot());
+                });
+              }}
+            />
+          </div>
 
           <Button onClick={createMessage}>Добавить сообщение</Button>
         </div>

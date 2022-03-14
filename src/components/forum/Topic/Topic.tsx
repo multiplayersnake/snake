@@ -10,10 +10,17 @@ import { formatDateTime } from '../../../utils';
 import './Topic.css';
 
 import { TopicModel } from '../../../database/models';
+import ImgButton from '../../common/Button/ImgButton';
+import srcBtnDel from '../../../assets/images/btnDelete.gif';
+import srcBtnEdit from '../../../assets/images/btnEdit.gif';
+import srcBtnSave from '../../../assets/images/btnSave.gif';
+import srcBtnUndo from '../../../assets/images/undo.gif';
 
 type TopicProps = {
   createdAt: string;
   author: string;
+  authorId: number;
+  currentUserId: number;
   mesCount: number;
   newCount: number;
   content: string;
@@ -24,7 +31,7 @@ type TopicProps = {
 };
 
 export const Topic: FC<TopicProps> = (props) => {
-  const { id, createdAt, author, mesCount, newCount, content, href, onDelete, onSave } = props;
+  const { id, createdAt, author, authorId, currentUserId, mesCount, newCount, content, href, onDelete, onSave } = props;
   const [topicContent, setTopicContent] = useState(content);
 
   const [editMode, setEditMode] = useState(false);
@@ -35,14 +42,14 @@ export const Topic: FC<TopicProps> = (props) => {
       e?.stopPropagation();
 
       if (editMode) {
-        setTopicContent(content);
+        setTopicContent(topicContent);
         setEditMode(false);
         return;
       }
 
       setEditMode(true);
     },
-    [content, editMode]
+    [topicContent, editMode]
   );
 
   const handleChange = useCallback((event: EditorEvent, editor: ClassicEditor) => {
@@ -71,7 +78,7 @@ export const Topic: FC<TopicProps> = (props) => {
   );
 
   let newElem = '';
-  if (newCount > 0) newElem = ` (новых ${newCount})`;
+  if (newCount > 0) newElem = ` (${newCount})`;
 
   const history = useHistory();
   const handleClick = useCallback(
@@ -84,6 +91,12 @@ export const Topic: FC<TopicProps> = (props) => {
     },
     [editMode, history, href]
   );
+
+  const classEdit = currentUserId === authorId ? cn('topic-edit') : cn('topic-edit', 'topic_hidden');
+  const classDelete =
+    currentUserId === authorId && parseInt(String(mesCount)) === 0
+      ? cn('topic-delete')
+      : cn('topic-delete', 'topic_hidden');
 
   return (
     <a href={href} onClick={handleClick}>
@@ -101,16 +114,20 @@ export const Topic: FC<TopicProps> = (props) => {
           <b>{newElem}</b>
         </div>
 
-        <div className="topic-edit">
-          <button className="topic-button" onClick={toggleEditMode}>
-            {editMode ? 'Выйти из редактирования' : 'Редактировать'}
-          </button>
+        <div className={classEdit}>
+          <ImgButton className="topic-button" onClick={toggleEditMode}>
+            {editMode ? (
+              <img src={srcBtnUndo} width={'16px'} height={'16px'} alt={'Выйти из редактирования'} />
+            ) : (
+              <img src={srcBtnEdit} width={'16px'} height={'16px'} alt={'Редактировать'} />
+            )}
+          </ImgButton>
         </div>
 
-        <div className="topic-delete">
-          <button className="topic-button" onClick={handleDelete}>
-            Удалить
-          </button>
+        <div className={classDelete}>
+          <ImgButton className="topic-button" onClick={handleDelete}>
+            <img src={srcBtnDel} width={'16px'} height={'16px'} alt={'Удалить'} />
+          </ImgButton>
         </div>
 
         <div className="topic-content">
@@ -128,9 +145,9 @@ export const Topic: FC<TopicProps> = (props) => {
 
         {editMode && (
           <div className="topic-save">
-            <button className="topic-button" onClick={handleSave}>
-              Сохранить
-            </button>
+            <ImgButton className="topic-button" onClick={handleSave}>
+              <img src={srcBtnSave} width={'16px'} height={'16px'} alt={'Сохранить'} />
+            </ImgButton>
           </div>
         )}
       </div>

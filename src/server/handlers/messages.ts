@@ -10,7 +10,7 @@ export async function createMessageHandler(req: Request, res: Response) {
 }
 
 export async function readMessagesHandler(req: Request, res: Response) {
-  const message = await readMessages(req.params.topic_id);
+  const message = await readMessages(req.params.topic_id, req.params.user_id);
   res.status(200).send(message);
 }
 

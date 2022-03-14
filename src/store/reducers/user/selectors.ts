@@ -5,6 +5,10 @@ export function getUser(state: RootState): GameUser {
   return state.user.data;
 }
 
+export function getUserId(state: RootState): number {
+  return state.user.data?.id;
+}
+
 export function getUserNickname(state: RootState): string {
   return state.user.data?.nickname;
 }

@@ -10,8 +10,8 @@ class MessagesAPI extends BaseAPI {
     return this.http.post('/', { data });
   }
 
-  public readMessages(topicId: number): Promise<MessageWithTimeStamps[]> {
-    return this.http.get<MessageWithTimeStamps[]>(`/${topicId}`);
+  public readMessages(topicId: number, userId: number): Promise<MessageWithTimeStamps[]> {
+    return this.http.get<MessageWithTimeStamps[]>(`/${topicId}/${userId}`);
   }
 
   public updateMessage(data: MessageModel): Promise<void> {

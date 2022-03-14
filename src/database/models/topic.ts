@@ -5,7 +5,7 @@ import { WithTimeStamps } from '../../types';
 
 export type TopicModel = {
   id?: number;
-  author?: string;
+  user_id?: number;
   content?: string;
 };
 
@@ -18,8 +18,8 @@ export const topicModel: ModelAttributes<Model, TopicModel> = {
     primaryKey: true,
     autoIncrement: true
   },
-  author: {
-    type: DataType.STRING
+  user_id: {
+    type: DataType.INTEGER
   },
   content: {
     type: DataType.STRING
