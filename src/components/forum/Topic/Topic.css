@@ -43,11 +43,15 @@
 .topic-edit {
   grid-area: edit;
   text-align: center;
+  display: flex;
+  align-items: center;
 }
 
 .topic-delete {
   grid-area: delete;
   text-align: center;
+  display: flex;
+  align-items: center;
 }
 
 .topic-save {
@@ -68,4 +72,8 @@
 
 .topic-button:hover {
   box-shadow: 0 0 5px rgb(255, 255, 255);
+}
+
+.topic_hidden {
+  display: none;
 }

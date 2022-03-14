@@ -10,8 +10,8 @@ class TopicsAPI extends BaseAPI {
     return this.http.post('/', { data });
   }
 
-  public readTopics(): Promise<TopicWithTimeStamps[]> {
-    return this.http.get<TopicWithTimeStamps[]>('/');
+  public readTopics(userId: number): Promise<TopicWithTimeStamps[]> {
+    return this.http.get<TopicWithTimeStamps[]>(`/${userId}`);
   }
 
   public updateTopic(data: TopicModel): Promise<void> {
@@ -20,6 +20,10 @@ class TopicsAPI extends BaseAPI {
 
   public deleteTopic(data: TopicModel): Promise<void> {
     return this.http.delete('/', { data });
+  }
+
+  public readTitle(topicId: number): Promise<string> {
+    return this.http.get<string>(`/title/${topicId}`);
   }
 }
 

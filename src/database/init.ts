@@ -5,6 +5,8 @@ import { IS_DEV } from '../../webpack/env';
 
 import { topicModel } from './models/topic';
 import { messageModel } from './models/message';
+import { userModel } from './models/user';
+import { mluModel } from './models/mlu';
 
 dotenv.config();
 
@@ -20,8 +22,21 @@ const sequelizeOptions: SequelizeOptions = {
 export const sequelize = new Sequelize(sequelizeOptions);
 
 // Инициализируем модели
+export const User = sequelize.define('User', userModel, {});
 export const Topic = sequelize.define('Topic', topicModel, {});
 export const Message = sequelize.define('Message', messageModel, {});
+export const Mlu = sequelize.define('Mlu', mluModel, {});
+
+// Создание внешних ключей и включение режима каскадного удаления данных
+Message.hasOne(Mlu, {
+  onDelete: 'CASCADE',
+  foreignKey: 'mess_id'
+});
+
+Topic.hasOne(Message, {
+  onDelete: 'CASCADE',
+  foreignKey: 'topic_id'
+});
 
 export async function dbConnect() {
   try {

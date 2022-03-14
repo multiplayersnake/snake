@@ -53,7 +53,7 @@
   grid-area: newtopic;
   display: flex;
   flex-direction: column;
-  gap: var(--gap5-2);
+  gap: var(--gap5-4);
   justify-self: center;
   align-self: flex-start;
   padding: var(--gap5-2);

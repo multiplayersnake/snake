@@ -26,6 +26,8 @@ it('Message', () => {
         id={0}
         content={''}
         author={''}
+        authorId={0}
+        currentUserId={0}
         createdAt={''}
         onDelete={() => {
           console.log(1);
@@ -49,7 +51,7 @@ it('Topic', () => {
           href={''}
           mesCount={1}
           content={''}
-          author={''}
+          author={'0'}
           createdAt={''}
           onDelete={() => {
             console.log(1);
@@ -57,6 +59,8 @@ it('Topic', () => {
           onSave={() => {
             console.log(1);
           }}
+          authorId={0}
+          currentUserId={0}
         />
       </BrowserRouter>
     )

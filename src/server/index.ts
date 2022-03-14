@@ -4,17 +4,19 @@ import express from 'express';
 import { IS_DEV } from '../../webpack/env';
 import { dbConnect } from '../database';
 
-import { topicsPaths, messagesPaths, routesPaths } from './paths';
+import { topicsPaths, messagesPaths, routesPaths, userPaths } from './paths';
 import { serverRenderMiddleware, getDevModeMiddlewares } from './middlewares';
 import {
   createTopicHandler,
   readTopicsHandler,
   updateTopicHandler,
   deleteTopicHandler,
+  readTopicTitleHandler,
   createMessageHandler,
   readMessagesHandler,
   updateMessageHandler,
-  deleteMessageHandler
+  deleteMessageHandler,
+  createUserHandler
 } from './handlers';
 
 const app = express();
@@ -30,14 +32,17 @@ app
 app
   // CRUD для топиков
   .post(topicsPaths.index, createTopicHandler)
-  .get(topicsPaths.index, readTopicsHandler)
+  .get(topicsPaths.withUserId, readTopicsHandler)
   .put(topicsPaths.index, updateTopicHandler)
   .delete(topicsPaths.index, deleteTopicHandler)
+  .get(topicsPaths.withTitle, readTopicTitleHandler)
   // CRUD для сообщений
   .post(messagesPaths.index, createMessageHandler)
   .get(messagesPaths.withTopicId, readMessagesHandler)
   .put(messagesPaths.index, updateMessageHandler)
-  .delete(messagesPaths.index, deleteMessageHandler);
+  .delete(messagesPaths.index, deleteMessageHandler)
+  // C для пользователя
+  .post(userPaths.index, createUserHandler);
 
 // Пока не можем проверить авторизацию, в боевом режиме пускаем юзера только страницы входа и регистрации
 const allowedPages = IS_DEV ? [routesPaths.any] : [routesPaths.login, routesPaths.signup];

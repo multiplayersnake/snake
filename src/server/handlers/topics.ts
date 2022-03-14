@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { readTopics, createTopic, updateTopic, deleteTopic } from '../../database';
+import { readTopics, createTopic, updateTopic, deleteTopic, readTopicTitle } from '../../database';
 
 export async function createTopicHandler(req: Request, res: Response) {
   req.on('data', async (chunk) => {
@@ -10,8 +10,13 @@ export async function createTopicHandler(req: Request, res: Response) {
 }
 
 export async function readTopicsHandler(req: Request, res: Response) {
-  const topics = await readTopics();
+  const topics = await readTopics(req.params.user_id);
   res.status(200).send(topics);
+}
+
+export async function readTopicTitleHandler(req: Request, res: Response) {
+  const title = await readTopicTitle(req.params.topic_id);
+  res.status(200).send(title);
 }
 
 export async function updateTopicHandler(req: Request, res: Response) {

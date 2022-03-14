@@ -68,3 +68,7 @@
   /* Default user agent stylesheet, you can change it to your needs. */
   padding-left: 40px;
 }
+
+.message_hidden {
+  display: none;
+}

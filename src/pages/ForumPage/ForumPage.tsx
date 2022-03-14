@@ -6,36 +6,34 @@ import { TopicType } from '../../types';
 import { topicsAPI } from '../../api';
 
 // TODO переработать
-import '../../components/common/TextArea/TextArea.css';
 import './ForumPage.css';
 
-import { getUserNickname, RootState, showModal } from '../../store';
+import { getUserId, RootState, showModal } from '../../store';
 import { TopicModel } from '../../database/models';
 
 export const ForumPage: FC = () => {
   const dispatch = useDispatch();
 
   const contentRef = useRef(null);
-  const userNickname = useSelector<RootState, string>(getUserNickname);
+  const userId = useSelector<RootState, number>(getUserId);
 
   const [topics, setTopics] = useState<TopicType[]>([]);
 
   // TODO перенести работу с API в redux
   const readTopics = useCallback(async () => {
-    const allTopics = await topicsAPI.readTopics();
+    const allTopics = await topicsAPI.readTopics(userId);
     setTopics(allTopics);
-  }, []);
+  }, [userId]);
 
   const createTopic = useCallback(async () => {
     const content = contentRef.current.value;
 
-    // TODO не правильней ли сохранять ID юзера вместо ника?
-    await topicsAPI.createTopic({ content, author: userNickname });
+    await topicsAPI.createTopic({ content, user_id: userId });
 
     contentRef.current.value = '';
 
     await readTopics();
-  }, [readTopics, userNickname]);
+  }, [readTopics, userId]);
 
   const deleteTopic = useCallback(
     (data: TopicModel) => {
@@ -79,9 +77,11 @@ export const ForumPage: FC = () => {
                 key={topic.id}
                 id={topic.id}
                 createdAt={topic.createdAt}
-                author={topic.author}
-                mesCount={'TODO как узнать сколько сообщений в топике?' && 42}
-                newCount={'TODO как понять сколько новых сообщений?' && 24}
+                author={topic.nick}
+                authorId={topic.user_id}
+                currentUserId={userId}
+                mesCount={topic.mes_count}
+                newCount={topic.new_count}
                 content={topic.content}
                 href={`/topics/${topic.id}`}
                 onDelete={deleteTopic}
