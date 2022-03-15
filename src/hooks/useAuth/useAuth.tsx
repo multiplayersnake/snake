@@ -6,7 +6,6 @@ import { MenuActionType, MenuAction } from '../../types';
 import AuthService from '../../services/AuthService';
 import OAuthService from '../../services/OAuthService';
 import { setUser } from '../../store';
-import { userAPI } from '../../api/UserAPI/index';
 
 type UseAuth = {
   handleAction: (action: MenuAction) => void;
@@ -27,10 +26,9 @@ export function useAuth(): UseAuth {
         await OAuthService.sendCode(code);
       }
 
-      // TODO эту логику надо попробовать перенести в redux с помощью redux-thunk
+      // TODO эту логику надо перенести в redux с помощью redux-thunk
       const gameUser = await AuthService.checkAuthorization();
 
-      userAPI.createUser({ id: gameUser.id, nick: gameUser.nickname });
       dispatch(setUser(gameUser));
     },
     [dispatch]

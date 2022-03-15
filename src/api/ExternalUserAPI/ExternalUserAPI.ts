@@ -1,4 +1,4 @@
-import BaseAPI from './BaseAPI';
+import BaseAPI from '../BaseAPI';
 
 export type UpdateProfileRequest = {
   first_name: string;
@@ -9,7 +9,7 @@ export type UpdateProfileRequest = {
   phone: string;
 };
 
-class UserAPI extends BaseAPI {
+class ExternalUserAPI extends BaseAPI {
   constructor() {
     super('/user');
   }
@@ -19,4 +19,4 @@ class UserAPI extends BaseAPI {
   }
 }
 
-export default new UserAPI();
+export const externalUserAPI = new ExternalUserAPI();

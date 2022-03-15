@@ -5,8 +5,7 @@ import cn from 'classnames';
 import { RootState, getUser, getUserNickname, getUserGameParameters, setUser, showModal } from '../../store';
 import { NavButton, Scroll, SelectorShopItem } from '../../components';
 
-import UserAPI from '../../api/UserAPI';
-import { mapToRawUser } from '../../api/AuthAPI';
+import { externalUserAPI, mapToRawUser } from '../../api/';
 
 import coinSource from '../../assets/images/coin.png';
 import awardSource from '../../assets/images/award.png';
@@ -41,7 +40,7 @@ export const ProfilePage: FC = () => {
       const rawUser = mapToRawUser(userDataUpdated);
 
       // TODO rework to async/await
-      UserAPI.updateProfile(rawUser).then(() => {
+      externalUserAPI.updateProfile(rawUser).then(() => {
         dispatch(setUser(userDataUpdated));
       });
     },
