@@ -26,7 +26,7 @@ const ColdClientApp: React.FC = () => {
 
             <Route path="/signup">
               <GuestOnly>
-                <SignupPage onAction={handleAction} />
+                <SignupPage />
               </GuestOnly>
             </Route>
 

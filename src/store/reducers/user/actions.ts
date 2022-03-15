@@ -39,3 +39,16 @@ export function logIn(e: FormEvent) {
     form.reset();
   };
 }
+
+export function signUp(e: FormEvent) {
+  return async function logInThunk(dispatch: Dispatch) {
+    await AuthService.signUp(e);
+
+    const gameUser = await AuthService.checkAuthorization();
+
+    dispatch(setUser(gameUser));
+
+    const form = e.target as HTMLFormElement;
+    form.reset();
+  };
+}

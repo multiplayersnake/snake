@@ -1,4 +1,4 @@
-import { useEffect, useCallback, FormEvent } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -19,27 +19,6 @@ export function useAuth(): UseAuth {
     dispatch(setUser(null));
   }, [dispatch]);
 
-  const logIn = useCallback(
-    async (e: FormEvent) => {
-      // TODO эту логику надо попробовать перенести в redux с помощью redux-thunk
-      await AuthService.signIn(e);
-      const gameUser = await AuthService.checkAuthorization();
-
-      dispatch(setUser(gameUser));
-    },
-    [dispatch]
-  );
-
-  const signUp = useCallback(
-    async (e: FormEvent) => {
-      await AuthService.signUp(e);
-      const gameUser = await AuthService.checkAuthorization();
-
-      dispatch(setUser(gameUser));
-    },
-    [dispatch]
-  );
-
   const handleAction = useCallback(
     (action: MenuAction) => {
       switch (action.type) {
@@ -47,15 +26,11 @@ export function useAuth(): UseAuth {
           void logOut();
           break;
 
-        case MenuActionType.SignUp:
-          void signUp(action.payload);
-          break;
-
         default:
           console.log('Unknown main menu action:', action);
       }
     },
-    [logOut, signUp]
+    [logOut]
   );
 
   const { search } = useLocation();

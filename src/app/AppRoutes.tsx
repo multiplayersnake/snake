@@ -18,7 +18,7 @@ export const AppRoutes = () => {
 
       <Route path="/signup">
         <GuestOnly>
-          <SignupPage onAction={handleAction} />
+          <SignupPage />
         </GuestOnly>
       </Route>
 
