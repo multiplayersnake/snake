@@ -12,7 +12,7 @@ export const AppRoutes = () => {
     <Switch>
       <Route path="/login">
         <GuestOnly>
-          <LoginPage onAction={handleAction} />
+          <LoginPage />
         </GuestOnly>
       </Route>
 

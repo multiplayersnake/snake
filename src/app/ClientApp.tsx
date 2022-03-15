@@ -20,7 +20,7 @@ const ColdClientApp: React.FC = () => {
           <Switch>
             <Route path="/login">
               <GuestOnly>
-                <LoginPage onAction={handleAction} />
+                <LoginPage />
               </GuestOnly>
             </Route>
 

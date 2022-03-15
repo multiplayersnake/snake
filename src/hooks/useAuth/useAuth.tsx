@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 
 import { MenuActionType, MenuAction } from '../../types';
 import AuthService from '../../services/AuthService';
-import OAuthService from '../../services/OAuthService';
 import { setUser, checkAuthorization } from '../../store';
 
 type UseAuth = {
@@ -31,10 +30,6 @@ export function useAuth(): UseAuth {
     [dispatch]
   );
 
-  const logInOAuth = useCallback(async () => {
-    await OAuthService.signIn();
-  }, []);
-
   const signUp = useCallback(
     async (e: FormEvent) => {
       await AuthService.signUp(e);
@@ -48,14 +43,6 @@ export function useAuth(): UseAuth {
   const handleAction = useCallback(
     (action: MenuAction) => {
       switch (action.type) {
-        case MenuActionType.Login:
-          void logIn(action.payload);
-          break;
-
-        case MenuActionType.OAuthLogin:
-          void logInOAuth();
-          break;
-
         case MenuActionType.Logout:
           void logOut();
           break;
@@ -68,7 +55,7 @@ export function useAuth(): UseAuth {
           console.log('Unknown main menu action:', action);
       }
     },
-    [logIn, logInOAuth, logOut, signUp]
+    [logOut, signUp]
   );
 
   const { search } = useLocation();
