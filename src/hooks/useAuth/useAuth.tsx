@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { MenuActionType, MenuAction } from '../../types';
 import AuthService from '../../services/AuthService';
 import OAuthService from '../../services/OAuthService';
-import { setUser } from '../../store';
+import { setUser, checkAuthorization } from '../../store';
 
 type UseAuth = {
   handleAction: (action: MenuAction) => void;
@@ -19,20 +19,6 @@ export function useAuth(): UseAuth {
     await AuthService.logOut();
     dispatch(setUser(null));
   }, [dispatch]);
-
-  const checkAuthorization = useCallback(
-    async (code?: string) => {
-      if (code) {
-        await OAuthService.sendCode(code);
-      }
-
-      // TODO эту логику надо перенести в redux с помощью redux-thunk
-      const gameUser = await AuthService.checkAuthorization();
-
-      dispatch(setUser(gameUser));
-    },
-    [dispatch]
-  );
 
   const logIn = useCallback(
     async (e: FormEvent) => {
@@ -91,8 +77,8 @@ export function useAuth(): UseAuth {
     const parsed = new URLSearchParams(search);
     const code = parsed.get('code');
 
-    void checkAuthorization(code);
-  }, [checkAuthorization, search]);
+    dispatch(checkAuthorization(code));
+  }, [dispatch, search]);
 
   return { handleAction };
 }
