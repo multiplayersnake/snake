@@ -1,23 +1,24 @@
 import React, { FC, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { MenuItemType, MenuAction } from '../../../types';
+import { MenuItemType } from '../../../types';
 import { RootState, getAuthorized } from '../../../store';
 
 import { Button, NavButton } from '../..';
 
 type MainMenuItemProps = {
   item: MenuItemType;
-  onAction: (action: MenuAction) => void;
 };
 
-export const MainMenuItem: FC<MainMenuItemProps> = ({ onAction, item }) => {
+export const MainMenuItem: FC<MainMenuItemProps> = ({ item }) => {
+  const dispatch = useDispatch();
+
   const authorized = useSelector<RootState, boolean>(getAuthorized);
   const { title, action, path, authorizedOnly } = item;
 
   const handleAction = useCallback(() => {
-    onAction({ type: action });
-  }, [action, onAction]);
+    dispatch(action());
+  }, [action, dispatch]);
 
   if (authorizedOnly && !authorized) {
     return null;

@@ -10,7 +10,7 @@ import '../styles/index.css';
 import './App.css';
 
 const ColdClientApp: React.FC = () => {
-  const { handleAction } = useAuth();
+  useAuth();
 
   return (
     <div className="app">
@@ -32,7 +32,7 @@ const ColdClientApp: React.FC = () => {
 
             <Route path="/" exact>
               <AuthorizedOnly>
-                <MainPage onAction={handleAction} />
+                <MainPage />
               </AuthorizedOnly>
             </Route>
 

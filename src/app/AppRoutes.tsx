@@ -6,7 +6,7 @@ import { AuthorizedOnly, GuestOnly } from '../components';
 import { useAuth } from '../hooks';
 
 export const AppRoutes = () => {
-  const { handleAction } = useAuth();
+  useAuth();
 
   return (
     <Switch>
@@ -24,7 +24,7 @@ export const AppRoutes = () => {
 
       <Route path="/" exact>
         <AuthorizedOnly>
-          <MainPage onAction={handleAction} />
+          <MainPage />
         </AuthorizedOnly>
       </Route>
 

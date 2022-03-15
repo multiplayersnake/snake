@@ -41,7 +41,7 @@ export function logIn(e: FormEvent) {
 }
 
 export function signUp(e: FormEvent) {
-  return async function logInThunk(dispatch: Dispatch) {
+  return async function signUpThunk(dispatch: Dispatch) {
     await AuthService.signUp(e);
 
     const gameUser = await AuthService.checkAuthorization();
@@ -50,5 +50,12 @@ export function signUp(e: FormEvent) {
 
     const form = e.target as HTMLFormElement;
     form.reset();
+  };
+}
+
+export function logOut() {
+  return async function logOutThunk(dispatch: Dispatch) {
+    await AuthService.logOut();
+    dispatch(setUser(null));
   };
 }
