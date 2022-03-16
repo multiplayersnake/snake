@@ -2,12 +2,52 @@
 
 const config = {
   // Игровые параметры
-  defaultSnakeLength: 4,
-  wholeSessionTime: 300,
-  baseVelocity: 0.1,
-  maxVelocityGrowTimes: 3,
-  boomHpLoose: 20,
-  appleCreateTime: 20,
+  level: [
+    {
+      defaultSnakeLength: 3,
+      wholeSessionTime: 60,
+      baseVelocity: 0.1,
+      maxVelocityGrowTimes: 1,
+      boomHpLoose: 0,
+      awardsCount: 0,
+      coinsPower: 0,
+      appleHealValue: 10,
+      appleCreateTime: 20
+    },
+    {
+      defaultSnakeLength: 4,
+      wholeSessionTime: 120,
+      baseVelocity: 0.1,
+      maxVelocityGrowTimes: 2,
+      boomHpLoose: 10,
+      awardsCount: 1,
+      coinsPower: 1,
+      appleHealValue: 20,
+      appleCreateTime: 10
+    },
+    {
+      defaultSnakeLength: 6,
+      wholeSessionTime: 240,
+      baseVelocity: 0.1,
+      maxVelocityGrowTimes: 3,
+      boomHpLoose: 20,
+      awardsCount: 5,
+      coinsPower: 2,
+      appleHealValue: 10,
+      appleCreateTime: 20
+    },
+    {
+      defaultSnakeLength: 12,
+      wholeSessionTime: 300,
+      baseVelocity: 0.1,
+      maxVelocityGrowTimes: 4,
+      boomHpLoose: 50,
+      awardsCount: 20,
+      coinsPower: 5,
+      appleHealValue: 5,
+      appleCreateTime: 30
+    }
+  ],
 
   // Общие параметры
   wholeWidth: 1000,

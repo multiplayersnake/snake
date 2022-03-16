@@ -5,6 +5,7 @@ export type EndGameState = {
   place: number;
   coins: number;
   awards: number;
+  isVictory: boolean;
   isGameOver: boolean;
 };
 

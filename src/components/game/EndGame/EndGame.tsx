@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 
-import { RootState, getEndGameAwards, getEndGameCoins, getEndGamePlace, getEndGameTime } from '../../../store';
+import { RootState, getEndGameAwards, getEndGameCoins, getEndGameTime, getEndGameIsVictory } from '../../../store';
 import { NavButton, Heading } from '../..';
 
 import coinSource from '../../../assets/images/coin.png';
@@ -10,26 +10,26 @@ import awardSource from '../../../assets/images/award.png';
 import './EndGame.css';
 import mscMain from '../../../assets/sound/endgame.mp3';
 
+import srcVictory from '../../../assets/images/victory.png';
+import srcLoose from '../../../assets/images/loose.png';
+
 export const EndGame: FC = () => {
   const time = useSelector<RootState, string>(getEndGameTime);
-  const place = useSelector<RootState, number>(getEndGamePlace);
   const coins = useSelector<RootState, number>(getEndGameCoins);
   const awards = useSelector<RootState, number>(getEndGameAwards);
+  const isVictory = useSelector<RootState, boolean>(getEndGameIsVictory);
 
-  // visibilityClass не нужен, так как видимость компонента теперь управляется из GamePage,
-  // так тоже можно делать - часто может быть удобнее и эффективнее
+  const title = isVictory ? 'Победа!' : 'Неудача...';
+  const srcImg = isVictory ? srcVictory : srcLoose;
 
   return (
     <div className="end-game">
       <audio id={'mainMusic'} src={mscMain} autoPlay={true} preload={'auto'} loop={true} />
-      <Heading tag="h1">
-        {/* ВАЖНО не стоит использовать стили с других страниц - в нашем проекте предполагается, что у каждой страницы отдельные стили */}
-        Игра окончена
-      </Heading>
+      <Heading tag="h1">{title}</Heading>
+
+      <img src={srcImg} alt={'Итог'} />
 
       <Heading tag="h2">Ваши результаты</Heading>
-      {/* ВАЖНО не стоит использовать стили компонентов отдельно от них */}
-      <Heading tag="h6">Вы заняли {place} место</Heading>
 
       <Heading tag="h6">Время игры: {time}</Heading>
 

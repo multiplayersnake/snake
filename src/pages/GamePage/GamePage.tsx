@@ -2,6 +2,7 @@ import React, { FC, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { hideEndGame, getIsGameOver, RootState, saveGameResults, getEndGameCoins, getEndGameAwards } from '../../store';
+
 import { Canvas, EndGame } from '../../components';
 import { clearGame } from '../../core/core';
 

@@ -10,6 +10,10 @@ import groundImg from '../assets/images/ground.jpg';
 import backImg from '../assets/images/gameback.jpg';
 import btnFullScreenSource from '../assets/images/fullscreen.png';
 import btnSmallScreenSource from '../assets/images/smallscreen.png';
+import level0Source from '../assets/images/level_0.png';
+import level1Source from '../assets/images/level_1.png';
+import level2Source from '../assets/images/level_2.png';
+import level3Source from '../assets/images/level_3.png';
 
 import sndBoom from '../assets/sound/boom.mp3';
 import sndCoin from '../assets/sound/coin.mp3';
@@ -19,6 +23,19 @@ import mscMain1 from '../assets/sound/fight1.mp3';
 import mscMain2 from '../assets/sound/fight2.mp3';
 import mscMain3 from '../assets/sound/fight3.mp3';
 import mscMain4 from '../assets/sound/fight4.mp3';
+
+// Игровые параметры уровня сложности
+let defaultSnakeLength = 4;
+let wholeSessionTime = 300;
+let baseVelocity = 0.1;
+let maxVelocityGrowTimes = 3;
+let boomHpLoose = 20;
+let awardsCount = 1;
+let coinsPower = 1;
+let appleHealValue = 10;
+let appleCreateTime = 20;
+
+const imgLevelSources = [level0Source, level1Source, level2Source, level3Source];
 
 let currentTrackIndex: number;
 const musicTracks = [
@@ -53,7 +70,7 @@ const leftPanelMaterial = new THREE.MeshPhongMaterial({ transparent: true, opaci
 const rightPanel = document.createElement('canvas');
 rightPanel.width = config.rightPanelWidth;
 rightPanel.height = config.rightPanelHeight;
-const rightPanelMaterial = new THREE.MeshPhongMaterial({ transparent: true, opacity: 1 });
+const rightPanelMaterial = new THREE.MeshPhongMaterial({ transparent: false, opacity: 1 });
 
 let last = window.performance.now();
 let mainTimerId: number;
@@ -61,7 +78,8 @@ let mainTimerStart: number;
 let timeoutCoinGenerator: number;
 let timeoutAppleGenerator: number;
 let requestAnimationRender: number;
-let endFunction: (time: string, place: number, coins: number, awards: number) => void;
+let endFunction: (time: string, isVictory: boolean, place: number, coins: number, awards: number) => void;
+let isVictory = false;
 
 let mainCanvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
@@ -96,15 +114,15 @@ function clearGame() {
 // Функция окончания игры
 function gameOver(): void {
   stopAllProcesses();
-  const coins = snakes[indexOfSnakeUnderControl].score;
+  const coins = isVictory ? snakes[indexOfSnakeUnderControl].score : 0;
+  const awards = isVictory ? awardsCount : 0;
 
   const now = window.performance.now();
   const dt = Math.floor((now - mainTimerStart) / 1000);
   const showTime = new Date(dt * 1000);
   const stringTime = ('0' + showTime.getMinutes()).slice(-2) + ':' + ('0' + showTime.getSeconds()).slice(-2);
 
-  // TODO временный режим тестирования
-  endFunction(stringTime, 1, coins, 1);
+  endFunction(stringTime, isVictory, 1, coins, awards);
 }
 
 // Функция устанавливающая направление движения змеи
@@ -158,7 +176,7 @@ function correctElementPosition(snake: Snake): void {
 
 // Функция подбирания змеёй монеты
 function snakeGetCoin(snake: Snake, coin: Coin, index: number): void {
-  snake.score += coin.value;
+  snake.score += coin.value * coinsPower;
   coins.splice(index, 1);
   const baseEl = snake.elements[1];
 
@@ -177,7 +195,6 @@ function snakeGetCoin(snake: Snake, coin: Coin, index: number): void {
     playSound(sndCoin);
   }
 
-  draw.drawRightPanel(rightPanel.getContext('2d'), rightPanelMaterial, snakes);
   draw.drawLeftPanel(leftPanel.getContext('2d'), leftPanelMaterial, snakes[indexOfSnakeUnderControl]);
 }
 
@@ -197,7 +214,7 @@ function collisionSnakeWithCoin(snake: Snake): void {
 
 // Функция подбирания змеёй монеты
 function snakeGetApple(snake: Snake, apple: Apple, index: number): void {
-  snake.hp = Math.min(100, snake.hp + 10);
+  snake.hp = Math.min(100, snake.hp + appleHealValue);
   apples.splice(index, 1);
   scene.remove(scene.getObjectByName(apple.id));
   draw.drawLeftPanel(leftPanel.getContext('2d'), leftPanelMaterial, snakes[indexOfSnakeUnderControl]);
@@ -235,7 +252,7 @@ function snakeGetBoom(x: number, y: number, snake: Snake): void {
   if (snake.hp > 0) {
     const boom = new Boom(x, y, `boom_${Math.ceil(Math.random() * 10000)}`);
     booms.push(boom);
-    snake.hp = Math.max(0, snake.hp - config.boomHpLoose);
+    snake.hp = Math.max(0, snake.hp - boomHpLoose);
     draw.drawLeftPanel(leftPanel.getContext('2d'), leftPanelMaterial, snakes[indexOfSnakeUnderControl]);
 
     playSound(sndBoom);
@@ -264,7 +281,10 @@ function collisionControl(): void {
     flagGameOver = flagGameOver && item.hp <= 0;
   });
 
-  if (flagGameOver) gameOver();
+  if (flagGameOver) {
+    isVictory = false;
+    gameOver();
+  }
 }
 
 // Функция движения объектов на поле
@@ -292,16 +312,12 @@ function moveObjects(): void {
 
     if (head.vx !== 0) {
       head.vx =
-        Math.sign(head.vx) *
-        (config.baseVelocity +
-          config.maxVelocityGrowTimes * config.baseVelocity * (pastSeconds / config.wholeSessionTime));
+        Math.sign(head.vx) * (baseVelocity + maxVelocityGrowTimes * baseVelocity * (pastSeconds / wholeSessionTime));
     }
 
     if (head.vy !== 0) {
       head.vy =
-        Math.sign(head.vy) *
-        (config.baseVelocity +
-          config.maxVelocityGrowTimes * config.baseVelocity * (pastSeconds / config.wholeSessionTime));
+        Math.sign(head.vy) * (baseVelocity + maxVelocityGrowTimes * baseVelocity * (pastSeconds / wholeSessionTime));
     }
 
     // Скалярная скорость движения змеи
@@ -436,7 +452,7 @@ function appleGenerator(): void {
     scene.add(object);
   });
 
-  const timeForNewApple = config.appleCreateTime * 1000;
+  const timeForNewApple = appleCreateTime * 1000;
 
   if (gameStatus.mode === 'Play') {
     timeoutAppleGenerator = window.setTimeout(appleGenerator, timeForNewApple);
@@ -467,7 +483,7 @@ function tick(): void {
   ctx.font = '96px Impact';
   ctx.textAlign = 'left';
   const now = window.performance.now();
-  const dt = config.wholeSessionTime - Math.floor((now - mainTimerStart) / 1000);
+  const dt = wholeSessionTime - Math.floor((now - mainTimerStart) / 1000);
   const showTime = new Date(dt * 1000);
   const stringTime = ('0' + showTime.getMinutes()).slice(-2) + ':' + ('0' + showTime.getSeconds()).slice(-2);
   const measureText = ctx.measureText('05:00').width;
@@ -481,6 +497,7 @@ function tick(): void {
 
   // Если таймер завершился заканчиваем сессию
   if (dt <= 0) {
+    isVictory = true;
     gameOver();
   }
 }
@@ -542,8 +559,19 @@ function onPointerMove(event: MouseEvent) {
 function startGame(
   inCanvas: HTMLCanvasElement,
   userElements: { [k: string]: { [k: string]: string } },
-  endGameFunction: (time: string, place: number, coins: number, awards: number) => void
+  endGameFunction: (time: string, isVictory: boolean, place: number, coins: number, awards: number) => void,
+  level: number
 ): void {
+  defaultSnakeLength = config.level[level].defaultSnakeLength;
+  wholeSessionTime = config.level[level].wholeSessionTime;
+  baseVelocity = config.level[level].baseVelocity;
+  maxVelocityGrowTimes = config.level[level].maxVelocityGrowTimes;
+  boomHpLoose = config.level[level].boomHpLoose;
+  awardsCount = config.level[level].awardsCount;
+  coinsPower = config.level[level].coinsPower;
+  appleHealValue = config.level[level].appleHealValue;
+  appleCreateTime = config.level[level].appleCreateTime;
+
   mainCanvas = inCanvas;
   mainCanvas.addEventListener('click', onClick);
   mainCanvas.addEventListener('mousemove', onPointerMove);
@@ -626,15 +654,18 @@ function startGame(
   scene.add(panelMesh);
 
   // Right Panel
-  panelGeometry = new THREE.PlaneGeometry(config.rightPanelWidth, config.rightPanelHeight);
-  panelMesh = new THREE.Mesh(panelGeometry, rightPanelMaterial);
-  panelMesh.position.set(
-    config.fieldLeft + config.fieldWidth + (config.rightPanelWidth / 2) * Math.cos(angle * (Math.PI / 180)),
-    config.rightPanelHeight / 2,
-    config.fieldTop + (config.rightPanelWidth / 2) * Math.sin(angle * (Math.PI / 180))
-  );
-  panelMesh.rotation.y = -angle * (Math.PI / 180);
-  scene.add(panelMesh);
+  textureLoader.load(imgLevelSources[level], function (texture) {
+    panelGeometry = new THREE.PlaneGeometry(config.rightPanelWidth, config.rightPanelHeight);
+    rightPanelMaterial.map = texture;
+    panelMesh = new THREE.Mesh(panelGeometry, rightPanelMaterial);
+    panelMesh.position.set(
+      config.fieldLeft + config.fieldWidth + (config.rightPanelWidth / 2) * Math.cos(angle * (Math.PI / 180)),
+      config.rightPanelHeight / 2,
+      config.fieldTop + (config.rightPanelWidth / 2) * Math.sin(angle * (Math.PI / 180))
+    );
+    panelMesh.rotation.y = -angle * (Math.PI / 180);
+    scene.add(panelMesh);
+  });
 
   // Общее освещение
   const light = new THREE.DirectionalLight(0xffffff);
@@ -657,11 +688,8 @@ function startGame(
   scene.add(bulbLight);
 
   if (snakes.length === 0) {
-    const snake1 = new Snake(400, 200, 0.1, 0.0, 100, 'red', 'Smith_123', '0');
+    const snake1 = new Snake(400, 200, 0.1, 0.0, 100, 'red', '', '0', defaultSnakeLength, config.fieldStep);
     snakes.push(snake1);
-
-    const snake2 = new Snake(700, 400, -0.1, 0.0, 100, 'blue', 'John', '1');
-    snakes.push(snake2);
 
     gameStatus.mode = 'Play';
 
@@ -670,12 +698,11 @@ function startGame(
     mainTimerId = window.setInterval(tick, 1000);
 
     coinGenerator();
-    timeoutAppleGenerator = window.setTimeout(appleGenerator, config.appleCreateTime * 1000);
+    timeoutAppleGenerator = window.setTimeout(appleGenerator, appleCreateTime * 1000);
   }
   profileSnake(userElements);
 
   draw.drawLeftPanel(leftPanel.getContext('2d'), leftPanelMaterial, snakes[indexOfSnakeUnderControl]);
-  draw.drawRightPanel(rightPanel.getContext('2d'), rightPanelMaterial, snakes);
   render();
 }
 

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { startGame } from '../../../core/core';
 
 import { GameParameters, GameUser } from '../../../types';
-import { getUser, getUserGameParameters, getUserNickname, RootState, showEndGame } from '../../../store';
+import { getLevelValue, getUser, getUserGameParameters, getUserNickname, RootState, showEndGame } from '../../../store';
 
 import { part_arr } from '../../../database/mock';
 import { item_arr } from '../../../database/mock';
@@ -25,6 +25,7 @@ export const Canvas: FC<Props> = () => {
   const userData = useSelector<RootState, GameUser>(getUser);
   const nickname = useSelector<RootState, string>(getUserNickname);
   const gameParameters = useSelector<RootState, GameParameters>(getUserGameParameters);
+  const level = useSelector<RootState, number>(getLevelValue);
 
   // TODO с этим объектом надо будет поработать, скоре всего надо использовать локальный стейт....
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,12 +39,12 @@ export const Canvas: FC<Props> = () => {
   userElements['base'] = { name: nickname };
 
   const endGame = useCallback(
-    (time: string, place: number, coins: number, awards: number) => {
+    (time: string, isVictory: boolean, place: number, coins: number, awards: number) => {
       // dispatch(saveGameResults({ coins }));
       // TODO сохранить результаты игры здесь в стор здесь нельзя - данные пользователя обновятся и компонент перерендерится - получим бесконечный цикл :-\
       // поэтому сохраняем их при открытии компонента EndGame
       // (!) это важный момент, который надо осознать при работе с react (!)
-      dispatch(showEndGame(time, place, coins, awards));
+      dispatch(showEndGame(time, place, coins, awards, isVictory));
 
       const coinsUpdated = gameParameters.coins + coins;
       const awardsUpdated = gameParameters.awards + awards;
@@ -61,8 +62,8 @@ export const Canvas: FC<Props> = () => {
   const ref = useRef(null);
 
   useEffect(() => {
-    startGame(ref.current, userElements, endGame);
-  }, [endGame, userElements]);
+    startGame(ref.current, userElements, endGame, level);
+  }, [endGame, level, userElements]);
 
   return <canvas className="canvas" ref={ref} width={1000} height={600} />;
 };

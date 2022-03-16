@@ -4,39 +4,12 @@ import config from './constants';
 import { Apple, Boom, Coin, Snake } from './classes';
 
 export const draw = {
-  drawRightPanel,
   drawLeftPanel,
   drawCoins,
   drawApples,
   drawBooms,
   drawSnakes
 };
-
-function drawRightPanel(ctx: CanvasRenderingContext2D, material: THREE.MeshPhongMaterial, snakes: Snake[]): void {
-  ctx.clearRect(0, 0, config.rightPanelWidth, config.rightPanelHeight);
-
-  ctx.beginPath();
-  ctx.fillStyle = 'rgba(139,179,317,0.5)';
-  ctx.fillRect(0, 0, config.rightPanelWidth, config.rightPanelHeight);
-  ctx.closePath();
-
-  ctx.textBaseline = 'top';
-  ctx.fillStyle = 'rgba(0,0,0,1.0)';
-  ctx.font = '24px Impact';
-
-  let textTop = 10;
-  snakes.forEach((item) => {
-    ctx.textAlign = 'left';
-    ctx.fillText(item.name, 5, textTop);
-    ctx.textAlign = 'right';
-    ctx.fillText(item.score.toString(), config.rightPanelWidth - 15, textTop);
-    textTop += 30;
-  });
-
-  const canvasTexture = new THREE.Texture(ctx.canvas);
-  canvasTexture.needsUpdate = true;
-  material.map = canvasTexture;
-}
 
 // Функция отрисовки левой панели
 function drawLeftPanel(ctx: CanvasRenderingContext2D, material: THREE.MeshPhongMaterial, snake: Snake): void {
@@ -85,30 +58,6 @@ function drawCoins(scene: THREE.Scene, coins: Coin[]): void {
       obj.rotation.y = el.phase / 40;
     }
   });
-
-  /*
-  coins.forEach((el) => {
-    el.phase++;
-    ctx.save();
-    ctx.translate(el.x, el.y);
-    ctx.scale(Math.sin(el.phase / 40), 1);
-
-    ctx.beginPath();
-    ctx.arc(0, 0, config.fieldStep / 2, 0, 2 * Math.PI);
-    ctx.fillStyle = 'yellow';
-    ctx.fill();
-    ctx.closePath();
-
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.strokeStyle = 'black';
-    ctx.font = Math.floor(config.fieldStep * 0.75).toString() + 'px Impact';
-    ctx.strokeText(el.value.toString(), 0, 0);
-
-    ctx.restore();
-  });
-
-   */
 }
 
 // Функция отрисовки яблок
@@ -119,13 +68,6 @@ function drawApples(scene: THREE.Scene, apples: Apple[]): void {
       obj.rotateZ(0.03);
     }
   });
-
-  /*
-  apples.forEach((el) => {
-    ctx.drawImage(el.image, el.x - config.fieldStep / 2, el.y - config.fieldStep / 2);
-  });
-
-   */
 }
 
 let boomGeometry: THREE.TorusGeometry;
@@ -176,31 +118,6 @@ function drawBooms(scene: THREE.Scene, booms: Boom[]): void {
       }
     }
   }
-
-  /*
-  booms.forEach((el) => {
-    el.phase++;
-    ctx.save();
-    ctx.rect(config.fieldLeft, config.fieldTop, config.fieldWidth, config.fieldHeight);
-    ctx.clip();
-
-    for (let i = 1; i <= 10; i++) {
-      ctx.beginPath();
-      ctx.arc(el.x, el.y, el.phase / Math.log10(i), 0, 2 * Math.PI);
-      ctx.strokeStyle = `rgba(255,0,0,${(100 - el.phase) / 100})`;
-      ctx.stroke();
-      ctx.closePath();
-    }
-    ctx.restore();
-  });
-
-  for (let i = booms.length - 1; i >= 0; i--) {
-    if (booms[i].phase >= 100) {
-      booms.splice(i, 1);
-    }
-  }
-
-   */
 }
 
 // Функция отрисовки змей
@@ -234,22 +151,4 @@ function drawSnakes(scene: THREE.Scene, snakes: Snake[]): void {
       }
     });
   });
-
-  /*
-  snakes.forEach((item) => {
-    item.elements.forEach((el) => {
-      ctx.beginPath();
-      ctx.arc(el.x, el.y, el.r, 0, 2 * Math.PI);
-
-      if (item.hp > 0) {
-        ctx.fillStyle = el.col;
-      } else {
-        ctx.fillStyle = 'rgba(0,0,0,0.1)';
-      }
-
-      ctx.fill();
-      ctx.closePath();
-    });
-  });
-   */
 }
