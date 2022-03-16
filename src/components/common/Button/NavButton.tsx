@@ -25,7 +25,7 @@ export const NavButton: FC<NavButtonProps> = (props) => {
       e.preventDefault();
       history.push(to);
     },
-    [data.store, data.value, history, to, dispatch]
+    [history, to, dispatch]
   );
 
   const ref = useRef(null);
