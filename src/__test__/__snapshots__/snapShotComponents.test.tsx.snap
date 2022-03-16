@@ -4,8 +4,14 @@ exports[`Button 1`] = `
 <button
   className="button"
   onClick={[Function]}
+  onMouseEnter={[Function]}
   type="button"
 >
+  <audio
+    autoPlay={false}
+    preload="auto"
+    src={Object {}}
+  />
   Test Button
 </button>
 `;
@@ -87,8 +93,6 @@ exports[`Input 1`] = `
 </label>
 `;
 
-exports[`MainMenuItem 1`] = `null`;
-
 exports[`Message 1`] = `
 <div
   className="message text-field"
@@ -98,12 +102,44 @@ exports[`Message 1`] = `
   >
     
         
-    
+    ??.??.???? ??:??
   </div>
   <div
-    className="message-content text-field"
+    className="message-edit"
   >
-    
+    <button
+      className="imgButton message-button"
+      onClick={[Function]}
+      type="button"
+    >
+      <img
+        alt="Редактировать"
+        height="16px"
+        src={Object {}}
+        width="16px"
+      />
+    </button>
+  </div>
+  <div
+    className="message-delete"
+  >
+    <button
+      className="imgButton message-button"
+      onClick={[Function]}
+      type="button"
+    >
+      <img
+        alt="Удалить"
+        height="16px"
+        src={Object {}}
+        width="16px"
+      />
+    </button>
+  </div>
+  <div
+    className="message-content"
+  >
+    <div />
   </div>
 </div>
 `;
@@ -136,7 +172,7 @@ exports[`Topic 1`] = `
     >
       Создана: 
       <b>
-        
+        ??.??.???? ??:??
       </b>
     </div>
     <div
@@ -144,7 +180,7 @@ exports[`Topic 1`] = `
     >
       Автор: 
       <b>
-        
+        0
       </b>
     </div>
     <div
@@ -153,13 +189,45 @@ exports[`Topic 1`] = `
       Сообщений: 
       1
       <b>
-         (новых 1)
+         (1)
       </b>
     </div>
     <div
-      className="topic-content text-field"
+      className="topic-edit"
     >
-      
+      <button
+        className="imgButton topic-button"
+        onClick={[Function]}
+        type="button"
+      >
+        <img
+          alt="Редактировать"
+          height="16px"
+          src={Object {}}
+          width="16px"
+        />
+      </button>
+    </div>
+    <div
+      className="topic-delete topic_hidden"
+    >
+      <button
+        className="imgButton topic-button"
+        onClick={[Function]}
+        type="button"
+      >
+        <img
+          alt="Удалить"
+          height="16px"
+          src={Object {}}
+          width="16px"
+        />
+      </button>
+    </div>
+    <div
+      className="topic-content"
+    >
+      <div />
     </div>
   </div>
 </a>

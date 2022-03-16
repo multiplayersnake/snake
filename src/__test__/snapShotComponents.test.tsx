@@ -3,7 +3,15 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
 
-import { Button, Input, Form, Heading, Message, Topic, TextArea, InfoPanel, MainMenuItem } from '../components';
+import { Button } from '../components/common/Button';
+import { Input } from '../components/common/Input';
+import { Form } from '../components/common/Form';
+import { Heading } from '../components/common/Heading';
+import { Message } from '../components/forum/Message';
+import { Topic } from '../components/forum/Topic';
+import { TextArea } from '../components/common/TextArea';
+import { InfoPanel } from '../components/main/InfoPanel';
+
 import { configureStore } from '../store';
 
 const { store } = configureStore();
@@ -82,25 +90,6 @@ it('InfoPanel', () => {
     .create(
       <Provider store={store}>
         <InfoPanel />
-      </Provider>
-    )
-    .toJSON();
-  expect(tree).toMatchSnapshot();
-});
-
-it('MainMenuItem', () => {
-  const item = {
-    title: '',
-    action: () => {
-      /* noop */
-    },
-    path: '',
-    authorizedOnly: true
-  };
-  const tree = renderer
-    .create(
-      <Provider store={store}>
-        <MainMenuItem item={item} />
       </Provider>
     )
     .toJSON();
