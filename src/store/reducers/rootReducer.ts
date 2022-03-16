@@ -6,6 +6,7 @@ import { userReducer } from './user';
 import { modalReducer } from './modal';
 import { endGameReducer } from './endGame';
 import { levelReducer } from './level';
+import { forumReducer } from './forum';
 
 export function createRootReducer(history: History) {
   return combineReducers({
@@ -13,6 +14,7 @@ export function createRootReducer(history: History) {
     modal: modalReducer,
     endGame: endGameReducer,
     level: levelReducer,
+    forum: forumReducer,
     router: connectRouter(history)
   });
 }

@@ -1,6 +1,8 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { getUserId, RootState, showModal, getTopics, fetchTopics } from '../../store';
+import { TopicModel } from '../../database/models';
 import { Button, NavButton, Heading, Scroll, Topic } from '../../components';
 import { TopicType } from '../../types';
 import { topicsAPI } from '../../api';
@@ -8,22 +10,12 @@ import { topicsAPI } from '../../api';
 // TODO переработать
 import './ForumPage.css';
 
-import { getUserId, RootState, showModal } from '../../store';
-import { TopicModel } from '../../database/models';
-
 export const ForumPage: FC = () => {
   const dispatch = useDispatch();
 
   const contentRef = useRef(null);
   const userId = useSelector<RootState, number>(getUserId);
-
-  const [topics, setTopics] = useState<TopicType[]>([]);
-
-  // TODO перенести работу с API в redux
-  const readTopics = useCallback(async () => {
-    const allTopics = await topicsAPI.readTopics(userId);
-    setTopics(allTopics);
-  }, [userId]);
+  const topics = useSelector<RootState, TopicType[]>(getTopics);
 
   const createTopic = useCallback(async () => {
     const content = contentRef.current.value;
@@ -32,32 +24,32 @@ export const ForumPage: FC = () => {
 
     contentRef.current.value = '';
 
-    await readTopics();
-  }, [readTopics, userId]);
+    dispatch(fetchTopics());
+  }, [dispatch, userId]);
 
   const deleteTopic = useCallback(
     (data: TopicModel) => {
       dispatch(
         showModal(`Вы уверены, что хотите удалить топик?`, async () => {
           await topicsAPI.deleteTopic(data);
-          await readTopics();
+          dispatch(fetchTopics());
         })
       );
     },
-    [dispatch, readTopics]
+    [dispatch]
   );
 
   const saveTopic = useCallback(
     async (data: TopicModel) => {
       await topicsAPI.updateTopic(data);
-      await readTopics();
+      dispatch(fetchTopics());
     },
-    [readTopics]
+    [dispatch]
   );
 
   useEffect(() => {
-    void readTopics();
-  }, [readTopics]);
+    dispatch(fetchTopics());
+  }, [dispatch]);
 
   return (
     <div className="forum-page">
