@@ -10,7 +10,7 @@ import '../styles/index.css';
 import './App.css';
 
 const ColdClientApp: React.FC = () => {
-  const { handleAction } = useAuth();
+  useAuth();
 
   return (
     <div className="app">
@@ -20,19 +20,19 @@ const ColdClientApp: React.FC = () => {
           <Switch>
             <Route path="/login">
               <GuestOnly>
-                <LoginPage onAction={handleAction} />
+                <LoginPage />
               </GuestOnly>
             </Route>
 
             <Route path="/signup">
               <GuestOnly>
-                <SignupPage onAction={handleAction} />
+                <SignupPage />
               </GuestOnly>
             </Route>
 
             <Route path="/" exact>
               <AuthorizedOnly>
-                <MainPage onAction={handleAction} />
+                <MainPage />
               </AuthorizedOnly>
             </Route>
 

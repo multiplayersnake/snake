@@ -1,6 +1,7 @@
 import { FormEvent } from 'react';
 
-import { authAPI, SignInRequest, SignUpRequest, mapToGameUser, mapToRawUser, SignUpFormData } from '../api/AuthAPI';
+import { SignInRequest, SignUpFormData, SignUpRequest, authAPI, mapToGameUser, mapToRawUser, userAPI } from '../api';
+
 import handleAPIError from '../api/handleAPIError';
 import { GameUser } from '../types';
 
@@ -40,6 +41,8 @@ class AuthService {
     try {
       const rawUser = await authAPI.getUser();
       const gameUser = mapToGameUser(rawUser);
+
+      await userAPI.syncUser({ id: gameUser.id, nick: gameUser.nickname });
 
       return gameUser;
     } catch (e) {

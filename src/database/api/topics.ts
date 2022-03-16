@@ -1,6 +1,7 @@
+import { QueryTypes } from 'sequelize';
+
 import { sequelize, Topic } from '../init';
 import { TopicModel } from '../models';
-import { QueryTypes } from 'sequelize';
 
 export async function readTopics(userId: string) {
   const query = `

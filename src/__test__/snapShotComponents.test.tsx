@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
 
 import { Button, Input, Form, Heading, Message, Topic, TextArea, InfoPanel, MainMenuItem } from '../components';
-import { MenuActionType } from '../types';
 import { configureStore } from '../store';
 
 const { store } = configureStore();
@@ -90,12 +89,18 @@ it('InfoPanel', () => {
 });
 
 it('MainMenuItem', () => {
-  const action: MenuActionType = MenuActionType.Login;
-  const item = { title: '', action: action, path: '', authorizedOnly: true };
+  const item = {
+    title: '',
+    action: () => {
+      /* noop */
+    },
+    path: '',
+    authorizedOnly: true
+  };
   const tree = renderer
     .create(
       <Provider store={store}>
-        <MainMenuItem item={item} onAction={() => ''} />
+        <MainMenuItem item={item} />
       </Provider>
     )
     .toJSON();

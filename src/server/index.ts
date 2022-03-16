@@ -16,7 +16,7 @@ import {
   readMessagesHandler,
   updateMessageHandler,
   deleteMessageHandler,
-  createUserHandler
+  syncUserHandler
 } from './handlers';
 
 const app = express();
@@ -41,8 +41,8 @@ app
   .get(messagesPaths.withTopicId, readMessagesHandler)
   .put(messagesPaths.index, updateMessageHandler)
   .delete(messagesPaths.index, deleteMessageHandler)
-  // C для пользователя
-  .post(userPaths.index, createUserHandler);
+  // CRUD для пользователя
+  .post(userPaths.index, syncUserHandler);
 
 // Пока не можем проверить авторизацию, в боевом режиме пускаем юзера только страницы входа и регистрации
 const allowedPages = IS_DEV ? [routesPaths.any] : [routesPaths.login, routesPaths.signup];

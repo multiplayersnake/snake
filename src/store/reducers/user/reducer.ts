@@ -15,16 +15,6 @@ export function userReducer(state: UserState = defaultState, action: UserAction)
         data: payload as GameUser
       };
 
-    case UserActionType.MergeGameParameters: {
-      const { data } = state;
-      const { gameParameters } = data;
-
-      return {
-        ...state,
-        data: { ...data, gameParameters: { ...gameParameters, ...payload } }
-      };
-    }
-
     // TODO логика сохранения результатов игры кажется сложноватой,
     // это может означать, для параметров игры нужен свой редьюсер, в котором будет работать удобнее
     // как вариант возможно, стоит endGameReducer переделать в gameReducer и хранить данные там...

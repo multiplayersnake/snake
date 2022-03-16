@@ -8,12 +8,10 @@ import { getLevelValue, getUser, getUserGameParameters, getUserNickname, RootSta
 
 import { part_arr } from '../../../database/mock';
 import { item_arr } from '../../../database/mock';
-import UserAPI from '../../../api/UserAPI';
 
-import { mapToRawUser } from '../../../api/AuthAPI';
+import { leaderBoardAPI, externalUserAPI, mapToRawUser } from '../../../api';
 
 import './Canvas.css';
-import { leaderBoardAPI } from '../../../api/LeaderBoardAPI';
 
 type OwnProps = React.CanvasHTMLAttributes<HTMLCanvasElement>;
 
@@ -47,9 +45,8 @@ export const Canvas: FC<Props> = () => {
       const gameParametersUpdated = { ...gameParameters, coins: coinsUpdated, awards: awardsUpdated };
       const userDataUpdated = { ...userData, gameParameters: gameParametersUpdated };
 
-      // сохранить пользователя на сервер можно - это не вызывает никаких побочных эффектов
       const rawUser = mapToRawUser(userDataUpdated);
-      void UserAPI.updateProfile(rawUser);
+      void externalUserAPI.updateProfile(rawUser);
       void leaderBoardAPI.setUserResult({ user: rawUser.first_name, awards: awardsUpdated });
     },
     [dispatch, userData, gameParameters]
