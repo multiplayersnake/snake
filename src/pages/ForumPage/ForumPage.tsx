@@ -1,13 +1,11 @@
 import React, { FC, useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getUserId, RootState, showModal, getTopics, fetchTopics } from '../../store';
+import { getUserId, RootState, getTopics, fetchTopics, createTopic, deleteTopic, updateTopic } from '../../store';
 import { TopicModel } from '../../database/models';
 import { Button, NavButton, Heading, Scroll, Topic } from '../../components';
 import { TopicType } from '../../types';
-import { topicsAPI } from '../../api';
 
-// TODO переработать
 import './ForumPage.css';
 
 export const ForumPage: FC = () => {
@@ -17,32 +15,27 @@ export const ForumPage: FC = () => {
   const userId = useSelector<RootState, number>(getUserId);
   const topics = useSelector<RootState, TopicType[]>(getTopics);
 
-  const createTopic = useCallback(async () => {
+  const handleCreateTopic = useCallback(async () => {
+    // TODO хорошо бы избавиться от ref и сделать обычную форму
     const content = contentRef.current.value;
 
-    await topicsAPI.createTopic({ content, user_id: userId });
+    if (!content) return;
+
+    dispatch(createTopic({ content, user_id: userId }));
 
     contentRef.current.value = '';
-
-    dispatch(fetchTopics());
   }, [dispatch, userId]);
 
-  const deleteTopic = useCallback(
+  const handleDeleteTopic = useCallback(
     (data: TopicModel) => {
-      dispatch(
-        showModal(`Вы уверены, что хотите удалить топик?`, async () => {
-          await topicsAPI.deleteTopic(data);
-          dispatch(fetchTopics());
-        })
-      );
+      dispatch(deleteTopic(data));
     },
     [dispatch]
   );
 
-  const saveTopic = useCallback(
-    async (data: TopicModel) => {
-      await topicsAPI.updateTopic(data);
-      dispatch(fetchTopics());
+  const handleSaveTopic = useCallback(
+    (data: TopicModel) => {
+      dispatch(updateTopic(data));
     },
     [dispatch]
   );
@@ -76,8 +69,8 @@ export const ForumPage: FC = () => {
                 newCount={topic.new_count}
                 content={topic.content}
                 href={`/topics/${topic.id}`}
-                onDelete={deleteTopic}
-                onSave={saveTopic}
+                onDelete={handleDeleteTopic}
+                onSave={handleSaveTopic}
               />
             ))}
             <br />
@@ -89,7 +82,7 @@ export const ForumPage: FC = () => {
 
           <input ref={contentRef} className="input" />
 
-          <Button onClick={createTopic}>Создать тему</Button>
+          <Button onClick={handleCreateTopic}>Создать тему</Button>
         </div>
       </div>
     </div>

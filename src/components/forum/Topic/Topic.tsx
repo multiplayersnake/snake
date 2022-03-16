@@ -1,8 +1,8 @@
 import React, { FC, useCallback, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import EditorEvent from '@ckeditor/ckeditor5-utils/src/eventinfo';
-import { useHistory } from 'react-router-dom';
 import cn from 'classnames';
 
 import { formatDateTime } from '../../../utils';
@@ -77,8 +77,7 @@ export const Topic: FC<TopicProps> = (props) => {
     [onSave, id, topicContent, toggleEditMode]
   );
 
-  let newElem = '';
-  if (newCount > 0) newElem = ` (${newCount})`;
+  const newCountLabel = newCount > 0 ? ` (${newCount})` : '';
 
   const history = useHistory();
   const handleClick = useCallback(
@@ -92,11 +91,11 @@ export const Topic: FC<TopicProps> = (props) => {
     [editMode, history, href]
   );
 
-  const classEdit = currentUserId === authorId ? cn('topic-edit') : cn('topic-edit', 'topic_hidden');
-  const classDelete =
-    currentUserId === authorId && parseInt(String(mesCount)) === 0
-      ? cn('topic-delete')
-      : cn('topic-delete', 'topic_hidden');
+  const isCurrentUserTopic = currentUserId === authorId;
+  const haveMessages = mesCount > 0;
+
+  const classEdit = isCurrentUserTopic ? 'topic-edit' : 'topic-edit topic_hidden';
+  const classDelete = isCurrentUserTopic && !haveMessages ? 'topic-delete' : 'topic-delete topic_hidden';
 
   return (
     <a href={href} onClick={handleClick}>
@@ -111,7 +110,7 @@ export const Topic: FC<TopicProps> = (props) => {
 
         <div className="topic-mes-count text-field">
           Сообщений: {mesCount}
-          <b>{newElem}</b>
+          <b>{newCountLabel}</b>
         </div>
 
         <div className={classEdit}>
