@@ -26,8 +26,8 @@ export const Modal: FC = () => {
     dispatch(hideModal());
   }, [dispatch]);
 
-  const confirm = useCallback(() => {
-    onConfirm();
+  const confirm = useCallback(async () => {
+    await onConfirm();
     dispatch(hideModal());
   }, [dispatch, onConfirm]);
 

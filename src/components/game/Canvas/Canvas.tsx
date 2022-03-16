@@ -37,6 +37,7 @@ export const Canvas: FC<Props> = () => {
 
   const endGame = useCallback(
     (time: string, place: number, coins: number, awards: number) => {
+      // TODO это надо перевести на redux
       dispatch(showEndGame(time, place, coins, awards));
 
       const coinsUpdated = gameParameters.coins + coins;
