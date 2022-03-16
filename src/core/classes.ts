@@ -1,4 +1,3 @@
-import config from './constants';
 import appleSource from '../assets/images/apple2.png';
 import emblemSource from '../assets/images/emblem.png';
 
@@ -20,12 +19,23 @@ class Snake {
   public score = 0;
   public id = '';
 
-  constructor(x: number, y: number, vx: number, vy: number, hp: number, col: string, name: string, id: string) {
+  constructor(
+    x: number,
+    y: number,
+    vx: number,
+    vy: number,
+    hp: number,
+    col: string,
+    name: string,
+    id: string,
+    len: number,
+    fieldstep: number
+  ) {
     this.hp = hp;
     this.id = id;
     this.name = name;
     this.elements = [];
-    const r = config.fieldStep / 2;
+    const r = fieldstep / 2;
     // Логическая защита. Змея может двигаться только по одной из осей
     if (vx !== 0) vy = 0;
 
@@ -35,11 +45,11 @@ class Snake {
 
     // Создаем туловище и хвост змеи. Это круги, смещенные относительно головы в зависимости от текущей скорости.
     // Элементы туловища на 2 пикселя меньше головы, а хвост еще на 2.
-    const dx = vx === 0 ? 0 : (Math.abs(vx) / vx) * config.fieldStep;
-    const dy = vy === 0 ? 0 : (Math.abs(vy) / vy) * config.fieldStep;
+    const dx = vx === 0 ? 0 : (Math.abs(vx) / vx) * fieldstep;
+    const dy = vy === 0 ? 0 : (Math.abs(vy) / vy) * fieldstep;
 
-    for (let i = 1; i < config.defaultSnakeLength; i++) {
-      const r2 = i < config.defaultSnakeLength - 1 ? Math.round(r * 0.8) : Math.round(r * 0.7);
+    for (let i = 1; i < len; i++) {
+      const r2 = i < len - 1 ? Math.round(r * 0.8) : Math.round(r * 0.7);
       x -= dx;
       y -= dy;
       const el: Circle = { x: x, y: y, vx: vx, vy: vy, r: r2, col: col, id: `${id}_${i}` };

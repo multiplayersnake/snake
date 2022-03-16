@@ -1,24 +1,31 @@
 import React, { FC, AnchorHTMLAttributes, useCallback, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 
 import './Button.css';
 import './NavButton.css';
 import mscHover from '../../../assets/sound/button_hover.mp3';
+import { setLevel } from '../../../store/reducers/level';
 
 type NavButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   to: string;
+  data?: { store: string; value: number };
 };
 
 export const NavButton: FC<NavButtonProps> = (props) => {
-  const { to, children, className, ...rest } = props;
+  const { to, children, className, data, ...rest } = props;
+  const dispatch = useDispatch();
   const history = useHistory();
   const handleClick = useCallback(
     (e: React.MouseEvent) => {
+      if (data.store === 'level') {
+        dispatch(setLevel(data.value));
+      }
       e.preventDefault();
       history.push(to);
     },
-    [history, to]
+    [history, to, dispatch]
   );
 
   const ref = useRef(null);

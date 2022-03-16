@@ -1,13 +1,20 @@
 import { EndGameActionType, EndGameAction } from './types';
 
-export function showEndGame(time: string, place: number, coins: number, awards: number): EndGameAction {
+export function showEndGame(
+  time: string,
+  place: number,
+  coins: number,
+  awards: number,
+  isVictory: boolean
+): EndGameAction {
   return {
     type: EndGameActionType.ShowEndGame,
     payload: {
       time,
       place,
       coins,
-      awards
+      awards,
+      isVictory
     }
   };
 }

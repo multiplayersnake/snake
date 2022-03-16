@@ -12,6 +12,9 @@ export function getEndGameAwards(state: RootState): number {
   return state.endGame.awards;
 }
 
+export function getEndGameIsVictory(state: RootState): boolean {
+  return state.endGame.isVictory;
+}
 export function getEndGamePlace(state: RootState): number {
   return state.endGame.place;
 }
