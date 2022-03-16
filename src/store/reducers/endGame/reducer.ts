@@ -5,7 +5,8 @@ const defaultState: EndGameState = {
   place: 0,
   coins: 0,
   awards: 0,
-  isGameOver: false
+  isGameOver: false,
+  isVictory: false
 };
 
 export function endGameReducer(state: EndGameState = defaultState, action: EndGameAction): EndGameState {
