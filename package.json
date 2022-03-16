@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "12"
+    "node": "14.18.0"
   },
   "scripts": {
     "csr:dev": "webpack serve --mode=development --open --hot --config=./webpack.csr.config.js",
