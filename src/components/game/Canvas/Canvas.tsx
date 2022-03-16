@@ -40,10 +40,6 @@ export const Canvas: FC<Props> = () => {
 
   const endGame = useCallback(
     (time: string, isVictory: boolean, place: number, coins: number, awards: number) => {
-      // dispatch(saveGameResults({ coins }));
-      // TODO сохранить результаты игры здесь в стор здесь нельзя - данные пользователя обновятся и компонент перерендерится - получим бесконечный цикл :-\
-      // поэтому сохраняем их при открытии компонента EndGame
-      // (!) это важный момент, который надо осознать при работе с react (!)
       dispatch(showEndGame(time, place, coins, awards, isVictory));
 
       const coinsUpdated = gameParameters.coins + coins;
