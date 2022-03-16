@@ -1,3 +1,3 @@
 export const userPaths = {
-  index: '/api/user'
+  index: '/api/users'
 };

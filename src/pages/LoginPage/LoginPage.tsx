@@ -1,30 +1,25 @@
-import React, { FC, FormEvent, useCallback } from 'react';
+import React, { FormEvent, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
+import { logIn } from '../../store';
+import OAuthService from '../../services/OAuthService';
 import { Button, NavButton, Input, Form, Heading } from '../../components/common';
-import { MenuAction, MenuActionType } from '../../types';
 
 import './LoginPage.css';
 
-type LoginPageProps = {
-  onAction?: (action: MenuAction) => void;
-};
+export const LoginPage = () => {
+  const dispatch = useDispatch();
 
-export const LoginPage: FC<LoginPageProps> = ({ onAction }) => {
   const handleLogin = useCallback(
     async (e: FormEvent) => {
-      if (!onAction) return;
-
-      onAction({ type: MenuActionType.Login, payload: e });
-
-      const form = e.target as HTMLFormElement;
-      form.reset();
+      dispatch(logIn(e));
     },
-    [onAction]
+    [dispatch]
   );
 
   const handleOAuthLogin = useCallback(async () => {
-    onAction({ type: MenuActionType.OAuthLogin });
-  }, [onAction]);
+    await OAuthService.signIn();
+  }, []);
 
   return (
     <div className="login-page">

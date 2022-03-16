@@ -1,17 +1,12 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 import { Heading, MainMenuItem, InfoPanel, LeaderBoard } from '../../components';
-import { MenuAction } from '../../types';
 
 import menuItems from './menuItems';
 
 import './MainPage.css';
 
-type MainPageProps = {
-  onAction: (action: MenuAction) => void;
-};
-
-export const MainPage: FC<MainPageProps> = ({ onAction }) => {
+export const MainPage = () => {
   return (
     <div className="main-page">
       <Heading tag="h1">Боевые змеи</Heading>
@@ -19,7 +14,7 @@ export const MainPage: FC<MainPageProps> = ({ onAction }) => {
 
       <div className="main-page-menu">
         {menuItems.map((item) => (
-          <MainMenuItem key={item.title} item={item} onAction={onAction} />
+          <MainMenuItem key={item.title} item={item} />
         ))}
       </div>
       <InfoPanel />

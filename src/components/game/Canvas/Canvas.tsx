@@ -8,12 +8,10 @@ import { getUser, getUserGameParameters, getUserNickname, RootState, showEndGame
 
 import { part_arr } from '../../../database/mock';
 import { item_arr } from '../../../database/mock';
-import UserAPI from '../../../api/UserAPI';
 
-import { mapToRawUser } from '../../../api/AuthAPI';
+import { leaderBoardAPI, externalUserAPI, mapToRawUser } from '../../../api';
 
 import './Canvas.css';
-import { leaderBoardAPI } from '../../../api/LeaderBoardAPI';
 
 type OwnProps = React.CanvasHTMLAttributes<HTMLCanvasElement>;
 
@@ -39,10 +37,7 @@ export const Canvas: FC<Props> = () => {
 
   const endGame = useCallback(
     (time: string, place: number, coins: number, awards: number) => {
-      // dispatch(saveGameResults({ coins }));
-      // TODO сохранить результаты игры здесь в стор здесь нельзя - данные пользователя обновятся и компонент перерендерится - получим бесконечный цикл :-\
-      // поэтому сохраняем их при открытии компонента EndGame
-      // (!) это важный момент, который надо осознать при работе с react (!)
+      // TODO это надо перевести на redux
       dispatch(showEndGame(time, place, coins, awards));
 
       const coinsUpdated = gameParameters.coins + coins;
@@ -50,9 +45,8 @@ export const Canvas: FC<Props> = () => {
       const gameParametersUpdated = { ...gameParameters, coins: coinsUpdated, awards: awardsUpdated };
       const userDataUpdated = { ...userData, gameParameters: gameParametersUpdated };
 
-      // сохранить пользователя на сервер можно - это не вызывает никаких побочных эффектов
       const rawUser = mapToRawUser(userDataUpdated);
-      void UserAPI.updateProfile(rawUser);
+      void externalUserAPI.updateProfile(rawUser);
       void leaderBoardAPI.setUserResult({ user: rawUser.first_name, awards: awardsUpdated });
     },
     [dispatch, userData, gameParameters]
