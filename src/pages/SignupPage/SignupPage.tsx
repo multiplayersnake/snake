@@ -1,10 +1,9 @@
 import React, { FormEvent, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Button, NavButton, Input, Form, Heading } from '../../components/common';
-
 import { signUp } from '../../store';
 import OAuthService from '../../services/OAuthService';
+import { Button, NavButton, Input, Form, Heading } from '../../components/common';
 
 import './SignupPage.css';
 

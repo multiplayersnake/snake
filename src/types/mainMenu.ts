@@ -1,6 +1,8 @@
+import { AnyAction } from 'redux';
+
 export type MenuItemType = {
   title: string;
   path?: string;
-  action?: () => void;
+  action?: () => AnyAction;
   authorizedOnly?: boolean;
 };

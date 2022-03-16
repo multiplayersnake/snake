@@ -1,9 +1,8 @@
 import React, { FC, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { MenuItemType } from '../../../types';
 import { RootState, getAuthorized } from '../../../store';
-
+import { MenuItemType } from '../../../types';
 import { Button, NavButton } from '../..';
 
 type MainMenuItemProps = {

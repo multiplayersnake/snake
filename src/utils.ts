@@ -36,3 +36,7 @@ export function parseSerializedData<T extends Indexed>(serializedData: string, d
 }
 
 export const isServer = !(typeof window !== 'undefined' && window.document && window.document.createElement);
+
+export function getAppUrl(): string {
+  return window.location.origin;
+}
