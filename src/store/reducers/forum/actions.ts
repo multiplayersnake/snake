@@ -65,8 +65,8 @@ export function deleteTopic(data: TopicModel) {
   };
 }
 
-export function fetchTopicTitle(topicId: number) {
-  return async function fetchTopicTitleThunk(dispatch: Dispatch) {
+export function fetchTopicContent(topicId: number) {
+  return async function fetchTopicContent(dispatch: Dispatch) {
     const topicContent = await topicsAPI.readContent(topicId);
     dispatch(setTopicContent(topicContent));
   };
@@ -83,7 +83,7 @@ export function fetchMessages(topicId: number) {
 
 export function fetchTopic(topicId: number) {
   return async function fetchTopicThunk(dispatch: ThunkDispatch<RootState, void, AnyAction>) {
-    await dispatch(fetchTopicTitle(topicId));
+    await dispatch(fetchTopicContent(topicId));
     await dispatch(fetchMessages(topicId));
   };
 }

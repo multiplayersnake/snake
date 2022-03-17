@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Heading, MainMenuItem, InfoPanel, LeaderBoard } from '../../components';
+import { Heading, MainMenuItem, InfoPanel, Leaderboard } from '../../components';
 
 import menuItems from './menuItems';
 
@@ -17,8 +17,9 @@ export const MainPage = () => {
           <MainMenuItem key={item.title} item={item} />
         ))}
       </div>
+
       <InfoPanel />
-      <LeaderBoard />
+      <Leaderboard />
     </div>
   );
 };

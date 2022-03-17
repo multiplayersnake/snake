@@ -1,3 +1,3 @@
 export * from './MainMenuItem';
-export * from './LeaderBoard';
+export * from './Leaderboard';
 export * from './InfoPanel';

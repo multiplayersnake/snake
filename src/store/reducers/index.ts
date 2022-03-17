@@ -4,3 +4,4 @@ export * from './modal';
 export * from './endGame';
 export * from './forum';
 export * from './level';
+export * from './leaderboard';
