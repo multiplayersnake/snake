@@ -1,10 +1,10 @@
 import { test, expect, Page } from '@playwright/test';
 
 async function logIn(page: Page) {
-  await page.goto('http://localhost:8080/');
+  await page.goto('http://localhost:3000/');
   await page.locator('[name=login]').fill('test_01');
   await page.locator('[name=password]').fill('01qweasd');
-  await page.locator('text=Войти').click();
+  await page.locator('text=Войти').first().click();
 }
 
 test('Login test', async ({ page }) => {
@@ -47,7 +47,7 @@ test('Game page router', async ({ page }) => {
 
   // Переход на страницу тренировочной игры
   await page.locator('text=В бой').click();
-  await page.locator('text=Начать').click();
+  await page.locator('text=Начать').first().click();
   await expect(page).toHaveURL(/game/);
 });
 
@@ -76,7 +76,7 @@ test('Forum page router', async ({ page }) => {
 
   // Переход на страницу сообщений
   await page.locator('text=Форум').click();
-  await page.locator('_react=Topic').first().click();
+  await page.locator('text=Автор').first().click();
   await expect(page).toHaveURL(/topics/);
 
   // Возврат в форум
