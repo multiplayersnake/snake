@@ -8,8 +8,28 @@ export const draw = {
   drawCoins,
   drawApples,
   drawBooms,
-  drawSnakes
+  drawSnakes,
+  drawTimerPanel
 };
+
+// Функция отрисовки панели таймера
+function drawTimerPanel(ctx: CanvasRenderingContext2D, material: THREE.MeshPhongMaterial, text: string): void {
+  ctx.clearRect(0, 0, config.topPanelWidth, config.topPanelHeight);
+  ctx.beginPath();
+  ctx.fillStyle = 'rgba(39, 79, 255, 0.4)';
+  ctx.fillRect(0, 0, config.topPanelWidth, config.topPanelHeight);
+  ctx.closePath();
+  ctx.textBaseline = 'top';
+  ctx.fillStyle = 'rgba(85,39,143,1.0)';
+  ctx.font = '96px Impact';
+  ctx.textAlign = 'left';
+  const measureText = ctx.measureText(text).width;
+  ctx.fillText(text, config.fieldWidth / 2 - measureText / 2, 20);
+
+  const canvasTexture = new THREE.Texture(ctx.canvas);
+  canvasTexture.needsUpdate = true;
+  material.map = canvasTexture;
+}
 
 // Функция отрисовки левой панели
 function drawLeftPanel(ctx: CanvasRenderingContext2D, material: THREE.MeshPhongMaterial, snake: Snake): void {
