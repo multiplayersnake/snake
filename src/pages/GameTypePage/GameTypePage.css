@@ -50,24 +50,3 @@
   justify-content: center;
   align-items: center;
 }
-
-.game-type {
-  width: calc(50% - var(--gap5-5));
-  height: calc(50% - 2 * var(--gap5-5));
-  overflow: hidden;
-  background: var(--panel-background);
-  border-radius: var(--gap5);
-  padding: var(--gap5-5);
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.game-type-desc {
-  color: var(--white);
-  text-shadow: var(--text-shadow);
-  font-family: var(--main-font);
-  font-size: var(--gap-5);
-}

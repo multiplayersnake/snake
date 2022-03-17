@@ -627,7 +627,7 @@ function startGame(
   mainCanvas = inCanvas;
   mainCanvas.addEventListener('click', onClick);
   mainCanvas.addEventListener('mousemove', onPointerMove);
-  // mainCanvas.requestFullscreen();
+  mainCanvas.requestFullscreen();
 
   endFunction = endGameFunction;
   const textureLoader = new THREE.TextureLoader();
