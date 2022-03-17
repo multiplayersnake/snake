@@ -33,7 +33,7 @@
     "build": "npm run build:server && npm run build:client",
     "serve": "cross-env NODE_ENV=production node index.js",
     "start": "npm run build && npm run serve",
-    "start:container": "docker-compose --remove-orphans up web",
+    "start:container": "docker-compose up web",
     "start:container:dev": "docker-compose -p snake-dev -f docker-compose.dev.yaml up pgadmindev"
   },
   "keywords": [

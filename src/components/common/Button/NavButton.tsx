@@ -5,8 +5,9 @@ import cn from 'classnames';
 
 import './Button.css';
 import './NavButton.css';
+
+import { setLevel } from '../../../store';
 import mscHover from '../../../assets/sound/button_hover.mp3';
-import { setLevel } from '../../../store/reducers/level';
 
 type NavButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   to: string;
@@ -19,13 +20,14 @@ export const NavButton: FC<NavButtonProps> = (props) => {
   const history = useHistory();
   const handleClick = useCallback(
     (e: React.MouseEvent) => {
-      if (data.store === 'level') {
-        dispatch(setLevel(data.value));
+      if (data?.store === 'level') {
+        dispatch(setLevel(data?.value));
       }
+
       e.preventDefault();
       history.push(to);
     },
-    [history, to, dispatch]
+    [data?.store, data?.value, history, to, dispatch]
   );
 
   const ref = useRef(null);
