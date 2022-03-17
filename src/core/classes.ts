@@ -10,6 +10,8 @@ export type Circle = {
   col: string;
   id: string;
   isShadow?: boolean;
+  dx?: number;
+  dy?: number;
 };
 
 class Snake {

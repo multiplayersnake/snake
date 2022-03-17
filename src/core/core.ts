@@ -32,6 +32,7 @@ let maxVelocityGrowTimes = 3;
 let boomHpLoose = 20;
 let awardsCount = 1;
 let coinsPower = 1;
+let selfIntersection = true;
 let appleHealValue = 10;
 let appleCreateTime = 20;
 
@@ -133,25 +134,33 @@ function setSnakeDirection(snake: Snake, direction: string): void {
 
   switch (direction) {
     case 'ArrowUp':
-      head.vy = -v;
-      head.vx = 0;
+      if (!selfIntersection || head.vy === 0) {
+        head.vy = -v;
+        head.vx = 0;
+      }
       break;
     case 'ArrowDown':
-      head.vy = v;
-      head.vx = 0;
+      if (!selfIntersection || head.vy === 0) {
+        head.vy = v;
+        head.vx = 0;
+      }
       break;
     case 'ArrowLeft':
-      head.vy = 0;
-      head.vx = -v;
+      if (!selfIntersection || head.vx === 0) {
+        head.vy = 0;
+        head.vx = -v;
+      }
       break;
     case 'ArrowRight':
-      head.vy = 0;
-      head.vx = v;
+      if (!selfIntersection || head.vx === 0) {
+        head.vy = 0;
+        head.vx = v;
+      }
       break;
   }
 }
 
-// Функция поворота змеи направо
+// Функция поворота змеи по часовой стрелке
 function rotateSnakeRight(snake: Snake): void {
   const head = snake.elements[0];
 
@@ -178,7 +187,7 @@ function correctElementPosition(snake: Snake): void {
 function snakeGetCoin(snake: Snake, coin: Coin, index: number): void {
   snake.score += coin.value * coinsPower;
   coins.splice(index, 1);
-  const baseEl = snake.elements[1];
+  const baseEl = snake.elements[2];
 
   for (let i = 1; i <= coin.value; i++) {
     const newElement: Circle = {
@@ -190,7 +199,7 @@ function snakeGetCoin(snake: Snake, coin: Coin, index: number): void {
       r: baseEl.r,
       id: `${snake.id}_${snake.elements.length}`
     };
-    snake.elements.splice(1, 0, newElement);
+    snake.elements.splice(2, 0, newElement);
     scene.remove(scene.getObjectByName(coin.id));
     playSound(sndCoin);
   }
@@ -210,6 +219,45 @@ function collisionSnakeWithCoin(snake: Snake): void {
       snakeGetCoin(snake, coin, i);
     }
   });
+}
+
+// Функция контроля столкновения змеи с собой
+function collisionSnakeWithSelf(snake: Snake): void {
+  const head = snake.elements[0];
+
+  for (let i = 3; i < snake.elements.length; i++) {
+    const elm = snake.elements[i];
+    const dx = head.x - elm.x;
+    const dy = head.y - elm.y;
+    const r = Math.sqrt(dx ** 2 + dy ** 2);
+    if (r < head.r + elm.r) {
+      head.x -= head.dx;
+      head.y -= head.dy;
+      snakeGetSelf(snake, elm, i);
+    }
+  }
+}
+
+// Функция столкновения змеи с собой
+function snakeGetSelf(snake: Snake, elm: Circle, index: number): void {
+  const head = snake.elements[0];
+  // Это элемент, в сторону которого не нужно поворачивать.
+  const controlElement = snake.elements[index - 1];
+
+  if (snake.hp > 0) {
+    if (head.vx === 0) {
+      head.vx = Math.sign(head.x - controlElement.x) * Math.abs(head.vy);
+      head.vy = 0;
+    } else {
+      head.vy = Math.sign(head.y - controlElement.y) * Math.abs(head.vx);
+      head.vx = 0;
+    }
+    const boom_x = (head.x + elm.x) / 2;
+    const boom_y = (head.y + elm.y) / 2;
+    const boom = new Boom(boom_x, boom_y, `boom_${Math.ceil(Math.random() * 10000)}`);
+    booms.push(boom);
+    snake.hp = Math.max(0, snake.hp - boomHpLoose);
+  }
 }
 
 // Функция подбирания змеёй монеты
@@ -271,6 +319,7 @@ function collisionControl(): void {
     if (item.hp > 0) {
       collisionSnakeWithCoin(item);
       collisionSnakeWithApple(item);
+      if (selfIntersection) collisionSnakeWithSelf(item);
     }
 
     if ((head.x === config.lBorder || head.x === config.rBorder) && head.vx !== 0) {
@@ -303,8 +352,10 @@ function moveObjects(): void {
     const head = item.elements[0];
 
     // Голова змеи всегда движется в соответствии со своей скоростью
-    head.x += dt * head.vx;
-    head.y += dt * head.vy;
+    head.dx = dt * head.vx;
+    head.dy = dt * head.vy;
+    head.x += head.dx;
+    head.y += head.dy;
 
     // Скорость головы растет с учетом оставшегося времени
     const now = window.performance.now();
@@ -569,12 +620,14 @@ function startGame(
   boomHpLoose = config.level[level].boomHpLoose;
   awardsCount = config.level[level].awardsCount;
   coinsPower = config.level[level].coinsPower;
+  selfIntersection = config.level[level].selfIntersection;
   appleHealValue = config.level[level].appleHealValue;
   appleCreateTime = config.level[level].appleCreateTime;
 
   mainCanvas = inCanvas;
   mainCanvas.addEventListener('click', onClick);
   mainCanvas.addEventListener('mousemove', onPointerMove);
+  // mainCanvas.requestFullscreen();
 
   endFunction = endGameFunction;
   const textureLoader = new THREE.TextureLoader();

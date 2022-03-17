@@ -64,7 +64,7 @@ export const GameTypePage: FC = () => {
           <div className={'game-type-desc'}>
             <img src={level2Source} alt={'level1'} style={{ float: 'left' }} />
             Игра на данном уровне нормализована по времени, скорости, ударам и лечению. За победу в этом уровне можно
-            получить 5 кубков.
+            получить 5 кубков. На этом уровне нельзя сталкиваться с собой.
           </div>
           <NavButton className={cn('button')} to={'/game'} data={{ store: 'level', value: 2 }}>
             Начать
@@ -75,7 +75,8 @@ export const GameTypePage: FC = () => {
           <div className={'game-type-desc'}>
             <img src={level3Source} alt={'level3'} style={{ float: 'right' }} />
             Данный уровень подойдет только тем, кто с легкостью проходит другие уровни. Скорость, удары значительно
-            увеличены, лечение ослаблено. Зато и награда достойная - 20 кубков.
+            увеличены, лечение ослаблено. Зато и награда достойная - 20 кубков. На этом уровне нельзя сталкиваться с
+            собой.
           </div>
           <NavButton className={cn('button')} to={'/game'} data={{ store: 'level', value: 3 }}>
             Начать

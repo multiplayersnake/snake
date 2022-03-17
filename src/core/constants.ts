@@ -4,35 +4,38 @@ const config = {
   // Игровые параметры
   level: [
     {
-      defaultSnakeLength: 3,
+      defaultSnakeLength: 4,
       wholeSessionTime: 60,
       baseVelocity: 0.1,
       maxVelocityGrowTimes: 1,
       boomHpLoose: 0,
       awardsCount: 0,
       coinsPower: 0,
+      selfIntersection: false,
       appleHealValue: 10,
       appleCreateTime: 20
     },
     {
-      defaultSnakeLength: 4,
+      defaultSnakeLength: 6,
       wholeSessionTime: 120,
       baseVelocity: 0.1,
       maxVelocityGrowTimes: 2,
       boomHpLoose: 10,
       awardsCount: 1,
       coinsPower: 1,
+      selfIntersection: false,
       appleHealValue: 20,
       appleCreateTime: 10
     },
     {
-      defaultSnakeLength: 6,
+      defaultSnakeLength: 8,
       wholeSessionTime: 240,
       baseVelocity: 0.1,
       maxVelocityGrowTimes: 3,
       boomHpLoose: 20,
       awardsCount: 5,
       coinsPower: 2,
+      selfIntersection: true,
       appleHealValue: 10,
       appleCreateTime: 20
     },
@@ -44,6 +47,7 @@ const config = {
       boomHpLoose: 50,
       awardsCount: 20,
       coinsPower: 5,
+      selfIntersection: true,
       appleHealValue: 5,
       appleCreateTime: 30
     }

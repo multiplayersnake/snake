@@ -5,8 +5,8 @@ const currentGameParametersVersion = 1006;
 
 const defaultGameParameters = {
   snake: currentGameParametersVersion,
-  coins: 9000,
-  awards: 500,
+  coins: 0,
+  awards: 0,
   parts: [0, 0, 0],
   byItems: [[0], [0], [0]]
 };
