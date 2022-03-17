@@ -1,63 +1,48 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { getUserId, RootState, getTopics, fetchTopics, createTopic, deleteTopic, updateTopic } from '../../store';
 import { Button, NavButton, Heading, Scroll, Topic } from '../../components';
-import { TopicType } from '../../types';
-import { topicsAPI } from '../../api';
-
-// TODO переработать
-import './ForumPage.css';
-
-import { getUserId, RootState, showModal } from '../../store';
 import { TopicModel } from '../../database/models';
+import { TopicType } from '../../types';
+
+import './ForumPage.css';
 
 export const ForumPage: FC = () => {
   const dispatch = useDispatch();
 
   const contentRef = useRef(null);
   const userId = useSelector<RootState, number>(getUserId);
+  const topics = useSelector<RootState, TopicType[]>(getTopics);
 
-  const [topics, setTopics] = useState<TopicType[]>([]);
-
-  // TODO перенести работу с API в redux
-  const readTopics = useCallback(async () => {
-    const allTopics = await topicsAPI.readTopics(userId);
-    setTopics(allTopics);
-  }, [userId]);
-
-  const createTopic = useCallback(async () => {
+  const handleTopicCreate = useCallback(async () => {
+    // TODO хорошо бы избавиться от ref и сделать обычную форму
     const content = contentRef.current.value;
 
-    await topicsAPI.createTopic({ content, user_id: userId });
+    if (!content) return;
+
+    dispatch(createTopic({ content, user_id: userId }));
 
     contentRef.current.value = '';
+  }, [dispatch, userId]);
 
-    await readTopics();
-  }, [readTopics, userId]);
-
-  const deleteTopic = useCallback(
+  const handleTopicDelete = useCallback(
     (data: TopicModel) => {
-      dispatch(
-        showModal(`Вы уверены, что хотите удалить топик?`, async () => {
-          await topicsAPI.deleteTopic(data);
-          await readTopics();
-        })
-      );
+      dispatch(deleteTopic(data));
     },
-    [dispatch, readTopics]
+    [dispatch]
   );
 
-  const saveTopic = useCallback(
-    async (data: TopicModel) => {
-      await topicsAPI.updateTopic(data);
-      await readTopics();
+  const handleTopicSave = useCallback(
+    (data: TopicModel) => {
+      dispatch(updateTopic(data));
     },
-    [readTopics]
+    [dispatch]
   );
 
   useEffect(() => {
-    void readTopics();
-  }, [readTopics]);
+    dispatch(fetchTopics());
+  }, [dispatch]);
 
   return (
     <div className="forum-page">
@@ -84,8 +69,8 @@ export const ForumPage: FC = () => {
                 newCount={topic.new_count}
                 content={topic.content}
                 href={`/topics/${topic.id}`}
-                onDelete={deleteTopic}
-                onSave={saveTopic}
+                onDelete={handleTopicDelete}
+                onSave={handleTopicSave}
               />
             ))}
             <br />
@@ -97,7 +82,7 @@ export const ForumPage: FC = () => {
 
           <input ref={contentRef} className="input" />
 
-          <Button onClick={createTopic}>Создать тему</Button>
+          <Button onClick={handleTopicCreate}>Создать тему</Button>
         </div>
       </div>
     </div>

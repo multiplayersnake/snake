@@ -1,37 +1,29 @@
+import { LeaderboardItem } from '../../types';
 import BaseAPI from '../BaseAPI';
 
-export type LeaderItem = {
-  data: {
-    user: string;
-    awards: number;
-  };
-};
+const teamName = 'snake';
+const limit = 10;
 
-export type UserResultData = {
-  user: string;
-  awards: number;
-};
-
-class LeaderBoardAPI extends BaseAPI {
+class LeaderboardAPI extends BaseAPI {
   constructor() {
     super('/leaderboard');
   }
 
-  public setUserResult(userData: UserResultData): Promise<void> {
+  public addItem(data: LeaderboardItem['data']): Promise<void> {
     return this.http.post('', {
-      data: { data: userData, ratingFieldName: 'awards', teamName: 'snake' }
+      data: { data, ratingFieldName: 'awards', teamName }
     });
   }
 
-  public getLeaderList(): Promise<LeaderItem[]> {
-    return this.http.post('/snake', {
+  public getItems(): Promise<LeaderboardItem[]> {
+    return this.http.post(`/${teamName}`, {
       data: {
         ratingFieldName: 'awards',
         cursor: 0,
-        limit: 10
+        limit
       }
     });
   }
 }
 
-export const leaderBoardAPI = new LeaderBoardAPI();
+export const leaderboardAPI = new LeaderboardAPI();

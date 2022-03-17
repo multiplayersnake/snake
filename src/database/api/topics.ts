@@ -6,12 +6,12 @@ import { TopicModel } from '../models';
 export async function readTopics(userId: string) {
   const query = `
     SELECT t1.*, us.nick, t2.new_count, t3.last_time_update FROM (
-        SELECT tp.*, COUNT(ms.id) mes_count
+        SELECT tp.*, COUNT(ms.id)::int mes_count
         FROM "Topics" tp
         LEFT JOIN "Messages" ms ON ms.topic_id=tp.id
         GROUP BY tp.id) t1
     LEFT JOIN (
-        SELECT tp.id as topic_id, COUNT(ms.id) as new_count
+        SELECT tp.id as topic_id, COUNT(ms.id)::int as new_count
         FROM "Topics" tp
         LEFT JOIN "Messages" ms ON ms.topic_id=tp.id
         LEFT JOIN (SELECT * FROM "Mlus" WHERE user_id=${userId}) ml ON ml.mess_id=ms.id

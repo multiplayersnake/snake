@@ -2,14 +2,11 @@ import React, { FC, useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { startGame } from '../../../core/core';
-
-import { GameParameters, GameUser } from '../../../types';
-import { getLevelValue, getUser, getUserGameParameters, getUserNickname, RootState, showEndGame } from '../../../store';
+import { GameParameters } from '../../../types';
+import { RootState, finishGame, getLevelValue, getUserGameParameters, getUserNickname } from '../../../store';
 
 import { part_arr } from '../../../database/mock';
 import { item_arr } from '../../../database/mock';
-
-import { leaderBoardAPI, externalUserAPI, mapToRawUser } from '../../../api';
 
 import './Canvas.css';
 
@@ -20,7 +17,6 @@ type Props = OwnProps;
 export const Canvas: FC<Props> = () => {
   const dispatch = useDispatch();
 
-  const userData = useSelector<RootState, GameUser>(getUser);
   const nickname = useSelector<RootState, string>(getUserNickname);
   const gameParameters = useSelector<RootState, GameParameters>(getUserGameParameters);
   const level = useSelector<RootState, number>(getLevelValue);
@@ -38,18 +34,9 @@ export const Canvas: FC<Props> = () => {
 
   const endGame = useCallback(
     (time: string, isVictory: boolean, place: number, coins: number, awards: number) => {
-      dispatch(showEndGame(time, place, coins, awards, isVictory));
-
-      const coinsUpdated = gameParameters.coins + coins;
-      const awardsUpdated = gameParameters.awards + awards;
-      const gameParametersUpdated = { ...gameParameters, coins: coinsUpdated, awards: awardsUpdated };
-      const userDataUpdated = { ...userData, gameParameters: gameParametersUpdated };
-
-      const rawUser = mapToRawUser(userDataUpdated);
-      void externalUserAPI.updateProfile(rawUser);
-      void leaderBoardAPI.setUserResult({ user: rawUser.first_name, awards: awardsUpdated });
+      dispatch(finishGame(time, place, coins, awards, isVictory));
     },
-    [dispatch, userData, gameParameters]
+    [dispatch]
   );
 
   const ref = useRef(null);

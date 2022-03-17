@@ -1,19 +1,16 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import cn from 'classnames';
-
-import { Button, NavButton, Scroll, Heading, Message } from '../../components';
-
-import { MessageType } from '../../types';
-import { MessageModel } from '../../database/models';
-
-import './TopicPage.css';
-import { getUserId, RootState, showModal } from '../../store';
-import { messagesAPI, topicsAPI } from '../../api';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import EditorEvent from '@ckeditor/ckeditor5-utils/src/eventinfo';
+
+import { getUserId, RootState, getTopic, fetchTopic, createMessage, updateMessage, deleteMessage } from '../../store';
+import { Button, NavButton, Scroll, Heading, Message } from '../../components';
+import { TopicType } from '../../types';
+import { MessageModel } from '../../database/models';
+
+import './TopicPage.css';
 
 export const TopicPage: FC = () => {
   const dispatch = useDispatch();
@@ -24,56 +21,38 @@ export const TopicPage: FC = () => {
   const { id } = useParams<{ id: string }>();
   const topicId = parseInt(id);
 
-  const [messages, setMessages] = useState<MessageType[]>([]);
-  const [title, setTitle] = useState('');
+  const { messages, content } = useSelector<RootState, TopicType>(getTopic);
 
-  const readTitle = useCallback(async () => {
-    setTitle(await topicsAPI.readTitle(topicId));
-  }, [topicId]);
-
-  const readMessages = useCallback(async () => {
-    const topicMessages = await messagesAPI.readMessages(topicId, userId);
-    setMessages(topicMessages);
-  }, [topicId, userId]);
-
-  const createMessage = useCallback(async () => {
-    await messagesAPI.createMessage({ content: newMessageContent, user_id: userId, topic_id: topicId });
-    await readMessages();
+  const handleMessageCreate = useCallback(async () => {
+    dispatch(createMessage({ content: newMessageContent, user_id: userId, topic_id: topicId }));
     setNewMessageContent('');
-  }, [newMessageContent, readMessages, topicId, userId]);
+  }, [dispatch, newMessageContent, topicId, userId]);
 
-  const deleteMessage = useCallback(
+  const handleMessageDelete = useCallback(
     (data: MessageModel) => {
-      dispatch(
-        showModal(`Вы уверены, что хотите удалить сообщение?`, async () => {
-          await messagesAPI.deleteMessage(data);
-          await readMessages();
-        })
-      );
+      dispatch(deleteMessage({ id: data.id, topic_id: topicId }));
     },
-    [dispatch, readMessages]
+    [dispatch, topicId]
   );
 
   const handleNewMessageChange = useCallback((event: EditorEvent, editor: ClassicEditor) => {
     setNewMessageContent(editor.getData());
   }, []);
 
-  const saveMessage = useCallback(
+  const handleMessageSave = useCallback(
     async (data: MessageModel) => {
-      await messagesAPI.updateMessage(data);
-      await readMessages();
+      dispatch(updateMessage({ ...data, topic_id: topicId }));
     },
-    [readMessages]
+    [dispatch, topicId]
   );
 
   useEffect(() => {
-    void readMessages();
-    void readTitle();
-  }, [topicId, readMessages, readTitle]);
+    dispatch(fetchTopic(topicId));
+  }, [dispatch, topicId]);
 
   return (
     <div className="topic-page">
-      <NavButton className={cn('button', 'button-forum-back')} to="/topics">
+      <NavButton className="button-forum-back" to="/topics">
         К темам
       </NavButton>
 
@@ -83,7 +62,7 @@ export const TopicPage: FC = () => {
 
       <div className="messages-forum">
         <div className="messages-list">
-          <Scroll title={title} mode="Last" id={`messages_${topicId}`}>
+          <Scroll title={content} mode="Last" id={`messages_${topicId}`}>
             {messages.map((message) => (
               <Message
                 key={message.id}
@@ -93,8 +72,8 @@ export const TopicPage: FC = () => {
                 authorId={message.user_id}
                 currentUserId={userId}
                 content={message.content}
-                onDelete={deleteMessage}
-                onSave={saveMessage}
+                onDelete={handleMessageDelete}
+                onSave={handleMessageSave}
               />
             ))}
             <br />
@@ -120,7 +99,7 @@ export const TopicPage: FC = () => {
             />
           </div>
 
-          <Button onClick={createMessage}>Добавить сообщение</Button>
+          <Button onClick={handleMessageCreate}>Добавить сообщение</Button>
         </div>
       </div>
     </div>
