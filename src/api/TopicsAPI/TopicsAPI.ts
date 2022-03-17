@@ -22,8 +22,8 @@ class TopicsAPI extends BaseAPI {
     return this.http.delete('/', { data });
   }
 
-  public readTitle(topicId: number): Promise<string> {
-    return this.http.get<string>(`/title/${topicId}`);
+  public readContent(topicId: number): Promise<string> {
+    return this.http.get<string>(`/content/${topicId}`);
   }
 }
 

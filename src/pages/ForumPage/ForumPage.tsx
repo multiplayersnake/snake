@@ -2,8 +2,8 @@ import React, { FC, useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getUserId, RootState, getTopics, fetchTopics, createTopic, deleteTopic, updateTopic } from '../../store';
-import { TopicModel } from '../../database/models';
 import { Button, NavButton, Heading, Scroll, Topic } from '../../components';
+import { TopicModel } from '../../database/models';
 import { TopicType } from '../../types';
 
 import './ForumPage.css';
@@ -15,7 +15,7 @@ export const ForumPage: FC = () => {
   const userId = useSelector<RootState, number>(getUserId);
   const topics = useSelector<RootState, TopicType[]>(getTopics);
 
-  const handleCreateTopic = useCallback(async () => {
+  const handleTopicCreate = useCallback(async () => {
     // TODO хорошо бы избавиться от ref и сделать обычную форму
     const content = contentRef.current.value;
 
@@ -26,14 +26,14 @@ export const ForumPage: FC = () => {
     contentRef.current.value = '';
   }, [dispatch, userId]);
 
-  const handleDeleteTopic = useCallback(
+  const handleTopicDelete = useCallback(
     (data: TopicModel) => {
       dispatch(deleteTopic(data));
     },
     [dispatch]
   );
 
-  const handleSaveTopic = useCallback(
+  const handleTopicSave = useCallback(
     (data: TopicModel) => {
       dispatch(updateTopic(data));
     },
@@ -69,8 +69,8 @@ export const ForumPage: FC = () => {
                 newCount={topic.new_count}
                 content={topic.content}
                 href={`/topics/${topic.id}`}
-                onDelete={handleDeleteTopic}
-                onSave={handleSaveTopic}
+                onDelete={handleTopicDelete}
+                onSave={handleTopicSave}
               />
             ))}
             <br />
@@ -82,7 +82,7 @@ export const ForumPage: FC = () => {
 
           <input ref={contentRef} className="input" />
 
-          <Button onClick={handleCreateTopic}>Создать тему</Button>
+          <Button onClick={handleTopicCreate}>Создать тему</Button>
         </div>
       </div>
     </div>

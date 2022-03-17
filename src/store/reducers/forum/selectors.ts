@@ -8,3 +8,8 @@ export function getTopics(state: RootState): TopicType[] {
 export function getMessages(state: RootState): MessageType[] {
   return state.forum.messages;
 }
+
+export function getTopic(state: RootState): TopicType {
+  const { messages, topicContent } = state.forum;
+  return { messages, content: topicContent };
+}
