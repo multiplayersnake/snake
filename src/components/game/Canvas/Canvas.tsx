@@ -1,9 +1,16 @@
 import React, { FC, useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { startGame } from '../../../core/core';
+import { gameStart } from '../../../core/core';
 import { GameParameters } from '../../../types';
-import { RootState, finishGame, getLevelValue, getUserGameParameters, getUserNickname } from '../../../store';
+import {
+  RootState,
+  finishGame,
+  getLevelValue,
+  getUserGameParameters,
+  getUserNickname,
+  showModal
+} from '../../../store';
 
 import { part_arr } from '../../../database/mock';
 import { item_arr } from '../../../database/mock';
@@ -32,6 +39,14 @@ export const Canvas: FC<Props> = () => {
   });
   userElements['base'] = { name: nickname };
 
+  const exitGame = useCallback(() => {
+    dispatch(
+      showModal(`Вы уверены, что хотите прервать игру?`, async () => {
+        window.history.back();
+      })
+    );
+  }, [dispatch]);
+
   const endGame = useCallback(
     (time: string, isVictory: boolean, place: number, coins: number, awards: number) => {
       dispatch(finishGame(time, place, coins, awards, isVictory));
@@ -42,8 +57,8 @@ export const Canvas: FC<Props> = () => {
   const ref = useRef(null);
 
   useEffect(() => {
-    startGame(ref.current, userElements, endGame, level);
-  }, [endGame, level, userElements]);
+    gameStart(ref.current, userElements, endGame, level, exitGame);
+  }, [exitGame, endGame, level, userElements]);
 
   return <canvas className="canvas" ref={ref} width={1000} height={600} />;
 };

@@ -8,8 +8,11 @@ import appleModel from '../assets/3d/apple.fbx';
 
 import groundImg from '../assets/images/ground.jpg';
 import backImg from '../assets/images/gameback.jpg';
+
 import btnFullScreenSource from '../assets/images/fullscreen.png';
-import btnSmallScreenSource from '../assets/images/smallscreen.png';
+import btnPauseSource from '../assets/images/pause.png';
+import btnExitSource from '../assets/images/exit.png';
+
 import level0Source from '../assets/images/level_0.png';
 import level1Source from '../assets/images/level_1.png';
 import level2Source from '../assets/images/level_2.png';
@@ -32,6 +35,7 @@ let maxVelocityGrowTimes = 3;
 let boomHpLoose = 20;
 let awardsCount = 1;
 let coinsPower = 1;
+let selfIntersection = true;
 let appleHealValue = 10;
 let appleCreateTime = 20;
 
@@ -75,11 +79,13 @@ const rightPanelMaterial = new THREE.MeshPhongMaterial({ transparent: false, opa
 let last = window.performance.now();
 let mainTimerId: number;
 let mainTimerStart: number;
+let mainTimerStartPause: number;
 let timeoutCoinGenerator: number;
 let timeoutAppleGenerator: number;
 let requestAnimationRender: number;
 let endFunction: (time: string, isVictory: boolean, place: number, coins: number, awards: number) => void;
 let isVictory = false;
+let exitFunction: () => void;
 
 let mainCanvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
@@ -125,6 +131,38 @@ function gameOver(): void {
   endFunction(stringTime, isVictory, 1, coins, awards);
 }
 
+function gameFullScreen() {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  } else {
+    mainCanvas.requestFullscreen();
+  }
+}
+
+function gameExit() {
+  if (gameStatus.mode === 'Play') gamePause();
+  if (document.fullscreenElement) document.exitFullscreen();
+  exitFunction();
+}
+
+function gamePause(): void {
+  if (gameStatus.mode === 'Play') {
+    gameStatus.mode = 'Pause';
+    clearInterval(mainTimerId);
+    clearTimeout(timeoutCoinGenerator);
+    clearTimeout(timeoutAppleGenerator);
+    mainTimerStartPause = window.performance.now();
+  } else if (gameStatus.mode === 'Pause') {
+    mainTimerStart += window.performance.now() - mainTimerStartPause;
+    gameStatus.mode = 'Play';
+    tick();
+    mainTimerId = window.setInterval(tick, 1000);
+    timeoutAppleGenerator = window.setTimeout(appleGenerator, appleCreateTime * 1000);
+    const timeForNewCoin = coins.length * 2000;
+    timeoutCoinGenerator = window.setTimeout(coinGenerator, timeForNewCoin);
+  }
+}
+
 // Функция устанавливающая направление движения змеи
 function setSnakeDirection(snake: Snake, direction: string): void {
   const head = snake.elements[0];
@@ -133,25 +171,33 @@ function setSnakeDirection(snake: Snake, direction: string): void {
 
   switch (direction) {
     case 'ArrowUp':
-      head.vy = -v;
-      head.vx = 0;
+      if (!selfIntersection || head.vy === 0) {
+        head.vy = -v;
+        head.vx = 0;
+      }
       break;
     case 'ArrowDown':
-      head.vy = v;
-      head.vx = 0;
+      if (!selfIntersection || head.vy === 0) {
+        head.vy = v;
+        head.vx = 0;
+      }
       break;
     case 'ArrowLeft':
-      head.vy = 0;
-      head.vx = -v;
+      if (!selfIntersection || head.vx === 0) {
+        head.vy = 0;
+        head.vx = -v;
+      }
       break;
     case 'ArrowRight':
-      head.vy = 0;
-      head.vx = v;
+      if (!selfIntersection || head.vx === 0) {
+        head.vy = 0;
+        head.vx = v;
+      }
       break;
   }
 }
 
-// Функция поворота змеи направо
+// Функция поворота змеи по часовой стрелке
 function rotateSnakeRight(snake: Snake): void {
   const head = snake.elements[0];
 
@@ -178,7 +224,7 @@ function correctElementPosition(snake: Snake): void {
 function snakeGetCoin(snake: Snake, coin: Coin, index: number): void {
   snake.score += coin.value * coinsPower;
   coins.splice(index, 1);
-  const baseEl = snake.elements[1];
+  const baseEl = snake.elements[2];
 
   for (let i = 1; i <= coin.value; i++) {
     const newElement: Circle = {
@@ -190,7 +236,7 @@ function snakeGetCoin(snake: Snake, coin: Coin, index: number): void {
       r: baseEl.r,
       id: `${snake.id}_${snake.elements.length}`
     };
-    snake.elements.splice(1, 0, newElement);
+    snake.elements.splice(2, 0, newElement);
     scene.remove(scene.getObjectByName(coin.id));
     playSound(sndCoin);
   }
@@ -210,6 +256,45 @@ function collisionSnakeWithCoin(snake: Snake): void {
       snakeGetCoin(snake, coin, i);
     }
   });
+}
+
+// Функция контроля столкновения змеи с собой
+function collisionSnakeWithSelf(snake: Snake): void {
+  const head = snake.elements[0];
+
+  for (let i = 3; i < snake.elements.length; i++) {
+    const elm = snake.elements[i];
+    const dx = head.x - elm.x;
+    const dy = head.y - elm.y;
+    const r = Math.sqrt(dx ** 2 + dy ** 2);
+    if (r < head.r + elm.r) {
+      head.x -= head.dx;
+      head.y -= head.dy;
+      snakeGetSelf(snake, elm, i);
+    }
+  }
+}
+
+// Функция столкновения змеи с собой
+function snakeGetSelf(snake: Snake, elm: Circle, index: number): void {
+  const head = snake.elements[0];
+  // Это элемент, в сторону которого не нужно поворачивать.
+  const controlElement = snake.elements[index - 1];
+
+  if (snake.hp > 0) {
+    if (head.vx === 0) {
+      head.vx = Math.sign(head.x - controlElement.x) * Math.abs(head.vy);
+      head.vy = 0;
+    } else {
+      head.vy = Math.sign(head.y - controlElement.y) * Math.abs(head.vx);
+      head.vx = 0;
+    }
+    const boom_x = (head.x + elm.x) / 2;
+    const boom_y = (head.y + elm.y) / 2;
+    const boom = new Boom(boom_x, boom_y, `boom_${Math.ceil(Math.random() * 10000)}`);
+    booms.push(boom);
+    snake.hp = Math.max(0, snake.hp - boomHpLoose);
+  }
 }
 
 // Функция подбирания змеёй монеты
@@ -271,6 +356,7 @@ function collisionControl(): void {
     if (item.hp > 0) {
       collisionSnakeWithCoin(item);
       collisionSnakeWithApple(item);
+      if (selfIntersection) collisionSnakeWithSelf(item);
     }
 
     if ((head.x === config.lBorder || head.x === config.rBorder) && head.vx !== 0) {
@@ -295,16 +381,14 @@ function moveObjects(): void {
   // скачок во времени, нарушающий логические процессы. Временно ставлю режим, что большие отрезки времени игнорируются.
   if (dt > 100) dt = 0;
 
-  const k = 1 + Math.sin((now - mainTimerStart) / 500) / 8;
-  scene.getObjectByName('btnFullScreen')?.scale.set(k, k, k);
-  scene.getObjectByName('btnSmallScreen')?.scale.set(k, k, k);
-
   snakes.forEach((item) => {
     const head = item.elements[0];
 
     // Голова змеи всегда движется в соответствии со своей скоростью
-    head.x += dt * head.vx;
-    head.y += dt * head.vy;
+    head.dx = dt * head.vx;
+    head.dy = dt * head.vy;
+    head.x += head.dx;
+    head.y += head.dy;
 
     // Скорость головы растет с учетом оставшегося времени
     const now = window.performance.now();
@@ -341,24 +425,31 @@ function onKeyDown(e: KeyboardEvent): void {
   if (e.code === 'ArrowUp' || e.code === 'ArrowDown' || e.code === 'ArrowLeft' || e.code === 'ArrowRight') {
     setSnakeDirection(snakes[indexOfSnakeUnderControl], e.code);
   }
+  if (e.code === 'KeyP') gamePause();
+  if (e.code === 'KeyF') gameFullScreen();
+  if (e.code === 'KeyE') gameExit();
 }
 
 // Основной Рендер
 function render(): void {
-  /*
-  ctx.clearRect(config.fieldLeft, config.fieldTop, config.fieldWidth, config.fieldHeight);
-  ctx.beginPath();
-  ctx.fillStyle = 'rgba(128,128,128,0.4)';
-  ctx.fillRect(config.fieldLeft, config.fieldTop, config.fieldWidth, config.fieldHeight);
-  ctx.closePath();
-  */
-  moveObjects();
+  if (gameStatus.mode === 'Play') {
+    moveObjects();
+  }
+  const k = 1 + Math.sin((window.performance.now() - mainTimerStart) / 500) / 8;
+  scene.getObjectByName('btnFullScreen')?.scale.set(k, k, k);
+  scene.getObjectByName('btnExit')?.scale.set(k, k, k);
+  scene.getObjectByName('btnPause')?.scale.set(k, k, k);
+
   draw.drawSnakes(scene, snakes);
   draw.drawCoins(scene, coins);
   draw.drawBooms(scene, booms);
   draw.drawApples(scene, apples);
 
-  if (gameStatus.mode === 'Play') {
+  if (gameStatus.mode === 'Pause') {
+    draw.drawTimerPanel(timerPanel.getContext('2d'), timerPanelMaterial, 'ПАУЗА');
+  }
+
+  if (gameStatus.mode === 'Play' || gameStatus.mode === 'Pause') {
     renderer.render(scene, camera);
     requestAnimationRender = window.requestAnimationFrame(render);
   }
@@ -472,27 +563,12 @@ function changeMusicTrack() {
 
 // Функция контроля главного таймера игры
 function tick(): void {
-  const ctx = timerPanel.getContext('2d');
-  ctx.clearRect(0, 0, config.topPanelWidth, config.topPanelHeight);
-  ctx.beginPath();
-  ctx.fillStyle = 'rgba(39, 79, 255, 0.4)';
-  ctx.fillRect(0, 0, config.topPanelWidth, config.topPanelHeight);
-  ctx.closePath();
-  ctx.textBaseline = 'top';
-  ctx.fillStyle = 'rgba(85,39,143,1.0)';
-  ctx.font = '96px Impact';
-  ctx.textAlign = 'left';
   const now = window.performance.now();
   const dt = wholeSessionTime - Math.floor((now - mainTimerStart) / 1000);
   const showTime = new Date(dt * 1000);
   const stringTime = ('0' + showTime.getMinutes()).slice(-2) + ':' + ('0' + showTime.getSeconds()).slice(-2);
-  const measureText = ctx.measureText('05:00').width;
-  ctx.fillText(stringTime, config.fieldWidth / 2 - measureText / 2, 20);
 
-  const canvasTexture = new THREE.Texture(timerPanel);
-  canvasTexture.needsUpdate = true;
-  timerPanelMaterial.map = canvasTexture;
-
+  draw.drawTimerPanel(timerPanel.getContext('2d'), timerPanelMaterial, stringTime);
   draw.drawLeftPanel(leftPanel.getContext('2d'), leftPanelMaterial, snakes[indexOfSnakeUnderControl]);
 
   // Если таймер завершился заканчиваем сессию
@@ -516,12 +592,13 @@ function onClick() {
   const intersects = raycaster.intersectObjects(scene.children);
   for (let i = 0; i < intersects.length; i++) {
     if (intersects[i].object.name === 'btnFullScreen') {
-      mainCanvas.requestFullscreen();
+      gameFullScreen();
     }
-    if (intersects[i].object.name === 'btnSmallScreen') {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      }
+    if (intersects[i].object.name === 'btnPause') {
+      gamePause();
+    }
+    if (intersects[i].object.name === 'btnExit') {
+      gameExit();
     }
   }
 }
@@ -556,11 +633,12 @@ function onPointerMove(event: MouseEvent) {
 }
 
 // Функция запуска ядра
-function startGame(
+function gameStart(
   inCanvas: HTMLCanvasElement,
   userElements: { [k: string]: { [k: string]: string } },
   endGameFunction: (time: string, isVictory: boolean, place: number, coins: number, awards: number) => void,
-  level: number
+  level: number,
+  exitGameFunction: () => void
 ): void {
   defaultSnakeLength = config.level[level].defaultSnakeLength;
   wholeSessionTime = config.level[level].wholeSessionTime;
@@ -569,14 +647,17 @@ function startGame(
   boomHpLoose = config.level[level].boomHpLoose;
   awardsCount = config.level[level].awardsCount;
   coinsPower = config.level[level].coinsPower;
+  selfIntersection = config.level[level].selfIntersection;
   appleHealValue = config.level[level].appleHealValue;
   appleCreateTime = config.level[level].appleCreateTime;
 
   mainCanvas = inCanvas;
   mainCanvas.addEventListener('click', onClick);
   mainCanvas.addEventListener('mousemove', onPointerMove);
+  mainCanvas.requestFullscreen();
 
   endFunction = endGameFunction;
+  exitFunction = exitGameFunction;
   const textureLoader = new THREE.TextureLoader();
 
   currentTrackIndex = -1;
@@ -610,23 +691,33 @@ function startGame(
   });
 
   // Кнопки управления
-  textureLoader.load(btnFullScreenSource, function (texture) {
+  textureLoader.load(btnExitSource, function (texture) {
     const btnGeometry = new THREE.BoxGeometry(40, 40, 1);
     const btnMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff, map: texture, transparent: true });
     const btnMesh = new THREE.Mesh(btnGeometry, btnMaterial);
     btnMesh.rotation.x = -1;
     btnMesh.position.set(250, -100, 565);
-    btnMesh.name = 'btnFullScreen';
+    btnMesh.name = 'btnExit';
     scene.add(btnMesh);
   });
 
-  textureLoader.load(btnSmallScreenSource, function (texture) {
+  textureLoader.load(btnFullScreenSource, function (texture) {
     const btnGeometry = new THREE.BoxGeometry(40, 40, 1);
     const btnMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff, map: texture, transparent: true });
     const btnMesh = new THREE.Mesh(btnGeometry, btnMaterial);
     btnMesh.rotation.x = -1;
     btnMesh.position.set(300, -100, 565);
-    btnMesh.name = 'btnSmallScreen';
+    btnMesh.name = 'btnFullScreen';
+    scene.add(btnMesh);
+  });
+
+  textureLoader.load(btnPauseSource, function (texture) {
+    const btnGeometry = new THREE.BoxGeometry(40, 40, 1);
+    const btnMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff, map: texture, transparent: true });
+    const btnMesh = new THREE.Mesh(btnGeometry, btnMaterial);
+    btnMesh.rotation.x = -1;
+    btnMesh.position.set(350, -100, 565);
+    btnMesh.name = 'btnPause';
     scene.add(btnMesh);
   });
 
@@ -708,4 +799,4 @@ function startGame(
 
 document.addEventListener('keydown', onKeyDown);
 
-export { startGame, clearGame };
+export { gameStart, clearGame };
