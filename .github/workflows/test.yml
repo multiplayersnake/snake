@@ -25,4 +25,4 @@ jobs:
       matrix:
         node-version: [ 14.18.0 ]
     steps:
-      - run: pwd
+      - uses: actions/checkout@v2
