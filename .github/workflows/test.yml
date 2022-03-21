@@ -29,4 +29,4 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm build:container:all
+      - run: npm run build:container:all
