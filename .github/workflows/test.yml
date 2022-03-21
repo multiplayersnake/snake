@@ -26,7 +26,4 @@ jobs:
         node-version: [ 14.18.0 ]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm run build:container:all
+      - run: docker-compose build
