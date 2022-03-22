@@ -1,7 +1,7 @@
 .text-field {
   padding: var(--gap5-2);
   width: 100%;
-  background: var(--sub-panel-background);
+  background: var(--input-background-color);
   border-radius: var(--gap5-1);
   text-shadow: var(--text-light);
 }

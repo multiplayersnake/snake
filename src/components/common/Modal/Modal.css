@@ -15,7 +15,7 @@
 .modal {
   min-width: 50%;
   min-height: 50%;
-  background: var(--panel-background);
+  background: var(--backdrop-background-color);
   box-shadow: var(--box-shadow);
   border-radius: var(--gap5);
   padding: var(--gap5-5);

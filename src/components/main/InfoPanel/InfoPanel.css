@@ -4,7 +4,7 @@
   max-width: 300px;
   height: calc(100% - 2 * var(--gap5-5));
   overflow: hidden;
-  background: var(--panel-background);
+  background: var(--backdrop-background-color);
   border-radius: var(--gap5);
   padding: var(--gap5-5);
   box-sizing: border-box;

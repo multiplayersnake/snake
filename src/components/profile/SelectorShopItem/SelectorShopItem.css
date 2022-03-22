@@ -5,7 +5,7 @@
     ' select . items ';
   grid-template-columns: 180px 30px auto;
   grid-template-rows: 30px auto;
-  background: var(--panel-background);
+  background: var(--backdrop-background-color);
   width: 100%;
   overflow: visible;
   border-radius: var(--gap5);

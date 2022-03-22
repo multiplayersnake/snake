@@ -21,14 +21,18 @@ export function toggleTheme() {
   return async function toggleThemeThunk(dispatch: ThunkDispatch<RootState, void, AnyAction>, getState: GetState) {
     const state = getState();
     const theme = getTheme(state);
-    const newTheme = theme ? undefined : 'dark';
+    const userData = getUser(state);
 
+    const newTheme = theme ? undefined : 'dark';
     setDocumentTheme(newTheme);
 
-    const userData = getUser(state);
     const userDataUpdated = updateTheme(userData, newTheme);
+
+    // TODO add updateUser action ?
     const rawUser = mapToRawUser(userDataUpdated);
     await externalUserAPI.updateProfile(rawUser);
+
+    dispatch(setUser(userDataUpdated));
   };
 }
 

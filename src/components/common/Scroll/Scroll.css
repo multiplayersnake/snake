@@ -26,7 +26,7 @@
 
 .scroll-bar {
   grid-area: bar;
-  background-color: var(--sub-panel-background);
+  background-color: var(--backdrop-background-color);
 }
 
 .scroll-bar-track {
@@ -34,7 +34,7 @@
   height: 60px;
   overflow: hidden;
   top: 0;
-  background: var(--panel-background);
+  background: var(--backdrop-background-color);
   cursor: pointer;
   position: relative;
 }

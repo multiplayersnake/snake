@@ -18,7 +18,7 @@
   font-family: var(--main-font);
   font-size: var(--gap-4);
   color: var(--black);
-  background: var(--sub-panel-background);
+  background: var(--input-background-color);
   padding: 24px 20px 10px 20px;
   height: var(--input-height);
   width: var(--input-width);

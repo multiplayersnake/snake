@@ -13,7 +13,7 @@
   font-size: var(--gap-6);
   font-weight: normal;
   border-radius: var(--gap5-1);
-  background: linear-gradient(rgb(254, 255, 199), rgb(250, 255, 150), rgb(250, 255, 0));
+  background: var(--button-background-color);
   position: relative;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
   cursor: pointer;

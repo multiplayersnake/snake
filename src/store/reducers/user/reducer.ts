@@ -41,7 +41,6 @@ export function userReducer(state: UserState = defaultState, action: UserAction)
       const { gameParameters } = data;
 
       const theme = payload as string;
-
       const gameParametersUpdated = { ...gameParameters, theme };
 
       return {

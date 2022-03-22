@@ -2,7 +2,7 @@
   width: calc(50% - var(--gap5-5));
   height: calc(50% - 2 * var(--gap5-5));
   overflow: hidden;
-  background: var(--panel-background);
+  background: var(--backdrop-background-color);
   border-radius: var(--gap5);
   padding: var(--gap5-5);
   box-sizing: border-box;
