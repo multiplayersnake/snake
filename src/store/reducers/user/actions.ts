@@ -1,5 +1,6 @@
 import { FormEvent } from 'react';
-import { Dispatch } from 'redux';
+import { AnyAction, Dispatch } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 
 import OAuthService from '../../../services/OAuthService';
 import AuthService from '../../../services/AuthService';
@@ -7,12 +8,13 @@ import AuthService from '../../../services/AuthService';
 import { item_arr } from '../../../database/mock';
 
 import { GameParameters, GameUser } from '../../../types';
-import { GetState } from '../../types';
+import { GetState, RootState } from '../../types';
 import { UserActionType, UserAction } from './types';
 
 import { externalUserAPI, mapToRawUser } from '../../../api';
+import { setDocumentTheme } from '../../../utils';
 import { showModal } from '../modal';
-import { getUser, getUserGameParameters } from './';
+import { getUser, getUserGameParameters, getTheme } from './';
 
 export function setUser(user: GameUser): UserAction {
   return { type: UserActionType.SetUser, payload: user };
@@ -22,8 +24,18 @@ export function saveGameResults(update: Partial<GameParameters>): UserAction {
   return { type: UserActionType.SaveGameResults, payload: update };
 }
 
+export function applyTheme() {
+  // TODO remove async ?
+  return async function applyThemeThunk(dispatch: Dispatch, getState: GetState) {
+    const state = getState();
+    const theme = getTheme(state);
+
+    setDocumentTheme(theme);
+  };
+}
+
 export function checkAuthorization(code?: string) {
-  return async function checkAuthorizationThunk(dispatch: Dispatch) {
+  return async function checkAuthorizationThunk(dispatch: ThunkDispatch<RootState, void, AnyAction>) {
     if (code) {
       await OAuthService.sendCode(code);
     }
@@ -31,6 +43,7 @@ export function checkAuthorization(code?: string) {
     const gameUser = await AuthService.checkAuthorization();
 
     dispatch(setUser(gameUser));
+    await dispatch(applyTheme());
   };
 }
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 
 import { RootState, getUserNickname, getUserGameParameters, selectCustomBodyPart } from '../../store';
-import { NavButton, Scroll, SelectorShopItem } from '../../components';
+import { NavButton, Scroll, SelectorShopItem, ThemeToggle } from '../../components';
 
 import coinSource from '../../assets/images/coin.png';
 import awardSource from '../../assets/images/award.png';
@@ -58,6 +58,7 @@ export const ProfilePage: FC = () => {
               purchasedItems={gameParameters?.byItems[index]}
             />
           ))}
+          <ThemeToggle />
         </Scroll>
       </div>
     </div>

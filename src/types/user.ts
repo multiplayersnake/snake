@@ -23,4 +23,5 @@ export type GameParameters = {
   awards: number;
   parts: number[];
   byItems: number[][];
+  theme?: string;
 };

@@ -1,14 +1,15 @@
 import { GameParameters, GameUser, RawUser } from '../../types';
 import { parseSerializedData } from '../../utils';
 
-const currentGameParametersVersion = 1006;
+const currentGameParametersVersion = 1007;
 
-const defaultGameParameters = {
+const defaultGameParameters: GameParameters = {
   snake: currentGameParametersVersion,
   coins: 0,
   awards: 0,
   parts: [0, 0, 0],
-  byItems: [[0], [0], [0]]
+  byItems: [[0], [0], [0]],
+  theme: undefined
 };
 
 // Это мэпперы - функции конвертации данных из формата, в котором удобно работать на фронтенде, в формат бэкенда, и наоборот.

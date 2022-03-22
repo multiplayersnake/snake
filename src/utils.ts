@@ -40,3 +40,14 @@ export const isServer = !(typeof window !== 'undefined' && window.document && wi
 export function getAppUrl(): string {
   return window.location.origin;
 }
+
+export function setDocumentTheme(theme?: string): string {
+  if (isServer) return;
+
+  if (!theme) {
+    document.documentElement.removeAttribute('data-theme');
+    return;
+  }
+
+  document.documentElement.setAttribute('data-theme', theme);
+}
