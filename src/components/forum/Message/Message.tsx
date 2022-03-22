@@ -3,16 +3,16 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import EditorEvent from '@ckeditor/ckeditor5-utils/src/eventinfo';
 
-import './Message.css';
+import { Button } from '../../common';
 import { MessageModel } from '../../../database/models';
 import { formatDateTime } from '../../../utils';
-import cn from 'classnames';
 
 import srcBtnDel from '../../../assets/images/btnDelete.gif';
 import srcBtnEdit from '../../../assets/images/btnEdit.gif';
 import srcBtnSave from '../../../assets/images/btnSave.gif';
 import srcBtnUndo from '../../../assets/images/undo.gif';
-import ImgButton from '../../common/Button/ImgButton';
+
+import './Message.css';
 
 type MessageProps = {
   id: number;
@@ -52,8 +52,8 @@ export const Message: FC<MessageProps> = (props) => {
     toggleEditMode();
   }, [onSave, id, messageContent, toggleEditMode]);
 
-  const classEdit = currentUserId === authorId ? cn('message-edit') : cn('message-edit', 'message_hidden');
-  const classDelete = currentUserId === authorId ? cn('message-delete') : cn('message-delete', 'message_hidden');
+  const classEdit = currentUserId === authorId ? 'message-edit' : 'message-edit message_hidden';
+  const classDelete = currentUserId === authorId ? 'message-delete' : 'message-delete message_hidden';
 
   return (
     <div className="message text-field">
@@ -62,19 +62,19 @@ export const Message: FC<MessageProps> = (props) => {
       </div>
 
       <div className={classEdit}>
-        <ImgButton className="message-button" onClick={toggleEditMode}>
+        <Button variant="icon" onClick={toggleEditMode}>
           {editMode ? (
-            <img src={srcBtnUndo} width={'16px'} height={'16px'} alt={'Выйти из редактирования'} />
+            <img src={srcBtnUndo} width="16px" height="16px" alt="Выйти из редактирования" />
           ) : (
-            <img src={srcBtnEdit} width={'16px'} height={'16px'} alt={'Редактировать'} />
+            <img src={srcBtnEdit} width="16px" height="16px" alt="Редактировать" />
           )}
-        </ImgButton>
+        </Button>
       </div>
 
       <div className={classDelete}>
-        <ImgButton className="message-button" onClick={handleDelete}>
-          <img src={srcBtnDel} width={'16px'} height={'16px'} alt={'Удалить'} />
-        </ImgButton>
+        <Button variant="icon" onClick={handleDelete}>
+          <img src={srcBtnDel} width="16px" height="16px" alt="Удалить" />
+        </Button>
       </div>
 
       <div className="message-content">
@@ -92,9 +92,9 @@ export const Message: FC<MessageProps> = (props) => {
 
       {editMode && (
         <div className="message-save">
-          <ImgButton className="message-button" onClick={handleSave}>
-            <img src={srcBtnSave} width={'16px'} height={'16px'} alt={'Сохранить'} />
-          </ImgButton>
+          <Button variant="icon" onClick={handleSave}>
+            <img src={srcBtnSave} width="16px" height="16px" alt="Сохранить" />
+          </Button>
         </div>
       )}
     </div>

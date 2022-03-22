@@ -15,7 +15,7 @@ import { getButtonVariantClassName } from './utils';
 type NavButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   to: string;
   data?: { store: string; value: number };
-  variant: ButtonVariant;
+  variant?: ButtonVariant;
 };
 
 export const NavButton: FC<NavButtonProps> = (props) => {
@@ -59,7 +59,7 @@ export const NavButton: FC<NavButtonProps> = (props) => {
       onClick={handleClick}
       onMouseEnter={hover}
     >
-      <audio ref={ref} src={mscHover} autoPlay={false} preload={'auto'} />
+      <audio ref={ref} src={mscHover} autoPlay={false} preload="auto" />
       {children}
     </a>
   );

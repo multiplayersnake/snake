@@ -6,15 +6,15 @@ import EditorEvent from '@ckeditor/ckeditor5-utils/src/eventinfo';
 import cn from 'classnames';
 
 import { formatDateTime } from '../../../utils';
-
-import './Topic.css';
-
 import { TopicModel } from '../../../database/models';
-import ImgButton from '../../common/Button/ImgButton';
+
+import { Button } from '../../common';
 import srcBtnDel from '../../../assets/images/btnDelete.gif';
 import srcBtnEdit from '../../../assets/images/btnEdit.gif';
 import srcBtnSave from '../../../assets/images/btnSave.gif';
 import srcBtnUndo from '../../../assets/images/undo.gif';
+
+import './Topic.css';
 
 type TopicProps = {
   createdAt: string;
@@ -104,7 +104,7 @@ export const Topic: FC<TopicProps> = (props) => {
           Создана: <b>{formatDateTime(createdAt)}</b>
         </div>
 
-        <div className={cn('topic-author', 'text-field')}>
+        <div className="topic-author text-field">
           Автор: <b>{author}</b>
         </div>
 
@@ -114,19 +114,19 @@ export const Topic: FC<TopicProps> = (props) => {
         </div>
 
         <div className={classEdit}>
-          <ImgButton className="topic-button" onClick={toggleEditMode}>
+          <Button variant="icon" onClick={toggleEditMode}>
             {editMode ? (
-              <img src={srcBtnUndo} width={'16px'} height={'16px'} alt={'Выйти из редактирования'} />
+              <img src={srcBtnUndo} width="16px" height="16px" alt="Выйти из редактирования" />
             ) : (
-              <img src={srcBtnEdit} width={'16px'} height={'16px'} alt={'Редактировать'} />
+              <img src={srcBtnEdit} width="16px" height="16px" alt="Редактировать" />
             )}
-          </ImgButton>
+          </Button>
         </div>
 
         <div className={classDelete}>
-          <ImgButton className="topic-button" onClick={handleDelete}>
-            <img src={srcBtnDel} width={'16px'} height={'16px'} alt={'Удалить'} />
-          </ImgButton>
+          <Button variant="icon" onClick={handleDelete}>
+            <img src={srcBtnDel} width="16px" height="16px" alt="Удалить" />
+          </Button>
         </div>
 
         <div className="topic-content">
@@ -144,9 +144,9 @@ export const Topic: FC<TopicProps> = (props) => {
 
         {editMode && (
           <div className="topic-save">
-            <ImgButton className="topic-button" onClick={handleSave}>
-              <img src={srcBtnSave} width={'16px'} height={'16px'} alt={'Сохранить'} />
-            </ImgButton>
+            <Button onClick={handleSave} variant="icon">
+              <img src={srcBtnSave} width="16px" height="16px" alt="Сохранить" />
+            </Button>
           </div>
         )}
       </div>

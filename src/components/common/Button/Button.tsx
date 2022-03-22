@@ -10,7 +10,7 @@ import './Button.css';
 export type ButtonVariant = 'regular' | 'icon';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant: ButtonVariant;
+  variant?: ButtonVariant;
 };
 
 export const Button: FC<ButtonProps> = (props) => {
@@ -39,7 +39,7 @@ export const Button: FC<ButtonProps> = (props) => {
       type={type}
       onMouseEnter={hover}
     >
-      <audio ref={ref} src={mscHover} autoPlay={false} preload={'auto'} />
+      <audio ref={ref} src={mscHover} autoPlay={false} preload="auto" />
       {children}
     </button>
   );

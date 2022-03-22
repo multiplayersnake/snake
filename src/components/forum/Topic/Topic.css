@@ -65,15 +65,6 @@
   font-size: var(--gap-5);
 }
 
-.topic-button {
-  height: 25px;
-  cursor: pointer;
-}
-
-.topic-button:hover {
-  box-shadow: 0 0 5px rgb(255, 255, 255);
-}
-
 .topic_hidden {
   display: none;
 }
