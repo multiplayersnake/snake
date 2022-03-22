@@ -14,24 +14,34 @@ import { UserActionType, UserAction } from './types';
 import { externalUserAPI, mapToRawUser } from '../../../api';
 import { setDocumentTheme } from '../../../utils';
 import { showModal } from '../modal';
+import { updateTheme } from './utils';
 import { getUser, getUserGameParameters, getTheme } from './';
+
+export function toggleTheme() {
+  return async function toggleThemeThunk(dispatch: ThunkDispatch<RootState, void, AnyAction>, getState: GetState) {
+    const state = getState();
+    const theme = getTheme(state);
+    const newTheme = theme ? undefined : 'dark';
+
+    setDocumentTheme(newTheme);
+
+    const userData = getUser(state);
+    const userDataUpdated = updateTheme(userData, newTheme);
+    const rawUser = mapToRawUser(userDataUpdated);
+    await externalUserAPI.updateProfile(rawUser);
+  };
+}
+
+export function setTheme(theme?: string): UserAction {
+  return { type: UserActionType.SetTheme, payload: theme };
+}
 
 export function setUser(user: GameUser): UserAction {
   return { type: UserActionType.SetUser, payload: user };
 }
 
 export function saveGameResults(update: Partial<GameParameters>): UserAction {
-  return { type: UserActionType.SaveGameResults, payload: update };
-}
-
-export function applyTheme() {
-  // TODO remove async ?
-  return async function applyThemeThunk(dispatch: Dispatch, getState: GetState) {
-    const state = getState();
-    const theme = getTheme(state);
-
-    setDocumentTheme(theme);
-  };
+  return { type: UserActionType.SetGameResults, payload: update };
 }
 
 export function checkAuthorization(code?: string) {
@@ -43,7 +53,8 @@ export function checkAuthorization(code?: string) {
     const gameUser = await AuthService.checkAuthorization();
 
     dispatch(setUser(gameUser));
-    await dispatch(applyTheme());
+
+    setDocumentTheme(gameUser?.gameParameters.theme);
   };
 }
 
@@ -81,8 +92,7 @@ export function logOut() {
 }
 
 // TODO эту функцию можно вынести в utils, а item_arr лучше передавать как параметр, можно это сделать когда (если ?) избавимся от мока в пользу хранения в базе данных
-
-function updateUserData(userData: GameUser, partKey: number, itemKey: number, isPurchased: boolean): GameUser {
+function updateBodyParts(userData: GameUser, partKey: number, itemKey: number, isPurchased: boolean): GameUser {
   const { gameParameters } = userData;
 
   const item = item_arr[partKey][itemKey];
@@ -113,7 +123,7 @@ export function selectCustomBodyPart(partKey: number, itemKey: number) {
     const isPurchased = gameParameters.byItems[partKey].includes(itemKey);
 
     if (isPurchased) {
-      const userDataUpdated = updateUserData(userData, partKey, itemKey, true);
+      const userDataUpdated = updateBodyParts(userData, partKey, itemKey, true);
       const rawUser = mapToRawUser(userDataUpdated);
       await externalUserAPI.updateProfile(rawUser);
 
@@ -137,7 +147,7 @@ export function selectCustomBodyPart(partKey: number, itemKey: number) {
     dispatch(
       showModal(`Хотите купить "${item.name}" за "${item.itemPrice}"?`, async () => {
         // TODO дублирующийся код, кажется это можно вынести в ExternalUserService
-        const userDataUpdated = updateUserData(userData, partKey, itemKey, false);
+        const userDataUpdated = updateBodyParts(userData, partKey, itemKey, false);
         const rawUser = mapToRawUser(userDataUpdated);
         await externalUserAPI.updateProfile(rawUser);
 

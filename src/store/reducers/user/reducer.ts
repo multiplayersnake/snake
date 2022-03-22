@@ -15,11 +15,10 @@ export function userReducer(state: UserState = defaultState, action: UserAction)
         data: payload as GameUser
       };
 
-    case UserActionType.SaveGameResults: {
+    case UserActionType.SetGameResults: {
       const { data } = state;
       const { gameParameters } = data;
-      const { coins } = gameParameters;
-      const { awards } = gameParameters;
+      const { coins, awards } = gameParameters;
 
       const results = payload as Partial<GameParameters>;
 
@@ -30,6 +29,20 @@ export function userReducer(state: UserState = defaultState, action: UserAction)
       const awardsUpdated = awards + awardsUpdate;
 
       const gameParametersUpdated = { ...gameParameters, coins: coinsUpdated, awards: awardsUpdated };
+
+      return {
+        ...state,
+        data: { ...data, gameParameters: gameParametersUpdated }
+      };
+    }
+
+    case UserActionType.SetTheme: {
+      const { data } = state;
+      const { gameParameters } = data;
+
+      const theme = payload as string;
+
+      const gameParametersUpdated = { ...gameParameters, theme };
 
       return {
         ...state,
