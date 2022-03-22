@@ -1,7 +1,6 @@
 :root {
   --app-background-image: url(../assets/images/backgroundLight.jpg);
   --backdrop-background-color: var(--transparent-light-blue);
-  /*--pane-background-color: var(--transparent-white);*/
   --button-background-color: linear-gradient(rgb(254, 255, 199), rgb(250, 255, 150), rgb(250, 255, 0));
   --page-heading-color: var(--yellow);
   --input-background-color: var(--transparent-gray);

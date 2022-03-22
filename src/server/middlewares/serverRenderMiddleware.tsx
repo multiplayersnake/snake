@@ -7,7 +7,10 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 import { getInitialState, configureStore } from '../../store';
 import { ServerApp } from '../../app/ServerApp';
-import favicon from '../../assets/images/favicon.ico';
+
+import appleTouchIcon from '../../assets/images/apple-touch-icon.png';
+import favicon32x32 from '../../assets/images/favicon-32x32.png';
+import favicon16x16 from '../../assets/images/favicon-16x16.png';
 
 export function serverRenderMiddleware(req: Request, res: Response) {
   const location = req.url;
@@ -42,7 +45,9 @@ function getHtml(reactHtml: string, reduxState = {}) {
             <meta charset="UTF-8"">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <link rel="icon" href="${favicon}" type="image/x-icon" />
+            <link rel="apple-touch-icon" sizes="180x180" href="${appleTouchIcon}">
+            <link rel="icon" type="image/png" sizes="32x32" href="${favicon32x32}">
+            <link rel="icon" type="image/png" sizes="16x16" href="${favicon16x16}">
             <title>Боевые змеи</title>
             <link href="/main.css" rel="stylesheet">
         </head>

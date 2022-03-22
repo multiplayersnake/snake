@@ -12,9 +12,6 @@ const defaultGameParameters: GameParameters = {
   theme: undefined
 };
 
-// Это мэпперы - функции конвертации данных из формата, в котором удобно работать на фронтенде, в формат бэкенда, и наоборот.
-// Их стоит хранить и использовать рядом с API.
-
 export function mapToGameUser(rawUser: RawUser): GameUser {
   const { first_name, second_name, display_name, phone, ...user } = rawUser;
   const nickname = first_name;
