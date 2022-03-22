@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTheme, RootState, toggleTheme } from '../../../store';
 import { Button } from '../Button';
 
+import themeToggleIcon from '../../../assets/images/themeToggle.png';
+
 import './ThemeToggle.css';
 
 export const ThemeToggle = () => {
@@ -14,7 +16,11 @@ export const ThemeToggle = () => {
     dispatch(toggleTheme());
   }, [dispatch]);
 
-  const label = theme ? 'Включить светлую тему' : 'Включить тёмную тему';
+  const title = theme ? 'Включить светлую тему' : 'Включить тёмную тему';
 
-  return <Button onClick={toggle}>{label}</Button>;
+  return (
+    <Button variant="icon" onClick={toggle} title={title} className="theme-toggle">
+      <img src={themeToggleIcon} alt="Переключить тему" width="16px" height="16px" />
+    </Button>
+  );
 };
