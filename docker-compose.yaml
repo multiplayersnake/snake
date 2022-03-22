@@ -12,8 +12,6 @@ services:
     depends_on:
       - postgres
       - pgadmin
-    networks:
-      - snake
     command: ./wait-for.sh postgres:5432 -- npm start
 
   postgres:
@@ -27,8 +25,6 @@ services:
     volumes:
       - ./postgresdata:/var/lib/postgresql/data
     restart: always
-    networks:
-      - snake
 
   pgadmin:
     container_name: pgadmin
@@ -44,12 +40,7 @@ services:
       - pgadmin-data:/var/lib/pgadmin
     depends_on:
       - postgres
-    networks:
-      - snake
+
 
 volumes:
   pgadmin-data:
-
-networks:
-  snake:
-    driver: bridge
