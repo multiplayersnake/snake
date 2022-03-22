@@ -9,13 +9,18 @@ import './NavButton.css';
 import { setLevel } from '../../../store';
 import mscHover from '../../../assets/sound/button_hover.mp3';
 
+import { ButtonVariant } from './Button';
+import { getButtonVariantClassName } from './utils';
+
 type NavButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   to: string;
   data?: { store: string; value: number };
+  variant: ButtonVariant;
 };
 
 export const NavButton: FC<NavButtonProps> = (props) => {
-  const { to, children, className, data, ...rest } = props;
+  const { variant = 'regular', to, children, className, data, ...rest } = props;
+
   const dispatch = useDispatch();
   const history = useHistory();
   const handleClick = useCallback(
@@ -47,7 +52,13 @@ export const NavButton: FC<NavButtonProps> = (props) => {
   }, []);
 
   return (
-    <a {...rest} href={to} className={cn('button', 'nav-button', className)} onClick={handleClick} onMouseEnter={hover}>
+    <a
+      {...rest}
+      href={to}
+      className={cn('button', getButtonVariantClassName(variant), 'nav-button', className)}
+      onClick={handleClick}
+      onMouseEnter={hover}
+    >
       <audio ref={ref} src={mscHover} autoPlay={false} preload={'auto'} />
       {children}
     </a>

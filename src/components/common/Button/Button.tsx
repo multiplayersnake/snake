@@ -1,13 +1,20 @@
 import React, { FC, ButtonHTMLAttributes, useRef, useCallback } from 'react';
 import cn from 'classnames';
 
-import './Button.css';
+import { getButtonVariantClassName } from './utils';
+
 import mscHover from '../../../assets/sound/button_hover.mp3';
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+import './Button.css';
+
+export type ButtonVariant = 'regular' | 'icon';
+
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant: ButtonVariant;
+};
 
 export const Button: FC<ButtonProps> = (props) => {
-  const { type = 'button', children, className, ...rest } = props;
+  const { variant = 'regular', type = 'button', children, className, ...rest } = props;
 
   const ref = useRef(null);
   const hover = useCallback(() => {
@@ -26,11 +33,14 @@ export const Button: FC<ButtonProps> = (props) => {
   }, []);
 
   return (
-    <button {...rest} className={cn('button', className)} type={type} onMouseEnter={hover}>
+    <button
+      {...rest}
+      className={cn('button', getButtonVariantClassName(variant), className)}
+      type={type}
+      onMouseEnter={hover}
+    >
       <audio ref={ref} src={mscHover} autoPlay={false} preload={'auto'} />
       {children}
     </button>
   );
 };
-
-export default Button;
