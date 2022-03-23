@@ -21,7 +21,7 @@ export function formatDateTime(input: Date | string): string {
   return `${DD}.${MM}.${YYYY} ${hh}:${mm}`;
 }
 
-export function parseSerializedData<T extends Indexed>(serializedData: string, defaultValue: T = null): T {
+export function parseSerializedData<T extends Indexed | string>(serializedData: string, defaultValue: T = null): T {
   try {
     const data = JSON.parse(serializedData);
 
@@ -59,19 +59,13 @@ export function readTheme(): string | undefined {
 
   const themeSerialized = localStorage.getItem(LOCAL_STORAGE_THEME_KEY);
 
-  try {
-    return JSON.parse(themeSerialized) || undefined;
-  } catch {
-    return undefined;
-  }
+  return parseSerializedData<string | undefined>(themeSerialized, undefined);
 }
 
-export function cacheTheme(theme: string) {
-  const themeSerialized = JSON.stringify(theme);
-  localStorage.setItem(LOCAL_STORAGE_THEME_KEY, themeSerialized);
+export function cacheTheme(theme?: string) {
+  localStorage.setItem(LOCAL_STORAGE_THEME_KEY, JSON.stringify(theme));
 }
 
 export function applyCachedTheme() {
-  const theme = readTheme();
-  setDocumentTheme(theme);
+  setDocumentTheme(readTheme());
 }

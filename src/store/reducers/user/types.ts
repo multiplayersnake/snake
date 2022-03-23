@@ -6,11 +6,10 @@ export type UserState = {
 };
 
 export enum UserActionType {
-  SetTheme = 'SetTheme',
   SetUser = 'SetUser',
   SetGameResults = 'SetGameResults'
 }
 
 export interface UserAction extends BaseAction<UserActionType> {
-  payload: GameUser | Partial<GameParameters> | string | undefined;
+  payload: Nullable<GameUser> | Partial<GameParameters>;
 }

@@ -1,5 +1,5 @@
+import { GameParameters, GameUser, Nullable } from '../../../types';
 import { UserState, UserAction, UserActionType } from './types';
-import { GameParameters, GameUser } from '../../../types';
 
 const defaultState: UserState = {
   data: undefined
@@ -12,7 +12,7 @@ export function userReducer(state: UserState = defaultState, action: UserAction)
     case UserActionType.SetUser:
       return {
         ...state,
-        data: payload as GameUser
+        data: payload as Nullable<GameUser>
       };
 
     case UserActionType.SetGameResults: {
@@ -29,19 +29,6 @@ export function userReducer(state: UserState = defaultState, action: UserAction)
       const awardsUpdated = awards + awardsUpdate;
 
       const gameParametersUpdated = { ...gameParameters, coins: coinsUpdated, awards: awardsUpdated };
-
-      return {
-        ...state,
-        data: { ...data, gameParameters: gameParametersUpdated }
-      };
-    }
-
-    case UserActionType.SetTheme: {
-      const { data } = state;
-      const { gameParameters } = data;
-
-      const theme = payload as string;
-      const gameParametersUpdated = { ...gameParameters, theme };
 
       return {
         ...state,

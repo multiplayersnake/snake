@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import EditorEvent from '@ckeditor/ckeditor5-utils/src/eventinfo';
-import cn from 'classnames';
 
 import { formatDateTime } from '../../../utils';
 import { TopicModel } from '../../../database/models';

@@ -1,15 +1,29 @@
-import { useSelector } from 'react-redux';
+import { useCallback, useState, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { getTheme, getAuthorized, RootState } from '../../store';
+import { getTheme, getAuthorized, RootState, toggleTheme } from '../../store';
 import { readTheme } from '../../utils';
 
-export function useTheme(): string | undefined {
+type UseTheme = {
+  theme?: string;
+  toggle: () => void;
+};
+
+export function useTheme(): UseTheme {
+  const [cachedTheme, setCachedTheme] = useState<string | undefined>(readTheme());
   const authorized = useSelector<RootState, boolean>(getAuthorized);
-  const theme = useSelector<RootState, string>(getTheme);
+  const authorizedUserTheme = useSelector<RootState, string>(getTheme);
 
-  if (authorized) {
-    return theme;
-  }
+  const dispatch = useDispatch();
+  const toggle = useCallback(() => {
+    dispatch(toggleTheme());
+    setCachedTheme(readTheme());
+  }, [dispatch]);
 
-  return readTheme();
+  const theme = useMemo(
+    () => (authorized ? authorizedUserTheme : cachedTheme),
+    [authorized, authorizedUserTheme, cachedTheme]
+  );
+
+  return { theme, toggle };
 }

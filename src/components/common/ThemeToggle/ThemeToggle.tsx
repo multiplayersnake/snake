@@ -1,7 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 
-import { toggleTheme } from '../../../store';
 import { useTheme } from '../../../hooks';
 import { Button } from '../Button';
 
@@ -10,19 +8,11 @@ import themeToggleIcon from '../../../assets/images/themeToggle.png';
 import './ThemeToggle.css';
 
 export const ThemeToggle = () => {
-  const [key, setKey] = useState(null);
-  const theme = useTheme();
-
-  const dispatch = useDispatch();
-  const toggle = useCallback(() => {
-    dispatch(toggleTheme());
-    setKey(Date.now());
-  }, [dispatch]);
-
+  const { theme, toggle } = useTheme();
   const title = theme ? 'Включить светлую тему' : 'Включить тёмную тему';
 
   return (
-    <Button variant="icon" onClick={toggle} title={title} className="theme-toggle" key={key}>
+    <Button variant="icon" onClick={toggle} title={title} className="theme-toggle">
       <img src={themeToggleIcon} alt="Переключить тему" width="16px" height="16px" />
     </Button>
   );

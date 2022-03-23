@@ -7,7 +7,7 @@ import AuthService from '../../../services/AuthService';
 
 import { item_arr } from '../../../database/mock';
 
-import { GameParameters, GameUser } from '../../../types';
+import { GameParameters, GameUser, Nullable } from '../../../types';
 import { GetState, RootState } from '../../types';
 import { UserActionType, UserAction } from './types';
 
@@ -49,7 +49,7 @@ export function toggleTheme() {
   };
 }
 
-export function setUser(user: GameUser | null): UserAction {
+export function setUser(user: Nullable<GameUser>): UserAction {
   return { type: UserActionType.SetUser, payload: user };
 }
 
