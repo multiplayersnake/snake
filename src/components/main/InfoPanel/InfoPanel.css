@@ -9,8 +9,7 @@
   padding: var(--gap5-5);
   box-sizing: border-box;
   display: flex;
-  position: fixed;
-  top: var(--gap5-5);
+  margin: var(--gap5-5);
   flex-wrap: wrap;
   align-content: flex-start;
   justify-content: space-between;
@@ -18,10 +17,6 @@
   font-family: var(--main-font);
   color: var(--white);
   font-size: 20px;
-}
-
-.left-panel {
-  left: var(--gap5-5);
 }
 
 .flex-wrapper {

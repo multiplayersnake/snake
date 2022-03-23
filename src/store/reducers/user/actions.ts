@@ -12,35 +12,44 @@ import { GetState, RootState } from '../../types';
 import { UserActionType, UserAction } from './types';
 
 import { externalUserAPI, mapToRawUser } from '../../../api';
-import { setDocumentTheme } from '../../../utils';
+import { setDocumentTheme, applyCachedTheme, cacheTheme, readTheme } from '../../../utils';
 import { showModal } from '../modal';
 import { updateTheme } from './utils';
-import { getUser, getUserGameParameters, getTheme } from './';
+import { getUser, getUserGameParameters, getTheme, getAuthorized } from './';
 
 export function toggleTheme() {
   return async function toggleThemeThunk(dispatch: ThunkDispatch<RootState, void, AnyAction>, getState: GetState) {
     const state = getState();
+    const authorized = getAuthorized(state);
+
+    if (!authorized) {
+      const cachedTheme = readTheme();
+      const newTheme = cachedTheme ? undefined : 'dark';
+
+      setDocumentTheme(newTheme);
+      cacheTheme(newTheme);
+
+      return;
+    }
+
     const theme = getTheme(state);
-    const userData = getUser(state);
-
     const newTheme = theme ? undefined : 'dark';
-    setDocumentTheme(newTheme);
 
+    setDocumentTheme(newTheme);
+    cacheTheme(newTheme);
+
+    const userData = getUser(state);
     const userDataUpdated = updateTheme(userData, newTheme);
 
     // TODO add updateUser action ?
     const rawUser = mapToRawUser(userDataUpdated);
     await externalUserAPI.updateProfile(rawUser);
 
-    dispatch(setUser(userDataUpdated));
+    await dispatch(setUser(userDataUpdated));
   };
 }
 
-export function setTheme(theme?: string): UserAction {
-  return { type: UserActionType.SetTheme, payload: theme };
-}
-
-export function setUser(user: GameUser): UserAction {
+export function setUser(user: GameUser | null): UserAction {
   return { type: UserActionType.SetUser, payload: user };
 }
 
@@ -50,6 +59,8 @@ export function saveGameResults(update: Partial<GameParameters>): UserAction {
 
 export function checkAuthorization(code?: string) {
   return async function checkAuthorizationThunk(dispatch: ThunkDispatch<RootState, void, AnyAction>) {
+    applyCachedTheme();
+
     if (code) {
       await OAuthService.sendCode(code);
     }
@@ -58,7 +69,11 @@ export function checkAuthorization(code?: string) {
 
     dispatch(setUser(gameUser));
 
-    setDocumentTheme(gameUser?.gameParameters.theme);
+    if (!gameUser) return;
+
+    const { theme } = gameUser.gameParameters;
+    setDocumentTheme(theme);
+    cacheTheme(theme);
   };
 }
 
@@ -72,6 +87,12 @@ export function logIn(e: FormEvent) {
 
     const form = e.target as HTMLFormElement;
     form.reset();
+
+    if (!gameUser) return;
+
+    const { theme } = gameUser.gameParameters;
+    setDocumentTheme(theme);
+    cacheTheme(theme);
   };
 }
 
@@ -85,6 +106,13 @@ export function signUp(e: FormEvent) {
 
     const form = e.target as HTMLFormElement;
     form.reset();
+
+    if (!gameUser) return;
+
+    // TODO сделать thunk ?
+    const { theme } = gameUser.gameParameters;
+    setDocumentTheme(theme);
+    cacheTheme(theme);
   };
 }
 

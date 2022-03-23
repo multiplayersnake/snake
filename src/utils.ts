@@ -51,3 +51,27 @@ export function setDocumentTheme(theme?: string): string {
 
   document.documentElement.setAttribute('data-theme', theme);
 }
+
+const LOCAL_STORAGE_THEME_KEY = 'theme';
+
+export function readTheme(): string | undefined {
+  if (isServer) return undefined;
+
+  const themeSerialized = localStorage.getItem(LOCAL_STORAGE_THEME_KEY);
+
+  try {
+    return JSON.parse(themeSerialized) || undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+export function cacheTheme(theme: string) {
+  const themeSerialized = JSON.stringify(theme);
+  localStorage.setItem(LOCAL_STORAGE_THEME_KEY, themeSerialized);
+}
+
+export function applyCachedTheme() {
+  const theme = readTheme();
+  setDocumentTheme(theme);
+}

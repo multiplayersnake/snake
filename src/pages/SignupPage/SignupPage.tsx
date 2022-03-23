@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { signUp } from '../../store';
 import OAuthService from '../../services/OAuthService';
-import { Button, NavButton, Input, Form, Heading } from '../../components/common';
+import { Button, NavButton, Input, Form, Heading, ThemeToggle } from '../../components/common';
 
 import './SignupPage.css';
 
@@ -27,7 +27,7 @@ export const SignupPage = () => {
         Боевые змеи
       </Heading>
 
-      <Form onSubmit={handleSignUp} className="signup-form">
+      <Form onSubmit={handleSignUp}>
         <Heading tag="h2">Регистрация</Heading>
 
         <Input required label="Логин" name="login" autoComplete="new-password" />
@@ -36,19 +36,23 @@ export const SignupPage = () => {
         <Input required label="Позывной" name="nickname" autoComplete="new-password" />
 
         <div>
-          <Button className="registration-button" type="submit">
+          <Button className="signup-button" type="submit">
             Зарегистрироваться
           </Button>
 
-          <NavButton className="registration-button" to="/login">
+          <NavButton className="signup-button" to="/login">
             Вход
           </NavButton>
 
-          <Button onClick={handleOAuthLogin} className="registration-button">
+          <Button onClick={handleOAuthLogin} className="signup-button">
             Войти через Яндекс
           </Button>
         </div>
       </Form>
+
+      <div className="signup-page-gap" />
+
+      <ThemeToggle />
     </div>
   );
 };
