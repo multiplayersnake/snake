@@ -1,14 +1,13 @@
 .error-message-container {
   width: 100%;
   height: 100%;
-  background: var(--transparent-blue);
+  background: var(--backdrop-background-color);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .error-message {
-  font-family: var(--impact-font);
   font-size: var(--gap-10);
-  color: var(--violet);
+  color: var(--white);
 }

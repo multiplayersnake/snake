@@ -32,7 +32,7 @@
   width: 100%;
   height: calc(100vh - 80px - 30px - 35px);
   overflow: hidden;
-  background: var(--panel-background);
+  background: var(--backdrop-background-color);
   padding: var(--gap5-5);
   border-radius: var(--gap5-1);
   display: grid;

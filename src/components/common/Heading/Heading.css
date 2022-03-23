@@ -8,9 +8,9 @@
 .h1 {
   font-size: calc(var(--gap) * 16);
   font-family: var(--title-font);
-  color: var(--yellow);
+  color: var(--page-heading-color);
   letter-spacing: calc(var(--gap) * 2);
-  text-shadow: var(--title-shadow);
+  text-shadow: var(--page-heading-shadow);
 }
 
 .h2 {

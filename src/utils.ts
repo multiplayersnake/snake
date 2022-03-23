@@ -21,7 +21,7 @@ export function formatDateTime(input: Date | string): string {
   return `${DD}.${MM}.${YYYY} ${hh}:${mm}`;
 }
 
-export function parseSerializedData<T extends Indexed>(serializedData: string, defaultValue: T = null): T {
+export function parseSerializedData<T extends Indexed | string>(serializedData: string, defaultValue: T = null): T {
   try {
     const data = JSON.parse(serializedData);
 
@@ -39,4 +39,33 @@ export const isServer = !(typeof window !== 'undefined' && window.document && wi
 
 export function getAppUrl(): string {
   return window.location.origin;
+}
+
+export function setDocumentTheme(theme?: string): string {
+  if (isServer) return;
+
+  if (!theme) {
+    document.documentElement.removeAttribute('data-theme');
+    return;
+  }
+
+  document.documentElement.setAttribute('data-theme', theme);
+}
+
+const LOCAL_STORAGE_THEME_KEY = 'theme';
+
+export function readTheme(): string | undefined {
+  if (isServer) return undefined;
+
+  const themeSerialized = localStorage.getItem(LOCAL_STORAGE_THEME_KEY);
+
+  return parseSerializedData<string | undefined>(themeSerialized, undefined);
+}
+
+export function cacheTheme(theme?: string) {
+  localStorage.setItem(LOCAL_STORAGE_THEME_KEY, JSON.stringify(theme));
+}
+
+export function applyCachedTheme() {
+  setDocumentTheme(readTheme());
 }

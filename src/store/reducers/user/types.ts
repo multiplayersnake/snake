@@ -7,9 +7,9 @@ export type UserState = {
 
 export enum UserActionType {
   SetUser = 'SetUser',
-  SaveGameResults = 'SaveGameResults'
+  SetGameResults = 'SetGameResults'
 }
 
 export interface UserAction extends BaseAction<UserActionType> {
-  payload: GameUser | Partial<GameParameters>;
+  payload: Nullable<GameUser> | Partial<GameParameters>;
 }

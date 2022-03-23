@@ -12,8 +12,12 @@
   margin-bottom: var(--gap5-5);
 }
 
-.registration-button {
+.login-button {
   width: 340px;
   margin-top: 20px;
   font-weight: bold;
+}
+
+.login-page-gap {
+  flex: 1;
 }

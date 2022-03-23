@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { logIn } from '../../store';
 import OAuthService from '../../services/OAuthService';
-import { Button, NavButton, Input, Form, Heading } from '../../components/common';
+import { Button, NavButton, Input, Form, Heading, ThemeToggle } from '../../components/common';
 
 import './LoginPage.css';
 
@@ -34,19 +34,23 @@ export const LoginPage = () => {
         <Input required label="Пароль" name="password" type="password" />
 
         <div>
-          <Button className="registration-button" type="submit">
+          <Button className="login-button" type="submit">
             Войти
           </Button>
 
-          <NavButton className="registration-button" to="/signup">
+          <NavButton className="login-button" to="/signup">
             Регистрация
           </NavButton>
 
-          <Button onClick={handleOAuthLogin} className="registration-button">
+          <Button onClick={handleOAuthLogin} className="login-button">
             Войти через Яндекс
           </Button>
         </div>
       </Form>
+
+      <div className="login-page-gap" />
+
+      <ThemeToggle />
     </div>
   );
 };

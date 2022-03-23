@@ -1,5 +1,5 @@
+import { GameParameters, GameUser, Nullable } from '../../../types';
 import { UserState, UserAction, UserActionType } from './types';
-import { GameParameters, GameUser } from '../../../types';
 
 const defaultState: UserState = {
   data: undefined
@@ -12,19 +12,13 @@ export function userReducer(state: UserState = defaultState, action: UserAction)
     case UserActionType.SetUser:
       return {
         ...state,
-        data: payload as GameUser
+        data: payload as Nullable<GameUser>
       };
 
-    // TODO логика сохранения результатов игры кажется сложноватой,
-    // это может означать, для параметров игры нужен свой редьюсер, в котором будет работать удобнее
-    // как вариант возможно, стоит endGameReducer переделать в gameReducer и хранить данные там...
-    // правильно спроектировать стор - непростая, но важная задача %-\
-
-    case UserActionType.SaveGameResults: {
+    case UserActionType.SetGameResults: {
       const { data } = state;
       const { gameParameters } = data;
-      const { coins } = gameParameters;
-      const { awards } = gameParameters;
+      const { coins, awards } = gameParameters;
 
       const results = payload as Partial<GameParameters>;
 

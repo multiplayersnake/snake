@@ -12,8 +12,12 @@
   margin-bottom: var(--gap5-5);
 }
 
-.registration-button {
+.signup-button {
   width: 340px;
   margin-top: 20px;
   font-weight: bold;
+}
+
+.signup-page-gap {
+  flex: 1;
 }

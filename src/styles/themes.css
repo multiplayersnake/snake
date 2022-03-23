@@ -1,0 +1,26 @@
+:root {
+  --app-background-image: url(../assets/images/backgroundLight.jpg);
+  --backdrop-background-color: var(--transparent-light-blue);
+  --button-background-color: linear-gradient(rgb(254, 255, 199), rgb(250, 255, 150), rgb(250, 255, 0));
+  --page-heading-color: var(--yellow);
+  --input-background-color: var(--transparent-gray);
+  --page-heading-shadow: 3px 3px 1px rgba(100, 100, 100, 0.8), -3px 3px 1px rgba(100, 100, 100, 0.8),
+    3px -3px 1px rgba(100, 100, 100, 0.8), -3px -3px 1px rgba(100, 100, 100, 0.8), 4px 4px 2px rgba(150, 150, 150, 0.8),
+    -4px 4px 2px rgba(150, 150, 150, 0.8), 4px -4px 2px rgba(150, 150, 150, 0.8), -4px -4px 2px rgba(150, 150, 150, 0.8),
+    5px 5px 2px rgba(100, 100, 100, 0.8), -5px 5px 2px rgba(100, 100, 100, 0.8), 5px -5px 2px rgba(200, 200, 200, 0.8),
+    -5px -5px 2px rgba(200, 200, 200, 0.8), 9px 9px 0 rgba(75, 75, 75, 1), 9px -5px 0 rgba(75, 75, 75, 1),
+    -5px 9px 0 rgba(75, 75, 75, 1), 11px 11px 0 rgba(75, 75, 75, 1), 11px -3px 0 rgba(75, 75, 75, 1),
+    -3px 11px 0 rgba(75, 75, 75, 1), 13px 13px 0 rgba(75, 75, 75, 1), 13px -1px 0 rgba(75, 75, 75, 1),
+    -1px 13px 0 rgba(75, 75, 75, 1), 15px 15px 0 rgba(75, 75, 75, 1), 15px -1px 0 rgba(75, 75, 75, 1),
+    1px 15px 0 rgba(75, 75, 75, 1);
+}
+
+:root[data-theme='dark'] {
+  --app-background-image: url(../assets/images/backgroundDark.jpg);
+  --backdrop-background-color: var(--transparent-dark-blue);
+  --page-heading-color: var(--dark-blue);
+  --page-heading-shadow: -1px -1px 5px #ffffff, 0 -1px 5px #ffffff, 1px -1px 5px #ffffff, 1px 0 5px #ffffff,
+    1px 1px 5px #ffffff, 0 1px 5px #ffffff, -1px 1px 5px #ffffff, -1px 0 5px #ffffff, 2px 2px 5px #c8c8c8,
+    3px 3px 5px #c8c8c8, 4px 4px 5px #c8c8c8, 5px 5px 5px #c8c8c8, 6px 6px 5px #c8c8c8, 7px 7px 5px #c8c8c8,
+    8px 8px 5px #c8c8c8, 9px 9px 5px #c8c8c8, 10px 10px 5px #c8c8c8, 11px 11px 5px #c8c8c8, 12px 12px 5px #c8c8c8;
+}

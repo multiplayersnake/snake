@@ -1,7 +1,7 @@
 .text-field {
   padding: var(--gap5-2);
   width: 100%;
-  background: var(--sub-panel-background);
+  background: var(--input-background-color);
   border-radius: var(--gap5-1);
   text-shadow: var(--text-light);
 }
@@ -43,15 +43,6 @@
 .message-content {
   grid-area: content;
   text-align: left;
-}
-
-.message-button {
-  height: 25px;
-  cursor: pointer;
-}
-
-.message-button:hover {
-  box-shadow: 0 0 5px rgb(255, 255, 255);
 }
 
 .ck.ck-content ul,

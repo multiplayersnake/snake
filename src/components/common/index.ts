@@ -7,3 +7,4 @@ export * from './Input';
 export * from './Modal';
 export * from './Scroll';
 export * from './TextArea';
+export * from './ThemeToggle';

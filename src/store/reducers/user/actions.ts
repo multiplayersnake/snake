@@ -1,29 +1,66 @@
 import { FormEvent } from 'react';
-import { Dispatch } from 'redux';
+import { AnyAction, Dispatch } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 
 import OAuthService from '../../../services/OAuthService';
 import AuthService from '../../../services/AuthService';
 
 import { item_arr } from '../../../database/mock';
 
-import { GameParameters, GameUser } from '../../../types';
-import { GetState } from '../../types';
+import { GameParameters, GameUser, Nullable } from '../../../types';
+import { GetState, RootState } from '../../types';
 import { UserActionType, UserAction } from './types';
 
 import { externalUserAPI, mapToRawUser } from '../../../api';
+import { setDocumentTheme, applyCachedTheme, cacheTheme, readTheme } from '../../../utils';
 import { showModal } from '../modal';
-import { getUser, getUserGameParameters } from './';
+import { updateTheme } from './utils';
+import { getUser, getUserGameParameters, getTheme, getAuthorized } from './';
 
-export function setUser(user: GameUser): UserAction {
+export function toggleTheme() {
+  return async function toggleThemeThunk(dispatch: ThunkDispatch<RootState, void, AnyAction>, getState: GetState) {
+    const state = getState();
+    const authorized = getAuthorized(state);
+
+    if (!authorized) {
+      const cachedTheme = readTheme();
+      const newTheme = cachedTheme ? undefined : 'dark';
+
+      setDocumentTheme(newTheme);
+      cacheTheme(newTheme);
+
+      return;
+    }
+
+    const theme = getTheme(state);
+    const newTheme = theme ? undefined : 'dark';
+
+    setDocumentTheme(newTheme);
+    cacheTheme(newTheme);
+
+    const userData = getUser(state);
+    const userDataUpdated = updateTheme(userData, newTheme);
+
+    // TODO add updateUser action ?
+    const rawUser = mapToRawUser(userDataUpdated);
+    await externalUserAPI.updateProfile(rawUser);
+
+    await dispatch(setUser(userDataUpdated));
+  };
+}
+
+export function setUser(user: Nullable<GameUser>): UserAction {
   return { type: UserActionType.SetUser, payload: user };
 }
 
 export function saveGameResults(update: Partial<GameParameters>): UserAction {
-  return { type: UserActionType.SaveGameResults, payload: update };
+  return { type: UserActionType.SetGameResults, payload: update };
 }
 
 export function checkAuthorization(code?: string) {
-  return async function checkAuthorizationThunk(dispatch: Dispatch) {
+  return async function checkAuthorizationThunk(dispatch: ThunkDispatch<RootState, void, AnyAction>) {
+    applyCachedTheme();
+
     if (code) {
       await OAuthService.sendCode(code);
     }
@@ -31,6 +68,12 @@ export function checkAuthorization(code?: string) {
     const gameUser = await AuthService.checkAuthorization();
 
     dispatch(setUser(gameUser));
+
+    if (!gameUser) return;
+
+    const { theme } = gameUser.gameParameters;
+    setDocumentTheme(theme);
+    cacheTheme(theme);
   };
 }
 
@@ -44,6 +87,12 @@ export function logIn(e: FormEvent) {
 
     const form = e.target as HTMLFormElement;
     form.reset();
+
+    if (!gameUser) return;
+
+    const { theme } = gameUser.gameParameters;
+    setDocumentTheme(theme);
+    cacheTheme(theme);
   };
 }
 
@@ -57,6 +106,13 @@ export function signUp(e: FormEvent) {
 
     const form = e.target as HTMLFormElement;
     form.reset();
+
+    if (!gameUser) return;
+
+    // TODO сделать thunk ?
+    const { theme } = gameUser.gameParameters;
+    setDocumentTheme(theme);
+    cacheTheme(theme);
   };
 }
 
@@ -68,8 +124,7 @@ export function logOut() {
 }
 
 // TODO эту функцию можно вынести в utils, а item_arr лучше передавать как параметр, можно это сделать когда (если ?) избавимся от мока в пользу хранения в базе данных
-
-function updateUserData(userData: GameUser, partKey: number, itemKey: number, isPurchased: boolean): GameUser {
+function updateBodyParts(userData: GameUser, partKey: number, itemKey: number, isPurchased: boolean): GameUser {
   const { gameParameters } = userData;
 
   const item = item_arr[partKey][itemKey];
@@ -100,7 +155,7 @@ export function selectCustomBodyPart(partKey: number, itemKey: number) {
     const isPurchased = gameParameters.byItems[partKey].includes(itemKey);
 
     if (isPurchased) {
-      const userDataUpdated = updateUserData(userData, partKey, itemKey, true);
+      const userDataUpdated = updateBodyParts(userData, partKey, itemKey, true);
       const rawUser = mapToRawUser(userDataUpdated);
       await externalUserAPI.updateProfile(rawUser);
 
@@ -124,7 +179,7 @@ export function selectCustomBodyPart(partKey: number, itemKey: number) {
     dispatch(
       showModal(`Хотите купить "${item.name}" за "${item.itemPrice}"?`, async () => {
         // TODO дублирующийся код, кажется это можно вынести в ExternalUserService
-        const userDataUpdated = updateUserData(userData, partKey, itemKey, false);
+        const userDataUpdated = updateBodyParts(userData, partKey, itemKey, false);
         const rawUser = mapToRawUser(userDataUpdated);
         await externalUserAPI.updateProfile(rawUser);
 

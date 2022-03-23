@@ -4,19 +4,30 @@
 }
 
 .button {
-  min-width: var(--button-width);
-  height: var(--button-height);
-  padding-left: var(--gap-5);
-  padding-right: var(--gap-5);
   color: var(--black);
   font-family: var(--main-font);
   font-size: var(--gap-6);
   font-weight: normal;
   border-radius: var(--gap5-1);
-  background: linear-gradient(rgb(254, 255, 199), rgb(250, 255, 150), rgb(250, 255, 0));
+  background: var(--button-background-color);
   position: relative;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
   cursor: pointer;
+}
+
+.regular-button {
+  min-width: var(--button-width);
+  height: var(--button-height);
+  padding-left: var(--gap-5);
+  padding-right: var(--gap-5);
+}
+
+.icon-button {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button:after {
@@ -30,10 +41,7 @@
   border-radius: var(--normal-border-radius);
 }
 
-.button:hover {
-  box-shadow: 0 0 5px rgb(255, 255, 255);
-}
-
+.button:hover,
 .button:focus {
   box-shadow: 0 0 5px rgb(255, 255, 255);
 }

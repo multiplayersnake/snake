@@ -1,12 +1,12 @@
 .one-item {
   display: grid;
   grid-template-areas:
-    ' img  price coin '
-    ' img  cond award '
-    ' title title title ';
+    ' img   price coin'
+    ' img   cond  award'
+    ' title title title';
   grid-template-columns: 75px 50px auto;
   grid-template-rows: 35px 35px 30px;
-  background: rgba(230, 230, 150, 0.8);
+  background: var(--transparent-gray);
   border-radius: var(--gap5);
   padding: var(--gap5-2);
   align-items: center;
@@ -16,7 +16,7 @@
 }
 
 .purchased-item {
-  background: var(--sub-panel-background);
+  background: var(--transparent-white);
 }
 
 .img {
