@@ -8,12 +8,9 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./shared:/var/www/shared
+      - ./../volumes/shared:/var/www/shared
     depends_on:
       - postgres
-      - pgadmin
-    networks:
-      - snake
     command: ./wait-for.sh postgres:5432 -- npm start
 
   postgres:
@@ -25,10 +22,8 @@ services:
     ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
-      - ./postgresdata:/var/lib/postgresql/data
+      - ./../volumes/postgresdata:/var/lib/postgresql/data
     restart: always
-    networks:
-      - snake
 
   pgadmin:
     container_name: pgadmin
@@ -41,15 +36,9 @@ services:
     ports:
       - "8080:${PGADMIN_LISTEN_PORT}"
     volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - ./../volumes/pgadmin-data:/var/lib/pgadmin
     depends_on:
       - postgres
-    networks:
-      - snake
 
 volumes:
   pgadmin-data:
-
-networks:
-  snake:
-    driver: bridge
