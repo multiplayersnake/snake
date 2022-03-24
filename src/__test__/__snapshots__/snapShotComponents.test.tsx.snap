@@ -2,7 +2,7 @@
 
 exports[`Button 1`] = `
 <button
-  className="button"
+  className="button regular-button"
   onClick={[Function]}
   onMouseEnter={[Function]}
   type="button"
@@ -108,10 +108,16 @@ exports[`Message 1`] = `
     className="message-edit"
   >
     <button
-      className="imgButton message-button"
+      className="button icon-button"
       onClick={[Function]}
+      onMouseEnter={[Function]}
       type="button"
     >
+      <audio
+        autoPlay={false}
+        preload="auto"
+        src={Object {}}
+      />
       <img
         alt="Редактировать"
         height="16px"
@@ -124,10 +130,16 @@ exports[`Message 1`] = `
     className="message-delete"
   >
     <button
-      className="imgButton message-button"
+      className="button icon-button"
       onClick={[Function]}
+      onMouseEnter={[Function]}
       type="button"
     >
+      <audio
+        autoPlay={false}
+        preload="auto"
+        src={Object {}}
+      />
       <img
         alt="Удалить"
         height="16px"
@@ -196,10 +208,16 @@ exports[`Topic 1`] = `
       className="topic-edit"
     >
       <button
-        className="imgButton topic-button"
+        className="button icon-button"
         onClick={[Function]}
+        onMouseEnter={[Function]}
         type="button"
       >
+        <audio
+          autoPlay={false}
+          preload="auto"
+          src={Object {}}
+        />
         <img
           alt="Редактировать"
           height="16px"
@@ -212,10 +230,16 @@ exports[`Topic 1`] = `
       className="topic-delete topic_hidden"
     >
       <button
-        className="imgButton topic-button"
+        className="button icon-button"
         onClick={[Function]}
+        onMouseEnter={[Function]}
         type="button"
       >
+        <audio
+          autoPlay={false}
+          preload="auto"
+          src={Object {}}
+        />
         <img
           alt="Удалить"
           height="16px"
